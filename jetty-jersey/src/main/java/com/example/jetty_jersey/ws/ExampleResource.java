@@ -17,49 +17,117 @@ public class ExampleResource {
 	
 	static List<User> u = new ArrayList<User>();
 	static List<Map> m = new ArrayList<Map>();
-		
+	static List<Map> l = new ArrayList<Location>();
+	
+	
+	//manipulation générale sur les users (infos, ajouter, supprimer)
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/homepage")
+	@Path("/users")
 	public List<User> getUsers() {
 		return u;
 	}
-	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/homepage")
-	public List<User> addUser() {
+	@Path("/users")
+	public void addUser() {
+		//voir pour ajouter paramBody 
 		u.add(new User());
-		return u;
+	}
+	//actions particulières sur les users
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/users/{user.id}")
+	public User getUser(@PathParam("user.id") int uid) {
+		for (User us: u) {
+			if (us.getUserID() == uid)
+				return us;
+		}
+		return null;
+	}
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/users/{user.id}")
+	public void editUser(@PathParam("user.id") int uid) {
+		//voir pour ajouter paramBody 
+		for (User us: u) {
+			if (us.getUserID() == uid);
+				//TODO
+		}
+	}
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/users/{user.id}")
+	public boolean delUser(@PathParam("user.id") int uid) {
+		for (User us: u) {
+			if (us.getUserID() == uid) {
+				u.remove(us);
+				return true;
+			}
+		}
+		return false;
 	}
 	
+	
+	//actions générales sur les maps
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/searchmap")
+	@Path("/maps")
 	public List<Map> getMaps() {
 		return m;
 	}
-	
-	//pas dans le doc, besoin pour ajouter des maps
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/searchmap")
-	public List<Map> addMap() {
+	@Path("/maps")
+	public void addMap() {
+		//voir pour ajouter paramBody 
 		m.add(new Map());
-		return m;
 	}
-	
+	//actions particulières sur les maps
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/searchmap/{map.id}")
-	public List<Location> getLocations(@PathParam("map.id") int id) {
+	@Path("/maps/{map.id}")
+	public Map getMap(@PathParam("map.id") int mid) {
 		for (Map map: m) {
-			if (map.getID() == id) {
-				return map.getLocations();
+			if (map.getID() == mid) {
+				return map;
 			}
 		}
 		return null;
 	}
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/maps/{map.id}")
+	public void editMap(@PathParam("map.id") int mid) {
+		//voir si on peut modifier une map localement ou globalement
+		for (Map map: m) {
+			if (map.getID() == mid) {
+				//TODO
+			}
+		}
+	}
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/maps/{map.id}")
+	public boolean delMap(@PathParam("map.id") int mid) {
+		//voir si on peut modifier une map localement ou globalement
+		for (Map ma: m) {
+			if (ma.getID() == mid) {
+				m.remove(ma);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
@@ -95,12 +163,12 @@ public class ExampleResource {
 								  @PathParam("map.id") int mid) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
-				for (Map map: us.getMaps()) {
+				for (Map map: m) {
 					if (map.getID() == mid) {
 						us.getMaps().add(map);
 						return us.getMaps();
 					}
-				}
+				}		
 			}
 		}
 		return null;
