@@ -1,0 +1,43 @@
+ <!DOCTYPE html>
+ 
+<html>
+	<head>
+	<meta charset="ISO-8859-1">
+	<title>ShareYourMap</title>
+	</head>
+	<body>
+
+		<script id="templateExample" type="text/template">
+			<div>
+				<%= attribute %>
+			</div>
+		</script>
+
+		<div>
+			<div>
+				<h1>ShareYourMap</h1>
+				<p>Find your <b>favorites places and event</b> everywhere in the world in less than 5 clicks.</p>
+			</div>
+			<div>
+				<div>
+					<p>List of users</p>
+					<input type="text" id="mail" name="mail">
+					<input type="password" id="psw" name="psw">
+					<button id="sign_in" onClick="document.location='searchmap.html'">Sign in</button>
+				</div>
+				<div>
+					<input type="text" id="newName" name="newName">	
+					<input type="password" id="newPsw" name="newPsw">	
+					<button id="addUser" onClick="document.location='searchmap.html'">Sign up</button>
+				</div>
+				<div id="usersList"></div>
+			</div>
+		</div>
+		
+	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+		<script type="text/javascript" src="home.js"></script>
+		
+		
+	</body>
+</html>
