@@ -62,32 +62,32 @@ function callDone2(result){
 
 $(function(){
 	$("#users").click(function(){
-		getServerData("/ws/homepage",callDone);
+		getServerData("/ws/users",callDone);
 	});
 });
 
 
 $(function(){
 	$("#addUser").click(function(){
-		putServerData("/ws/homepage",callDone);
+		putServerData("/ws/users",callDone);
 	});
 });
 
 $(function(){
 	$("#maps").click(function(){
-		getServerData("/ws/searchmap",callDone2);
+		getServerData("/ws/maps",callDone2);
 	});
 });
 
 $(function(){
 	$("#locations").click(function(){
-		getServerData('/ws/searchmap/'+id,callDone3);
+		getServerData('/ws/maps/'+id,callDone3);
 	});
 });
 
 $(function(){
 	$("#locations").click(function(){
-		putServerData('/ws/searchmap/'+id,callDone3);
+		putServerData('/ws/maps/'+id,callDone3);
 	});
 });
 
