@@ -2,11 +2,15 @@
 <html>
 	<head>
 	<meta charset="ISO-8859-1">
-	<title>SearchMap</title>
+	<title>PublicMap</title>
 	</head>
 	<body>
 		<script id="listTemplateHTML" type="text/template">
-				<li><%= attribute %></li>
+				<div>
+					<ul>
+						<li><%= attribute %></li>
+					</ul>
+				</div>
 		</script>
 
 		<script id="templateExample" type="text/template">
@@ -16,30 +20,41 @@
 		<div>
 			<div>
 				<h1>ShareYourMap</h1>
-				<button id="signOut" onClick="document.location='home.html'">X</button>
+				<button id="sign_out" onClick="document.location='home.html'">X</button>
 				<h2>Public maps</h2>
-				<p>Search</p>
-				<button id="addMap">Add map</button>
-				<div id="resAddMap"></div>
-				<input type="text" id="searchFav" name="searchFav"> 
-				<button id="search">GO</button>
-				<div id="mapsList"></div>
+				<p>
+					Search map
+					<input type="text" id="searchBar" name="searchBar">		
+					<button id="searchMap">GO</button>
+				</p>
+				
+				<div id="mapsList">
+					<ul>
+						<li> <button class="publicMap"> Map 1 example HTML </button> </li>
+						<li> <button class="publicMap"> Map 2 example HTML </button> </li>
+					</ul>
+				</div>
+				
 				<div>
 					<button id="viewMap" onClick="document.location='viewmap.html'">View my maps</button>
 				</div>
+				
 			</div>
+			
+			
 			<div>
 				<div>
 					<h2>Current map</h2>
 					<div id="currentMap"></div>
 					<div id="favsList"></div>
+
 				</div>
 			</div>
 		</div>
 		
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-		<script type="text/javascript" src="searchmap.js"></script>
+		<script type="text/javascript" src="publicmap.js"></script>
 		
 		
 	</body>

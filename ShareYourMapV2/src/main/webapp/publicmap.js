@@ -42,12 +42,18 @@ $(function(){
 });
 
 function getMapsList(result){
-	var templateExample = _.template($('#templateExample').html());
+	var templateExample = _.template($('#listTemplateHTML').html());
 
-	var html = templateExample({
-		"attribute":JSON.stringify(result)
+	var content = '';
+	
+	_.each(artists, function(artist, index, artists) {
+		  content += templateExample({
+				"attribute":JSON.stringify(result)
+		  });
 	});
 
+	var html = document.createElement('ol');
+	html.innerHTML = content;
 	$("#mapsList").append(html); 
 }
 
@@ -84,3 +90,19 @@ function putAddMap(result){
 
 	$("#resAddMap").append(html);
 }
+
+/*
+var artists = ['Led Zeppelin', 'ACDC', 'Rolling Stones'],
+artistTemplate = _.template('<li><%= artist %></li>'),
+content = '';
+
+_.each(artists, function(artist, index, artists) {
+content += artistTemplate({
+artist: artist
+});
+});
+
+var container = document.createElement('ol');
+container.innerHTML = content;
+document.body.appendChild(container);
+*/

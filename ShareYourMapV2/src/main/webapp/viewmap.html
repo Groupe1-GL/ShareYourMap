@@ -15,31 +15,52 @@
 		<div>
 			<div>
 				<h1>ShareYourMap</h1>
-				<button id="signOut" onClick="document.location='home.html'">X</button>
+				<button id="sign_out" onClick="document.location='home.html'">X</button>
 				<div id="userName"></div>
-				<p>Search</p>
-				<input type="text" id="searchFav" name="searchFav"> 
-				<button id="search">GO</button>
-				<div id="mapList"></div>
+				<p>
+					Search favorites
+					<input type="text" id="searchBar" name="searchBar"> 
+					<button id="searchFavde">GO</button>
+				</p>
+				
+				<div id="mapList">
+					<ul>
+						<li> <button class="map"> Map 1 example HTML </button> <button id="deleteMap">DeleteMap</button> </li>
+						<li> <button class="map"> Map 2 example HTML </button> <button id="deleteMap">DeleteMap</button></li>
+					</ul>
+					<div id="resDeleteMap"></div>
+				</div>
+				
 				<div>
-					<button id="searchMap" onClick="document.location='searchmap.html'">Search public maps</button>
+					<button id="publicMap" onClick="document.location='publicmap.html'">View public maps</button>
 					<button id="createMap">Create a new map</button>
 					<div id="resAddMap"></div>
-					<button id="deleteMap">DeleteMap</button>
-					<div id="resDeleteMap"></div>
 				</div>
 			</div>
 			<div>
-				<div>
-					<h2>Current map</h2>
-					<div id="currentMap"></div>
+				<h2>Current map</h2>
+				<div id="currentMap">
 					<div id="locationsList"></div>
+					<button id="viewLocation">ViewLocation</button>
 					<button id="addLocation">AddLocation</button>
 					<div id="resAddLocation"></div>
-					<button id="editLocation">EditLocation</button>
-					<div id="resEditLocation"></div>
-					<button id="deleteLocation">DeleteLocation</button>
-					<div id="resDeleteLocation"></div>
+					
+					<div id="location">
+						<h1>Location's name</h1>
+						<p>Address of the location</p>
+						<h2>Description</h2>
+						<p>Text for describe the location.</p>
+						<h2>Messages</h2>
+						<p>Messages for the current location</p>
+						<h2>Pictures</h2>
+						
+						<button id="editLocation">EditLocation</button>
+						<div id="resEditLocation"></div>
+						<button id="closeLocation">Close</button>
+						<button id="deleteLocation">DeleteLocation</button>
+						<div id="resDeleteLocation"></div>
+					</div>
+				
 				</div>
 			</div>
 		</div>
