@@ -5,7 +5,8 @@ import java.util.*;
 
 public class Location{
 	private int LocID;
-	private String name, creator_name, description, message;
+	private String name, creator_name, description;
+	private List<String> message;//*
 	private Position pos;
 	private String label;
 	private static int id = 1;
@@ -59,14 +60,14 @@ public class Location{
 		description = null;
 	}
 	
-	public String getMessage(){
+	public List<String> getMessage(){
 		// TODO Auto-generated method stub
 		return this.message;
 	}
 	
 	public void putMessage(String str){
 		// TODO Auto-generated method stub
-		message += str;
+		this.message.add(str);//*
 	}
 	
 

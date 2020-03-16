@@ -46,23 +46,82 @@ function deleteServerData(url, success){
 }
 
 
+//---------------------		Automatic actions		---------------------		
+
+
+// Return current registered user
 $(function(){
-	getServerDataLambda("/ws/viewmap/1",getUser);
+	var user = "1";
+	//getServerDataLambda("/users/"+user,getUser);
+	getServerDataLambda("/ws/viewmap/"+user,getUser);
 });
 
 
 function getUser(result){
+	var user_name = _.template("<%=userInfo%>");
+	var user_maps = _.template("<%=userID%>");
+	$("#userName").append(user_name(result));
+	
+
+	var id_template = _.template($('#listMap').html());
+	var maps = result['maps'];
+	_.each(maps, function(map) {
+		map_id = id_template(map);
+		$('#mapsList').append(map_id);
+	 });
+	
+}
+
+
+//---------------------		Actions on click		---------------------	
+
+//Return list of location with "location_name" (searchBar value) in their name 
+$(function(){
+	$("#searchFav").click(function(){
+		var location_name = document.getElementById("searchBar").value;
+		
+		//getServerData("/ws/maps/"+select_map+"/location"+location_name,getLocationsList);
+		getServerDataTxt("/ws/searchmap/search/"+location_name,getLocationsList);
+	});
+});
+
+
+function getLocationsList(result){
 	var templateExample = _.template($('#templateExample').html());
 
 	var html = templateExample({
 		"attribute":JSON.stringify(result)
 	});
 
-	$("#userName").append(html);
+	$("#locationsList").append(html);
 }
 
+
+//Return list of locations for the selected map
+$(function(){
+	$("#1").click(function(){
+		var select_map = "1";
+		getServerData("/ws/viewmap/1/1"+select_map,getFavInMap)
+		//getServerData("/ws/maps/"+select_map+"/location",getFavInMap)
+	});
+});
+
+
+function getFavInMap(result){
+	var templateExample = _.template($('#templateExample').html());
+
+	var html = templateExample({
+		"attribute":JSON.stringify(result)
+	});
+
+	$("#locationsList").append(html);
+}
+
+
+// Create a new map
 $(function(){
 	$("#createMap").click(function(){
+		//putServerData("/ws/maps",postAddMapToUser)
 		postServerData("/ws/viewmap/1",postAddMapToUser);
 	});
 });
@@ -77,10 +136,13 @@ function postAddMapToUser(result){
 	$("#resAddMap").append(html);
 }
 
-
+// Delete a map from user's list of map
 $(function(){
 	$("#deleteMap").click(function(){
-		deleteServerData("/ws/viewmap/1/1",deleteMapToUser);
+		var user = "1";
+		var map = "1";
+		//deleteServerData("/users/"+user+"/maps/"+map,deleteMapToUser);
+		deleteServerData("/ws/viewmap/"+user+"/"+map,deleteMapToUser);
 	});
 });
 
@@ -95,8 +157,10 @@ function deleteMapToUser(result){
 }
 
 
+// Add a new location to the current map
 $(function(){
 	$("#addLocation").click(function(){
+		//putServerData("/ws/location",putAddLocation);
 		putServerData("/ws/viewmap/viewlocation/1/1",putAddLocation);
 	});
 });
@@ -112,25 +176,12 @@ function putAddLocation(result){
 }
 
 
-$(function(){
-	getServerData("/ws/viewmap/viewlocation/1/1",getLocationsList);
-});
-
-
-function getLocationsList(result){
-	var templateExample = _.template($('#templateExample').html());
-
-	var html = templateExample({
-		"attribute":JSON.stringify(result)
-	});
-
-	$("#locationsList").append(html);
-}
-
-
+// Edit a location
 $(function(){
 	$("#editLocation").click(function(){
-		postServerData("/ws/viewmap/viewlocation/1/1/1",postEditLocation);
+		var location = "1";
+		//postServerData("/ws/location/"+location,postEditLocation);
+		postServerData("/ws/viewmap/viewlocation/1/1/"+location,postEditLocation);
 	});
 });
 
@@ -144,9 +195,13 @@ function postEditLocation(result){
 	$("#resEditLocation").append(html);
 }
 
-
+// Delete a location
 $(function(){
 	$("#deleteLocation").click(function(){
+		var user = "1";
+		var map = "1";
+		var location = "1";
+		//deleteServerData("/ws/users/"+user+"/maps/"+map+"/location/"+location,deleteLocationToUser);
 		deleteServerData("/ws/viewmap/viewlocation/1/1/1",deleteLocationToUser);
 	});
 });

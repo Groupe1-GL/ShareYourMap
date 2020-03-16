@@ -6,13 +6,17 @@ import java.util.*;
 public class User{
 	private int userID;
 	private String name;
+	private String password; //ADD
+	private String email; //ADD
 	private List<Map> listMap; 
 	private Position current_position;
 	private static int id = 1;
 	
-	public User() {
+	public User(String name, String password, String emai) {
 		this.userID=id++;
-		this.name = "user"+String.valueOf(this.userID);
+		this.name = name;
+		this.password = password;
+		this.email = email;
 		this.listMap = new ArrayList<Map>();		
 	}
 
