@@ -32,6 +32,10 @@ public class Map{
 		return this.Map_ID;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public List<Location> getLocations() {
 		return this.favorite_locations;
 	}
