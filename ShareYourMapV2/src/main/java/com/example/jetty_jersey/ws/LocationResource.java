@@ -73,7 +73,7 @@ public class LocationResource {
 	//voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps/location/{location-id}")
+	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}")
 	public boolean deleteLocation(@PathParam("user-id") int uid,
 								  @PathParam("map-id") int mid,
 								  @PathParam("location-id") int lid) {
