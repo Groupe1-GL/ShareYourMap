@@ -16,10 +16,26 @@ public class UserDAOImpl implements UserDAO {
 	
 	static List<User> u = new ArrayList<User>();
 	
+	/**
+	 * Returns the list of all registered users.
+	 * If there is not users, it will return a null object.
+     *	 
+	 * @return	the users on the database
+	 */
 	public List<User> getUsers() {
 		return u;
 	}
 	
+	/**
+	 * Creates a new user on the database according to the user's information matching the fields' names.
+	 * If the username is already used it don't finalize the processus and returns a BAD_REQUEST HTTP code.
+	 * This service is used on the signup process.
+     *	 
+	 * @param username	a public string identifier of the user
+	 * @param passwd	the password
+	 * @param cpasswd	confirmation of the previous password entry
+	 * @param email		the email of the user
+	 */
 	public Response createUser( 		String name, 
 										String password, 
 										String cpassword, 
@@ -49,6 +65,12 @@ public class UserDAOImpl implements UserDAO {
 		}		
 	}
 	
+	/**
+     * Returns the user selected by his id.
+	 *
+	 * @param  uid the user identifier 
+	 * @return	   the user object
+	 */
 	public User getUser(				int uid) {
 		for (User us: u) {
 			if (us.getUserID() == uid)
@@ -56,6 +78,18 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return null;		
 	}
+	
+	/**
+     * Edits the user selected by his id.
+	 * The username can not be changed.
+	 *
+	 * @param  uid 		the user identifier 
+	 * @param  opasswd 	the user's current password
+	 * @param  passwd	new password
+	 * @param  cpasswd  confirmation of the new password to avoid mistake
+	 * @param  email	email of the user
+	 * @return	   		the user object
+	 */
 	public Response editUser(   		int uid, 
 										String opassword, 
 										String password, 
@@ -94,6 +128,14 @@ public class UserDAOImpl implements UserDAO {
 					.entity("User not found!")
 					.build();		
 	}
+	
+	/**
+     * Deletes the user selected by his id.
+	 * A user can delete himself only.
+	 *
+	 * @param  uid the user identifier 
+	 * @return	   true if the operation was successful
+	 */
 	public boolean deleteUser(			int uid) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
@@ -103,6 +145,16 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;		
 	}
+	
+	/**
+     * Returns a list of the user's maps selected by his id.
+	 * If the user doesn't exist a null object is returned.
+	 * This resource method is used in order to display the list of the user's maps 
+	 * on the web application.
+	 *
+	 * @param  uid the user identifier 
+	 * @return	   list of maps
+	 */
 	public List<Map> getMapsOfUser(		int uid) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
@@ -111,18 +163,36 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return null;		
 	}
+	
+	/**
+	 * Creates a new map on the database and link it to the user.
+     *	 
+	 * @param  name 		public map name
+	 * @param  creatorName  save the creator username
+	 * @return 				true if the operation is successful
+	 */
 	public boolean createMap(			int uid, String name) {
 		for (User us : u) {
 			if (us.getUserID() == uid) {
-				return MapResource.m.add(new Map(name, us.getName()));
+				return MapDAOImpl.m.add(new Map(name, us.getName()));
 			}
 		}
 		return false;
 	}
+	
+	/**
+     * Adds a map on the user's map.
+	 * If the map doesn't exist nothing is added.
+	 * This resource method is used to add a map from the search bar.
+	 *
+	 * @param  uid the user identifier 
+	 * @param  mid the map identifier 
+	 * @return	   list of maps
+	 */
 	public boolean addMapOnUser(		int uid, int mid) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
-				for (Map ma: MapResource.m) {
+				for (Map ma: MapDAOImpl.m) {
 					if (ma.getID() == mid) {
 						us.getMaps().add(ma);
 						return true;
@@ -132,6 +202,15 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
+	
+	/**
+     * Deletes a map on the user's map.
+	 * If the map doesn't exist nothing is deleted.
+	 *
+	 * @param  uid the user identifier 
+	 * @param  mid the map identifier 
+	 * @return	   true if the operation was successful
+	 */
 	public boolean removeMapOnUser(		int uid, int mid) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
@@ -145,6 +224,19 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
+	
+	/**
+     * Creates and adds a location on a map selected by its id.
+	 * If the map or the location doesn't exist nothing is added.
+	 *
+	 * @param	uid		the user identifier 
+	 * @param	mid		the map identifier 
+	 * @param	lid		the location identifier
+	 * @param	name	the location name
+	 * @param	descr 	the location description
+	 * @param	label	the location label
+	 * @return			true if the operation was successful
+	 */
 	public boolean addLocationOnMap(	int uid, 
 										int mid, 
 										String name, 
@@ -164,17 +256,31 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
+	
+	/**
+     * Edits a location.
+	 *
+	 * @param	uid		the user identifier 
+	 * @param	mid 	the map identifier 
+	 * @param	lid 	the location identifier 
+	 * @param	name 	the location name
+	 * @param	descr	the location description
+	 * @param	label	the location label
+	 * @return			true if the operation was successful
+	 */
 	public boolean editLocation(		int uid,
 										int mid,
 										int lid,
-										String message) {
+										String name,
+										String descr,
+										String label) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						for (Location lo: ma.getLocations()) {
-							if (lo.getID() == lid) {								
-								return lo.putMessage(message);
+							if ((lo.getID() == lid)&&(lo.getCreatorName().equals(us.getName()))) {
+								return lo.setName(name)&&lo.setDescription(descr)&&lo.setLabel(label);
 							}
 						}
 					}
@@ -183,6 +289,16 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
+	
+	/**
+     * Contributes on the feed of a location by a message.
+	 * If the map or the location doesn't exist nothing is added.
+	 *
+	 * @param  uid the user identifier 
+	 * @param  mid the map identifier 
+	 * @param  lid the location identifier 
+	 * @return	   true if the operation was successful
+	 */
 	public boolean contributeOnLocation(int uid,
 										int mid,
 										int lid,
@@ -202,6 +318,16 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
+	
+	/**
+     * Deletes a location on a map.
+	 * If the map or the location doesn't exist nothing is deleted.
+	 *
+	 * @param  uid the user identifier 
+	 * @param  mid the map identifier 
+	 * @param  lid the location identifier 
+	 * @return	   true if the operation was successful
+	 */
 	public boolean deleteLocation(		int uid,
 										int mid,
 										int lid) {
@@ -222,5 +348,5 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
-
+	
 }

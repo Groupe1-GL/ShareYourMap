@@ -93,4 +93,36 @@ public class Location{
 		message = null;
 	}
 
+
+	public String getCreatorName() {
+		return this.creatorName;
+	}
+
+
+	public boolean setName(String name) {
+		if (!name.equals(null)) {
+			this.name = name;
+			return true;
+		}
+		return false;
+	}
+
+
+	public boolean setDescription(String descr) {
+		if (!descr.equals(null)) {
+			this.description = descr;
+			return true;
+		}
+		return false;
+	}
+
+
+	public boolean setLabel(String label) {
+		if (!label.equals(null)) {
+			this.label = label;
+			return true;
+		}
+		return false;
+	}
+
 }

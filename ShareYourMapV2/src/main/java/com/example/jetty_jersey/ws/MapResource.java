@@ -23,9 +23,7 @@ import java.util.*;
 @Path("/maps")
 public class MapResource {
 	
-	static List<Map> m = new ArrayList<Map>();
-	static List<Location> l = new ArrayList<Location>();
-	
+	MapDAO mapDAO = new MapDAOImpl();
 	
 	/**
 	 * Returns the list of all maps.
@@ -34,23 +32,9 @@ public class MapResource {
 	 * @return	the maps on the database
 	 */
 	@GET
-/*	@Produces(MediaType.TEXT_HTML)
-	public Response getMaps() {
-		String str = "<ul>\n";
-		//Take on the database all the entry of the user table
-		for (Map ma : m) {
-			str += "<li>" + m.getName() + "</li><br />\n";//can redirect to its maps URL
-		}
-		str += "</ul>";
-		return Response
-				.status(400)
-				.entity(str)
-				.build();
-	}
-*/
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Map> getMaps(){
-		return m;
+		return mapDAO.getMaps();
 	}
 	
 	/**
@@ -63,12 +47,7 @@ public class MapResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{map-id}")
 	public Map getMap(@PathParam("map-id") int mid) {
-		for (Map ma : m) {
-			if (ma.getID() == mid) {
-				return ma;
-			}
-		}
-		return null;
+		return mapDAO.getMap(mid);
 	}
 	
 	/**
@@ -85,12 +64,7 @@ public class MapResource {
 	// mettre un privilège de modification
 	public boolean editMap(@PathParam("map-id") int mid,
 					       @FormParam("name") String name) {
-		for (Map ma : m) {
-			if (ma.getID() == mid) {
-				return ma.setName(name);
-			}
-		}
-		return false;
+		return mapDAO.editMap(mid, name);
 	}
 	
 	/**
@@ -103,12 +77,7 @@ public class MapResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{map-id}")
 	public boolean deleteMap(@PathParam("map-id") int mid) {
-		for (Map ma : m) {
-			if (ma.getID() == mid) {
-				return m.remove(ma);
-			}
-		}
-		return false;
+		return mapDAO.deleteMap(mid);
 	}
 	
 	/**
@@ -121,11 +90,6 @@ public class MapResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{map-id}/location")
 	public List<Location> getLocations(@PathParam("map-id") int mid) {
-		for (Map ma : m) {
-			if (ma.getID() == mid) {
-				return ma.getLocations();
-			}
-		}
-		return null;
+		return mapDAO.getLocations(mid);
 	}
 }

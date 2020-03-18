@@ -24,10 +24,7 @@ import java.util.*;
 @Path("/users")
 public class UserResource {
 	
-	static List<User> u = new ArrayList<User>();
-	static List<Location> l = new ArrayList<Location>();
-	
-	UserDAO uDAO = new UserDAOImpl();
+	UserDAO userDAO = new UserDAOImpl();
 	
 	/**
 	 * Returns the list of all registered users.
@@ -35,24 +32,10 @@ public class UserResource {
      *	 
 	 * @return	the users on the database
 	 */
-//	@Produces(MediaType.TEXT_HTML)
-/*	public Response getUsers() {
-		String str = "<ul>\n";
-		//Take on the database all the entry of the user table
-		for (User us : u) {
-			str += "<li>" + us.getName() + "</li><br />\n";//can redirect to his user profil by get users/user-id
-		}
-		str += "</ul>";
-		return Response
-				.status(400)
-				.entity(str)
-				.build();
-	}
-*/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getUsers(){
-		return uDAO.getUsers();
+		return userDAO.getUsers();
 	}
 	
 	/**
@@ -73,7 +56,7 @@ public class UserResource {
 		@FormParam("passwd") String password,
 		@FormParam("cpasswd") String cpassword,
 		@FormParam("email") String email) {
-		return uDAO.createUser(name, password, cpassword, email);
+		return userDAO.createUser(name, password, cpassword, email);
 	}
 	
 	/**
@@ -86,7 +69,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}")
 	public User getUser(@PathParam("user-id") int uid) {
-		return uDAO.getUser(uid);
+		return userDAO.getUser(uid);
 	}
 	
 	/**
@@ -110,7 +93,7 @@ public class UserResource {
 		@FormParam("passwd") String password,
 		@FormParam("cpasswd") String cpassword,
 		@FormParam("email") String email) {//voir si on modifie current_position
-		return uDAO.editUser(uid, opassword, password, cpassword, email);
+		return userDAO.editUser(uid, opassword, password, cpassword, email);
 	}
 	
 	/**
@@ -125,7 +108,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}")
 	public boolean deleteUser(@PathParam("user-id") int uid) {
-		return uDAO.deleteUser(uid);
+		return userDAO.deleteUser(uid);
 	}
 	
 	/**
@@ -142,7 +125,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps")
 	public List<Map> getMapsOfUser(@PathParam("user-id") int uid) {
-		return uDAO.getMapsOfUser(uid);
+		return userDAO.getMapsOfUser(uid);
 	}
 	
 	/**
@@ -157,8 +140,8 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps")
 	public boolean createMap(@PathParam("user-id") int uid,
-							 @FormParam("username") String name) {
-		return uDAO.createMap(uid, name);
+							 @FormParam("map_name") String name) {
+		return userDAO.createMap(uid, name);
 	}
 	
 	/**
@@ -174,10 +157,10 @@ public class UserResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps")
+	@Path("/{user-id}/maps/{map-id}")
 	public boolean addMapOnUser(@PathParam("user-id") int uid,
 								@PathParam("map-id") int mid) {
-		return uDAO.addMapOnUser(uid, mid);
+		return userDAO.addMapOnUser(uid, mid);
 	}
 	
 	/**
@@ -191,10 +174,10 @@ public class UserResource {
 	 //voir si la réponse est cohérente si l'user et/ou la map n'existent pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps")
+	@Path("/{user-id}/maps/{map-id}")
 	public boolean removeMapOnUser(@PathParam("user-id") int uid,
 								   @PathParam("map-id") int mid) {
-		return uDAO.removeMapOnUser(uid, mid);
+		return userDAO.removeMapOnUser(uid, mid);
 	}
 	
 	/**
@@ -221,30 +204,7 @@ public class UserResource {
 									@FormParam("label") String label,
 									@QueryParam("x") float x,
 									@QueryParam("y") float y){
-		return uDAO.addLocationOnMap(uid, mid, name, descr, label, x, y);
-	}
-	
-	/**
-     * Edit a location.
-	 *
-	 * @param	uid		the user identifier 
-	 * @param	mid 	the map identifier 
-	 * @param	lid 	the location identifier 
-	 * @param	name 	the location name
-	 * @param	descr	the location description
-	 * @param	label	the location label
-	 * @return			true if the operation was successful
-	 */
-	 //voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
-	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps/location/{location-id}")
-	public boolean editLocation(@PathParam("user-id") int uid,
-										@PathParam("map-id") int mid,
-										@PathParam("location-id") int lid,
-										@FormParam("message") String message) {
-		return uDAO.editLocation(uid, mid, lid, message);
+		return userDAO.addLocationOnMap(uid, mid, name, descr, label, x, y);
 	}
 	
 	/**
@@ -265,7 +225,32 @@ public class UserResource {
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
 										@FormParam("message") String message) {
-		return uDAO.contributeOnLocation(uid, mid, lid, message);
+		return userDAO.contributeOnLocation(uid, mid, lid, message);
+	}
+	
+	/**
+     * Edits a location.
+	 *
+	 * @param	uid		the user identifier 
+	 * @param	mid 	the map identifier 
+	 * @param	lid 	the location identifier 
+	 * @param	name 	the location name
+	 * @param	descr	the location description
+	 * @param	label	the location label
+	 * @return			true if the operation was successful
+	 */
+	 //voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{user-id}/maps/location/{location-id}")
+	public boolean editLocation(@PathParam("user-id") int uid,
+										@PathParam("map-id") int mid,
+										@PathParam("location-id") int lid,
+										@FormParam("message") String name,
+										@FormParam("description") String descr,
+										@FormParam("label") String label) {
+		return userDAO.editLocation(uid, mid, lid, name, descr, label);
 	}
 	
 	/**
@@ -284,6 +269,6 @@ public class UserResource {
 	public boolean deleteLocation(@PathParam("user-id") int uid,
 								  @PathParam("map-id") int mid,
 								  @PathParam("location-id") int lid) {
-		return uDAO.deleteLocation(uid, mid, lid);
+		return userDAO.deleteLocation(uid, mid, lid);
 	}
 }

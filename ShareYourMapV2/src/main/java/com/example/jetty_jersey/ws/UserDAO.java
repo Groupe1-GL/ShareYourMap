@@ -37,7 +37,9 @@ public interface UserDAO {
 	public boolean editLocation(		int uid,
 										int mid,
 										int lid,
-										String message);
+										String message,
+										String descr,
+										String label);
 	public boolean contributeOnLocation(int uid,
 										int mid,
 										int lid,
