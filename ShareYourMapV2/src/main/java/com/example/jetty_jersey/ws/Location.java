@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Location{
 	private int LocID;
-	private String name, creator_name, description;
+	private String name, creatorName, description;
 	private List<String> message;//*
 	private Position pos;
 	private String label;
@@ -17,6 +17,17 @@ public class Location{
 		this.name = "Location"+String.valueOf(this.LocID);
 	}
 	
+	
+	public Location(String name, String creatorName, float x, float y, String descr, String label2) {
+		this.creatorName = creatorName;
+		this.name = name;
+		Position pos = new Position(x,y);
+		this.pos = new Position(x,y);
+		this.description = descr;
+		this.label = label;
+	}
+
+
 	public static ArrayList<Location> generateLocations(){
 		ArrayList<Location> locations = new ArrayList<Location>();
 		for(int i=0; i<3;i++) {
