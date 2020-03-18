@@ -30,7 +30,9 @@ public class LocationDAOImpl implements LocationDAO {
 			if (us.getUserID() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
-						ma.getLocations().add(new Location(name, us.getName(), x, y, descr, label));
+						Location newLocation = new Location(name, us.getName(), x, y, descr, label);
+						LocationDAOImpl.l.add(newLocation);
+						ma.getLocations().add(newLocation);
 						return true;
 					}
 				}
