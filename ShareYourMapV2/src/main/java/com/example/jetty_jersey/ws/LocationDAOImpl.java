@@ -155,7 +155,7 @@ public class LocationDAOImpl implements LocationDAO {
 				res.add(lo);
 			}
 		}
-		return l;
+		return res;
 	}
 	
 }

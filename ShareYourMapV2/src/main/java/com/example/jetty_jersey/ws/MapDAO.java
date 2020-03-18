@@ -46,6 +46,16 @@ public interface MapDAO {
 	 */
 	public boolean deleteMap(int uid, int mid);
 	/**
+     * Returns the list of maps matching with the keywords.
+	 * If the map doesn't exist or no map matches  a null object is returned.
+	 * 
+	 * @param  value	keywords where map name can match
+	 * @return	   		list of maps
+	 */
+	public List<Map> searchMap(String ref);
+	
+	// ************************ 
+	/**
 	 * Returns all the locations of a map selected by its id.
 	 * If there is not map matching, it will return a null object.
      *	 

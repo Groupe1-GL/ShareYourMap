@@ -2,6 +2,8 @@ package com.example.jetty_jersey.ws;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MapDAOImpl implements MapDAO {
@@ -89,6 +91,30 @@ public class MapDAOImpl implements MapDAO {
 		}
 		return false;
 	}
+	
+	/**
+     * Returns the list of maps matching with the keywords.
+	 * If the map doesn't exist or no map matches  a null object is returned.
+	 * 
+	 * @param  value	keywords where map name can match
+	 * @return	   		list of maps
+	 */
+	public List<Map> searchMap(String ref) {
+		List<Map> res = new ArrayList<Map>();
+		Pattern pattern = Pattern.compile(ref);
+		Matcher matcherName;
+		for (Map ma: m) {
+			matcherName = pattern.matcher(ma.getName());
+			while (matcherName.find()&&(!res.contains(ma))) {
+				res.add(ma);
+			}
+		}
+		return res;
+	}
+	
+	
+	
+	// **********
 	
 	/**
 	 * Returns all the locations of a map selected by its id.

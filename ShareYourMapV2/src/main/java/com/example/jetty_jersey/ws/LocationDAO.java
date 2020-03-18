@@ -74,7 +74,7 @@ public interface LocationDAO {
 	 * @param  value	keywords where location name can match
 	 * @return	   		list of locations
 	 */
-	public List<Location> searchLocation(String value);
+	public List<Location> searchLocation(String ref);
 	
 	/*
 	public List<Location> getLocation(String label);
