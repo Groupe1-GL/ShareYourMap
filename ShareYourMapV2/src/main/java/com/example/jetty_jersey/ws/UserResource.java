@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import java.util.*;
 
 /**
- * ExampleRessource is the class of the User ressource.
+ * UserRessource is the class of the User ressource.
  * used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
