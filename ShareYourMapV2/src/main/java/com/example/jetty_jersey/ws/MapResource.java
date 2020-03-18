@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import java.util.*;
 
 /**
- * MapRessource is the class of the maps ressource used in the ShareYourMap website.
+ * MapRessource is the class of the maps resource used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
  * @version 1.0
@@ -34,7 +34,7 @@ public class MapResource {
 	 * @return	the maps on the database
 	 */
 	@GET
-	@Produces(MediaType.TEXT_HTML)
+/*	@Produces(MediaType.TEXT_HTML)
 	public Response getMaps() {
 		String str = "<ul>\n";
 		//Take on the database all the entry of the user table
@@ -46,6 +46,11 @@ public class MapResource {
 				.status(400)
 				.entity(str)
 				.build();
+	}
+	*/
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Map> getMaps(){
+		return m;
 	}
 	
 	/**
