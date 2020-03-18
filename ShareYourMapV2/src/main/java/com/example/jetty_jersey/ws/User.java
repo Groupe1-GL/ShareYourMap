@@ -12,7 +12,7 @@ public class User{
 	private Position current_position;
 	private static int id = 1;
 	
-	public User(String name, String password, String emai) {
+	public User(String name, String password, String email) {
 		this.userID=id++;
 		this.name = name;
 		this.password = password;

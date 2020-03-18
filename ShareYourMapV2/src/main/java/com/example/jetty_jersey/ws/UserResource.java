@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.*;
@@ -88,7 +89,7 @@ public class UserResource {
 			u.add(new User(name,password,email));//gérer regex d'email & password encryption
 			return Response
 					.status(201)
-					.entity("You've been successfully signed up.")
+					.entity("You've been successfuly signed up.")
 					.build();
 		}
 		else {
@@ -161,7 +162,7 @@ public class UserResource {
 				}
 				return Response
 						.status(200)
-						.entity("Modification successfully updated!")
+						.entity("Modification successfuly updated!")
 						.build();
 			}					
 		}
@@ -176,7 +177,7 @@ public class UserResource {
 	 * A user can delete himself only.
 	 *
 	 * @param  uid the user identifier 
-	 * @return	   true if the operation was successfull
+	 * @return	   true if the operation was successful
 	 */
 	 //voir si la réponse est cohérente si l'user n'existe pas
 	@DELETE
@@ -219,7 +220,7 @@ public class UserResource {
      *	 
 	 * @param  name 		public map name
 	 * @param  creatorName  save the creator username
-	 * @return 				true if the operation is successfull
+	 * @return 				true if the operation is successful
 	 */
 	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
@@ -270,7 +271,7 @@ public class UserResource {
 	 *
 	 * @param  uid the user identifier 
 	 * @param  mid the map identifier 
-	 * @return	   true if the operation was successfull
+	 * @return	   true if the operation was successful
 	 */
 	 //voir si la réponse est cohérente si l'user et/ou la map n'existent pas
 	@DELETE
@@ -292,30 +293,69 @@ public class UserResource {
 	}
 	
 	/**
-     * Creates and adds a location on a map both selected by their id.
+     * Creates and adds a location on a map selected by its id.
 	 * If the map or the location doesn't exist nothing is added.
 	 *
-	 * @param  uid the user identifier 
-	 * @param  mid the map identifier 
-	 * @param  lid the location identifier 
-	 * @return	   true if the operation was successfull
+	 * @param	uid		the user identifier 
+	 * @param	mid		the map identifier 
+	 * @param	lid		the location identifier
+	 * @param	name	the location name
+	 * @param	descr 	the location description
+	 * @param	label	the location label
+	 * @return			true if the operation was successful
 	 */
 	 //voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps/location/{location-id}")
+	@Path("/{user-id}/maps/location/")
 	public boolean addLocationOnMap(@PathParam("user-id") int uid,
 									@PathParam("map-id") int mid,
-									@PathParam("location-id") int lid) {
+									@FormParam("name") String name,
+									@FormParam("description") String descr,
+									@FormParam("label") String label,
+									@QueryParam("x") float x,
+									@QueryParam("y") float y){
+		for (User us: u) {
+			if (us.getUserID() == uid) {
+				for (Map ma: us.getMaps()) {
+					if (ma.getID() == mid) {
+						ma.getLocations().add(new Location(name, us.getName(), x, y, descr, label));
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+     * Edit a location.
+	 *
+	 * @param	uid		the user identifier 
+	 * @param	mid 	the map identifier 
+	 * @param	lid 	the location identifier 
+	 * @param	name 	the location name
+	 * @param	descr	the location description
+	 * @param	label	the location label
+	 * @return			true if the operation was successful
+	 */
+	 //voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{user-id}/maps/location/{location-id}")
+	public boolean editLocation(@PathParam("user-id") int uid,
+										@PathParam("map-id") int mid,
+										@PathParam("location-id") int lid,
+										@FormParam("message") String message) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						for (Location lo: ma.getLocations()) {
-							if (lo.getID() == lid) {
-								ma.getLocations().add(lo);
-								return true;
+							if (lo.getID() == lid) {								
+								return lo.putMessage(message);
 							}
 						}
 					}
@@ -332,10 +372,10 @@ public class UserResource {
 	 * @param  uid the user identifier 
 	 * @param  mid the map identifier 
 	 * @param  lid the location identifier 
-	 * @return	   true if the operation was successfull
+	 * @return	   true if the operation was successful
 	 */
 	 //voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps/location/{location-id}")
@@ -366,7 +406,7 @@ public class UserResource {
 	 * @param  uid the user identifier 
 	 * @param  mid the map identifier 
 	 * @param  lid the location identifier 
-	 * @return	   true if the operation was successfull
+	 * @return	   true if the operation was successful
 	 */
 	 //voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
 	@DELETE

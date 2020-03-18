@@ -75,7 +75,7 @@ public class MapResource {
 	 * Edits a map selected by its id.
 	 * If there is not map matching, it will modify nothing.
      *	 
-	 * @return	true if the operation was successfull
+	 * @return	true if the operation was successful
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -97,7 +97,7 @@ public class MapResource {
 	 * Deletes the selected map.
 	 * If there is not map matching, it will return a null object.
      *	 
-	 * @return	true if the operation was successfull
+	 * @return	true if the operation was successful
 	 */
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
