@@ -121,7 +121,7 @@ public class UserResource {
 	 * @param  passwd	new password
 	 * @param  cpasswd  confirmation of the new password to avoid mistake
 	 * @param  email	email of the user
-	 * @return	   the user object
+	 * @return	   		the user object
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
