@@ -84,7 +84,7 @@ public class MapResource {
 	//voir s'il y a une variable globale de session pour vérifier le current user et/ou
 	// mettre un privilège de modification
 	public boolean editMap(@PathParam("map-id") int mid,
-					      @FormParam("name") String name) {
+					       @FormParam("name") String name) {
 		for (Map ma : m) {
 			if (ma.getID() == mid) {
 				return ma.setName(name);
