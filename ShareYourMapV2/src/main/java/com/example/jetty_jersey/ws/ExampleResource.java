@@ -15,13 +15,37 @@ import java.util.*;
 @Path("/")
 public class ExampleResource {
 
-	public static List<User> users = new ArrayList<User>();
+	public static List<User> users = new Arraylist<User>();
 	public static List<Map> maps = new ArrayList<Map>();
+
+	Location Mcdo = new Location("Mcdo");
+	Location KFC = new Location("KFC");
+	Location Quick = new Location("Quick");
+	Location Monoprix = new Location("Monoprix");
+	Location Carrefour = new Location("Carrefour");
+	
+	//Creation de map
+	Map m1 = new Map();
+	m1.addLocation(Mcdo);
+	Map m2 = new Map();
+	m2.addLocation(KFC); 
+	m2.addLocation(Monoprix;)
+	Map m3 = new Map();
+	m3.addLocation(Carrefour); 
+	
+	User u1 = new User();
+	u1.putMap(m1);
+	u1.putMap(m2);
+	users.add(u1);
+	User u2 = new User();
+	u2.putMap(m3);
+	users.add(u2);
+	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/homepage")
-	public List<User> getUsers() {
+	public List<User> getUsers() {  //liste des users
 		return this.users;
 	}
 	
@@ -33,6 +57,14 @@ public class ExampleResource {
 		this.users.add(u);
 		return users;
 	}
+	
+	
+	
+	public List<Map> afficheListMap(User u){ //fonction qui retourne la liste de l'utilisateur u
+		return u.listMap;
+	}
+	
+	
 	
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)

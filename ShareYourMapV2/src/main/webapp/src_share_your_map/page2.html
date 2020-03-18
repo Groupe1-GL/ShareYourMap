@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Share Your Map</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4">
+			<h3 class="text-muted text-left">
+				Share Your Map
+			</h3>
+			<div class="row">
+				<div class="col-md-12">
+					<span class="badge badge-default">Public map</span> 
+
+					<p>Search</p> 
+					<input type="text" id="searchFav" name="searchFav">
+					<button id="search" type="button" class="btn btn-sm btn-outline-primary">
+						Go
+					</button>
+					<div id="mapList"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="btn-group btn-group-vertical btn-group-sm" role="group">
+						 
+						<button id="searchMap" class="btn btn-md btn-outline-primary" type="button">
+							Search public maps
+						</button> 
+						<button id="createMap" class="btn btn-md btn-outline-primary" type="button">
+							Create a new map
+						</button> 
+						<button id="deleteMap" class="btn btn-md btn-outline-primary" type="button">
+							Delete map
+						</button> 
+						<div id="resAddMap"></div>
+						<div id="resDeleteMap"></div>
+						
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<span class="badge badge-default">Current Map</span> 
+				</div>
+
+
+				<div class="col-md-12">
+					<div class="btn-group btn-group-vertical btn-group-sm" role="group">
+						<div id="currentMap"></div>
+						<div id="locationsList"></div> 
+						<button id="addLocation" class="btn btn-md btn-outline-primary" type="button">
+							Add location
+						</button> 
+						<button id="editLocation" class="btn btn-md btn-outline-primary" type="button">
+							Edit location
+						</button> 
+						<button id="deleteLocation" class="btn btn-md btn-outline-primary" type="button">
+							Delete location
+						</button> 
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<h3>
+				Your Map
+			</h3>
+		</div>
+	</div>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
