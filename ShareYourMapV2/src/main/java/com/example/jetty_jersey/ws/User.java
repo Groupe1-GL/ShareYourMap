@@ -33,7 +33,7 @@ public class User{
 	public int getUserID() {
 		return this.userID;
 	}
-	public int getName() {
+	public String getName() {
 		return this.name;
 	}
 	

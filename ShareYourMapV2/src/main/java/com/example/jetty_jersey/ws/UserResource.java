@@ -139,7 +139,6 @@ public class UserResource {
 		@FormParam("email") String email) {//voir si on modifie current_position
 		for (User us: u) {
 			if (us.getUserID() == uid) {
-				us.setName(name);
 				if (!opassword.equals(null)&&!password.equals(null)&&!cpassword.equals(null)){
 					if (opassword.equals(us.getPassword())&&password.equals(cpassword)){//ADD getPassword
 						us.setPassword(password);//ADD setPassword encryption
@@ -152,7 +151,7 @@ public class UserResource {
 					}
 				}
 				if (!email.equals(null)) {
-					boolean valid_mail = us.setEmail();//ADD setEmail regex
+					boolean valid_mail = us.setEmail(email);//ADD setEmail regex
 					if (!valid_mail) {
 						return Response
 								.status(400)
@@ -230,9 +229,10 @@ public class UserResource {
 							 @FormParam("username") String name) {
 		for (User us : u) {
 			if (us.getUserID() == uid) {
-				return m.add(new Map(name, us.getName()));
+				return MapResource.m.add(new Map(name, us.getName()));
 			}
 		}
+		return false;
 	}
 	
 	/**
