@@ -7,11 +7,11 @@ import javax.ws.rs.core.Response;
  * UserDAO is the interface of the Data Access Object of users.
  *
  * @author Eric Gao
- * @version 1.0
+ * @version %I%, %G%
  * @since 1.0
  */
 public interface UserDAO {
-	public User getUsers();
+	public List<User> getUsers();
 	public Response createUser( 		String name, 
 										String password, 
 										String cpassword, 

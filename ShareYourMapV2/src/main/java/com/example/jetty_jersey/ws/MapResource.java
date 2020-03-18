@@ -17,7 +17,7 @@ import java.util.*;
  * MapRessource is the class of the maps resource used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
- * @version 1.0
+ * @version %I%, %G%
  * @since 1.0
  */
 @Path("/maps")

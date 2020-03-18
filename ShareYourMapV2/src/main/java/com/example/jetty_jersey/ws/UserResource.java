@@ -18,7 +18,7 @@ import java.util.*;
  * UserRessource is the class of the User resource used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
- * @version 1.0
+ * @version %I%, %G%
  * @since 1.0
  */
 @Path("/users")
@@ -27,6 +27,7 @@ public class UserResource {
 	static List<User> u = new ArrayList<User>();
 	static List<Location> l = new ArrayList<Location>();
 	
+	UserDAO uDAO = new UserDAOImpl();
 	
 	/**
 	 * Returns the list of all registered users.
@@ -34,8 +35,6 @@ public class UserResource {
      *	 
 	 * @return	the users on the database
 	 */
-	@GET
-	
 //	@Produces(MediaType.TEXT_HTML)
 /*	public Response getUsers() {
 		String str = "<ul>\n";
@@ -50,9 +49,10 @@ public class UserResource {
 				.build();
 	}
 */
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getUsers(){
-		return u;
+		return uDAO.getUsers();
 	}
 	
 	/**
@@ -73,31 +73,7 @@ public class UserResource {
 		@FormParam("passwd") String password,
 		@FormParam("cpasswd") String cpassword,
 		@FormParam("email") String email) {
-		//Check if the pseudo is already present on the database to catch the code response
-		//TODO with DataNucleus
-		for (User us : u){
-			if (us.getName().equals(name)){
-				return Response
-						.status(400)
-						.entity("This username is already used.")
-						.build();
-			}
-		}
-		//Check if the passwords are equals
-		if (password.equals(cpassword)){
-			//Encrypt & Insert into the database
-			u.add(new User(name,password,email));//g√©rer regex d'email & password encryption
-			return Response
-					.status(201)
-					.entity("You've been successfuly signed up.")
-					.build();
-		}
-		else {
-			return Response
-					.status(400)
-					.entity("The passwords do not match.")
-					.build();
-		}
+		return uDAO.createUser(name, password, cpassword, email);
 	}
 	
 	/**
@@ -110,11 +86,7 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}")
 	public User getUser(@PathParam("user-id") int uid) {
-		for (User us: u) {
-			if (us.getUserID() == uid)
-				return us;
-		}
-		return null;
+		return uDAO.getUser(uid);
 	}
 	
 	/**
@@ -138,38 +110,7 @@ public class UserResource {
 		@FormParam("passwd") String password,
 		@FormParam("cpasswd") String cpassword,
 		@FormParam("email") String email) {//voir si on modifie current_position
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				if (!opassword.equals(null)&&!password.equals(null)&&!cpassword.equals(null)){
-					if (opassword.equals(us.getPassword())&&password.equals(cpassword)){//ADD getPassword
-						us.setPassword(password);//ADD setPassword encryption
-					}
-					else {
-						return Response
-								.status(400)
-								.entity("The passwords do not match.")
-								.build();
-					}
-				}
-				if (!email.equals(null)) {
-					boolean valid_mail = us.setEmail(email);//ADD setEmail regex
-					if (!valid_mail) {
-						return Response
-								.status(400)
-								.entity("The e-mail is incorrect.")
-								.build();
-					}
-				}
-				return Response
-						.status(200)
-						.entity("Modification successfuly updated!")
-						.build();
-			}					
-		}
-		return Response
-					.status(404)
-					.entity("User not found!")
-					.build();
+		return uDAO.editUser(uid, opassword, password, cpassword, email);
 	}
 	
 	/**
@@ -179,18 +120,12 @@ public class UserResource {
 	 * @param  uid the user identifier 
 	 * @return	   true if the operation was successful
 	 */
-	 //voir si la r√©ponse est coh√©rente si l'user n'existe pas
+	 //voir si la rÈponse est cohÈrente si l'user n'existe pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}")
 	public boolean deleteUser(@PathParam("user-id") int uid) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				u.remove(us);
-				return true;
-			}
-		}
-		return false;
+		return uDAO.deleteUser(uid);
 	}
 	
 	/**
@@ -202,17 +137,12 @@ public class UserResource {
 	 * @param  uid the user identifier 
 	 * @return	   list of maps
 	 */
-	 //voir si la r√©ponse est coh√©rente si l'user n'existe pas
+	 //voir si la rÈponse est cohÈrente si l'user n'existe pas
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps")
 	public List<Map> getMapsOfUser(@PathParam("user-id") int uid) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				return us.getMaps();//ADD getMaps
-			}
-		}
-		return null;
+		return uDAO.getMapsOfUser(uid);
 	}
 	
 	/**
@@ -228,12 +158,7 @@ public class UserResource {
 	@Path("/{user-id}/maps")
 	public boolean createMap(@PathParam("user-id") int uid,
 							 @FormParam("username") String name) {
-		for (User us : u) {
-			if (us.getUserID() == uid) {
-				return MapResource.m.add(new Map(name, us.getName()));
-			}
-		}
-		return false;
+		return uDAO.createMap(uid, name);
 	}
 	
 	/**
@@ -245,24 +170,14 @@ public class UserResource {
 	 * @param  mid the map identifier 
 	 * @return	   list of maps
 	 */
-	 //voir si la r√©ponse est coh√©rente si l'user et/ou la map n'existent pas
+	 //voir si la rÈponse est cohÈrente si l'user et/ou la map n'existent pas
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps")
 	public boolean addMapOnUser(@PathParam("user-id") int uid,
 								@PathParam("map-id") int mid) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: MapResource.m) {
-					if (ma.getID() == mid) {
-						us.getMaps().add(ma);
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+		return uDAO.addMapOnUser(uid, mid);
 	}
 	
 	/**
@@ -273,23 +188,13 @@ public class UserResource {
 	 * @param  mid the map identifier 
 	 * @return	   true if the operation was successful
 	 */
-	 //voir si la r√©ponse est coh√©rente si l'user et/ou la map n'existent pas
+	 //voir si la rÈponse est cohÈrente si l'user et/ou la map n'existent pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps")
 	public boolean removeMapOnUser(@PathParam("user-id") int uid,
 								   @PathParam("map-id") int mid) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						us.getMaps().remove(ma);
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+		return uDAO.removeMapOnUser(uid, mid);
 	}
 	
 	/**
@@ -304,7 +209,7 @@ public class UserResource {
 	 * @param	label	the location label
 	 * @return			true if the operation was successful
 	 */
-	 //voir si la r√©ponse est coh√©rente si l'user et/ou la map et/ou la location n'existent pas
+	 //voir si la rÈponse est cohÈrente si l'user et/ou la map et/ou la location n'existent pas
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -316,17 +221,7 @@ public class UserResource {
 									@FormParam("label") String label,
 									@QueryParam("x") float x,
 									@QueryParam("y") float y){
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						ma.getLocations().add(new Location(name, us.getName(), x, y, descr, label));
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+		return uDAO.addLocationOnMap(uid, mid, name, descr, label, x, y);
 	}
 	
 	/**
@@ -340,7 +235,7 @@ public class UserResource {
 	 * @param	label	the location label
 	 * @return			true if the operation was successful
 	 */
-	 //voir si la r√©ponse est coh√©rente si l'user et/ou la map et/ou la location n'existent pas
+	 //voir si la rÈponse est cohÈrente si l'user et/ou la map et/ou la location n'existent pas
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -349,20 +244,7 @@ public class UserResource {
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
 										@FormParam("message") String message) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						for (Location lo: ma.getLocations()) {
-							if (lo.getID() == lid) {								
-								return lo.putMessage(message);
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
+		return uDAO.editLocation(uid, mid, lid, message);
 	}
 	
 	/**
@@ -374,7 +256,7 @@ public class UserResource {
 	 * @param  lid the location identifier 
 	 * @return	   true if the operation was successful
 	 */
-	 //voir si la r√©ponse est coh√©rente si l'user et/ou la map et/ou la location n'existent pas
+	 //voir si la rÈponse est cohÈrente si l'user et/ou la map et/ou la location n'existent pas
 	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -383,20 +265,7 @@ public class UserResource {
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
 										@FormParam("message") String message) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						for (Location lo: ma.getLocations()) {
-							if (lo.getID() == lid) {								
-								return lo.putMessage(message);
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
+		return uDAO.contributeOnLocation(uid, mid, lid, message);
 	}
 	
 	/**
@@ -408,28 +277,13 @@ public class UserResource {
 	 * @param  lid the location identifier 
 	 * @return	   true if the operation was successful
 	 */
-	 //voir si la r√©ponse est coh√©rente si l'user et/ou la map et/ou la location n'existent pas
+	 //voir si la rÈponse est cohÈrente si l'user et/ou la map et/ou la location n'existent pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps/location/{location-id}")
 	public boolean deleteLocation(@PathParam("user-id") int uid,
 								  @PathParam("map-id") int mid,
 								  @PathParam("location-id") int lid) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						for (Location lo: ma.getLocations()) {
-							if (lo.getID() == lid) {								
-								ma.getLocations().remove(lo);
-								//g√©rer l'instruction : supprimer de la base de la donn√©e
-								return true;
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
+		return uDAO.deleteLocation(uid, mid, lid);
 	}
 }

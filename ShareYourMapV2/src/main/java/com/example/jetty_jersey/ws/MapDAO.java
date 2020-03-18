@@ -6,7 +6,7 @@ import java.util.List;
  * MapDAO is the interface of the Data Access Object of maps.
  *
  * @author Eric Gao
- * @version 1.0
+ * @version %I%, %G%
  * @since 1.0
  */
 public interface MapDAO {
