@@ -14,8 +14,7 @@ import javax.ws.rs.core.Response;
 import java.util.*;
 
 /**
- * UserRessource is the class of the User ressource.
- * used in the ShareYourMap website.
+ * UserRessource is the class of the User resource used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
  * @version 1.0
@@ -35,8 +34,9 @@ public class UserResource {
 	 * @return	the users on the database
 	 */
 	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public Response getUsers() {
+	
+//	@Produces(MediaType.TEXT_HTML)
+/*	public Response getUsers() {
 		String str = "<ul>\n";
 		//Take on the database all the entry of the user table
 		for (User us : u) {
@@ -48,7 +48,11 @@ public class UserResource {
 				.entity(str)
 				.build();
 	}
-
+*/
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User> getUsers(){
+		return u;
+	}
 	
 	/**
 	 * Creates a new user on the database according to the user's information matching the fields' names.
