@@ -42,7 +42,9 @@ public class MapDAOImpl implements MapDAO {
 	public boolean createMap(int uid, String name, int access) {
 		for (User us: UserDAOImpl.u) {
 			if (us.getUserID() == uid) {
-				return us.getMaps().add(new Map(name, us.getName(), access==1));
+				Map newMap = new Map(name, us.getName(), access==1);
+				MapDAOImpl.m.add(newMap);
+				return us.getMaps().add(newMap);
 			}
 		}
 		return false;
