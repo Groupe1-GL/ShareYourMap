@@ -55,4 +55,16 @@ public class Map{
 		}
 		return false;
 	}
+
+	public boolean setAccess(boolean b) {
+		if (b||!b) {//if b is boolean
+			this.access = b;
+			return true;
+		}
+		return false;
+	}
+
+	public String getCreatorName() {
+		return this.creatorName;
+	}
 }

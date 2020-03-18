@@ -35,6 +35,20 @@ public class MapDAOImpl implements MapDAO {
 	}
 	
 	/**
+	 * Creates a map.
+     *	 
+	 * @return	the map
+	 */
+	public boolean createMap(int uid, String name, int access) {
+		for (User us: UserDAOImpl.u) {
+			if (us.getUserID() == uid) {
+				return us.getMaps().add(new Map(name, us.getName(), access==1));
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Edits a map selected by its id.
 	 * If there is not map matching, it will modify nothing.
      *	 
@@ -42,10 +56,14 @@ public class MapDAOImpl implements MapDAO {
 	 */
 	//voir s'il y a une variable globale de session pour vérifier le current user et/ou
 	// mettre un privilège de modification
-	public boolean editMap(int mid, String name) {
-		for (Map ma : m) {
-			if (ma.getID() == mid) {
-				return ma.setName(name);
+	public boolean editMap(int uid, int mid, String name, int access) {
+		for (User us: UserDAOImpl.u) {
+			if (us.getUserID() == uid) {
+				for (Map ma : m) {
+					if ((ma.getID() == mid)&&(uid == us.getUserID())) {
+						return ma.setName(name)&&ma.setAccess(access==1);
+					}
+				}
 			}
 		}
 		return false;
@@ -57,10 +75,14 @@ public class MapDAOImpl implements MapDAO {
      *	 
 	 * @return	true if the operation was successful
 	 */
-	public boolean deleteMap(int mid) {
-		for (Map ma : m) {
-			if (ma.getID() == mid) {
-				return m.remove(ma);
+	public boolean deleteMap(int uid, int mid) {
+		for (User us: UserDAOImpl.u) {
+			if (us.getUserID() == uid) {
+				for (Map ma : m) {
+					if ((ma.getID() == mid)&&(ma.getCreatorName() == us.getName())) {
+						return m.remove(ma);
+					}
+				}
 			}
 		}
 		return false;
@@ -79,19 +101,6 @@ public class MapDAOImpl implements MapDAO {
 			}
 		}
 		return null;
-	}	
-	
-	/**
-	 * Creates a map.
-     *	 
-	 * @return	the map
-	 */
-	public boolean createMap(int uid, String name, int access) {
-		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
-				return us.getMaps().add(new Map(name, us.getName(), access==1));
-			}
-		}
-		return false;
 	}
+	
 }

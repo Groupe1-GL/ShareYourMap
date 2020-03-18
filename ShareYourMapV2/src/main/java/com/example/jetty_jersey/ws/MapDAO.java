@@ -14,8 +14,9 @@ public interface MapDAO {
 	public List<Map> getMaps();
 	public Map getMap(int mid);
 	public boolean createMap(int uid, String creator, int access);
-	public boolean editMap(int mid, String name);
-	public boolean deleteMap(int mid);
-	public List<Location> getLocations(int mid);//inutile
+	public boolean editMap(int uid, int mid, String name, int access);
+	public boolean deleteMap(int uid, int mid);
+	
+	public List<Location> getLocations(int mid);
 	
 }

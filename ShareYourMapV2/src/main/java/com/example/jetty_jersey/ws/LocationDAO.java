@@ -12,6 +12,19 @@ public interface LocationDAO {
 										String label, 
 										float x, 
 										float y);
+	public boolean contributeOnLocation(int uid,
+										int mid,
+										int lid,
+										String message);
+	public boolean editLocation(		int uid,
+										int mid,
+										int lid,
+										String message,
+										String descr,
+										String label);
+	public boolean deleteLocation(		int uid,
+										int mid,
+										int lid);
 	/*
 	public Location getLocation();
 	public boolean editLocation();  //only creator

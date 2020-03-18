@@ -158,26 +158,10 @@ public class UserDAOImpl implements UserDAO {
 	public List<Map> getMapsOfUser(		int uid) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
-				return us.getMaps();//ADD getMaps
+				return us.getMaps();
 			}
 		}
 		return null;		
-	}
-	
-	/**
-	 * Creates a new map on the database and link it to the user.
-     *	 
-	 * @param  name 		public map name
-	 * @param  creatorName  save the creator username
-	 * @return 				true if the operation is successful
-	 */
-	public boolean createMap(			int uid, String name) {
-		for (User us : u) {
-			if (us.getUserID() == uid) {
-				return MapDAOImpl.m.add(new Map(name, us.getName()));
-			}
-		}
-		return false;
 	}
 	
 	/**
@@ -218,130 +202,6 @@ public class UserDAOImpl implements UserDAO {
 					if (ma.getID() == mid) {
 						us.getMaps().remove(ma);
 						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	/**
-     * Creates and adds a location on a map selected by its id.
-	 * If the map or the location doesn't exist nothing is added.
-	 *
-	 * @param	uid		the user identifier 
-	 * @param	mid		the map identifier 
-	 * @param	lid		the location identifier
-	 * @param	name	the location name
-	 * @param	descr 	the location description
-	 * @param	label	the location label
-	 * @return			true if the operation was successful
-	 */
-	public boolean createLocationOnMap(	int uid, 
-										int mid, 
-										String name, 
-										String descr, 
-										String label, 
-										float x, 
-										float y) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						ma.getLocations().add(new Location(name, us.getName(), x, y, descr, label));
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	/**
-     * Edits a location.
-	 *
-	 * @param	uid		the user identifier 
-	 * @param	mid 	the map identifier 
-	 * @param	lid 	the location identifier 
-	 * @param	name 	the location name
-	 * @param	descr	the location description
-	 * @param	label	the location label
-	 * @return			true if the operation was successful
-	 */
-	public boolean editLocation(		int uid,
-										int mid,
-										int lid,
-										String name,
-										String descr,
-										String label) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						for (Location lo: ma.getLocations()) {
-							if ((lo.getID() == lid)&&(lo.getCreatorName().equals(us.getName()))) {
-								return lo.setName(name)&&lo.setDescription(descr)&&lo.setLabel(label);
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	/**
-     * Contributes on the feed of a location by a message.
-	 * If the map or the location doesn't exist nothing is added.
-	 *
-	 * @param  uid the user identifier 
-	 * @param  mid the map identifier 
-	 * @param  lid the location identifier 
-	 * @return	   true if the operation was successful
-	 */
-	public boolean contributeOnLocation(int uid,
-										int mid,
-										int lid,
-										String message) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						for (Location lo: ma.getLocations()) {
-							if (lo.getID() == lid) {								
-								return lo.putMessage(message);
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	/**
-     * Deletes a location on a map.
-	 * If the map or the location doesn't exist nothing is deleted.
-	 *
-	 * @param  uid the user identifier 
-	 * @param  mid the map identifier 
-	 * @param  lid the location identifier 
-	 * @return	   true if the operation was successful
-	 */
-	public boolean deleteLocation(		int uid,
-										int mid,
-										int lid) {
-		for (User us: u) {
-			if (us.getUserID() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						for (Location lo: ma.getLocations()) {
-							if (lo.getID() == lid) {								
-								ma.getLocations().remove(lo);
-								//gérer l'instruction : supprimer de la base de la donnée
-								return true;
-							}
-						}
 					}
 				}
 			}
