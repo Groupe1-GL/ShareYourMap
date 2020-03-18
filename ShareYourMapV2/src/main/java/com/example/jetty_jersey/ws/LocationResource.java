@@ -91,8 +91,8 @@ public class LocationResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps/{map-id}/location")
-	public List<Location> nearLocations(int uid, int mid){
-		return locationDAO.nearLocations(uid, mid);
+	public List<Location> nearestLocations(int uid, int mid){
+		return locationDAO.nearestLocations(uid, mid);
 	}
 	
 }

@@ -86,7 +86,7 @@ public interface LocationDAO {
 	 * @param 	mid 	the map identifier	
 	 * @return	   		list of locations
 	 */
-	public List<Location> nearLocations(int uid, int mid);
+	public List<Location> nearestLocations(int uid, int mid);
 	
 	/*
 	public List<Location> getLocation(String label);

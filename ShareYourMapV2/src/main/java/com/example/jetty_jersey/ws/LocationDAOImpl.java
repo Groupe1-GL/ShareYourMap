@@ -168,7 +168,7 @@ public class LocationDAOImpl implements LocationDAO {
 	 * @param 	mid 	the map identifier	
 	 * @return	   		list of locations
 	 */
-	public List<Location> nearLocations(int uid, int mid){
+	public List<Location> nearestLocations(int uid, int mid){
 		List<Location> res = new ArrayList<Location>();
 		for (User us: UserDAOImpl.u) {
 			double x = us.getCurrent_Position().getX();
