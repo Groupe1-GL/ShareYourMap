@@ -65,9 +65,15 @@ public class Location{
 		return this.message;
 	}
 	
-	public void putMessage(String str){
+	public boolean putMessage(String str){
 		// TODO Auto-generated method stub
-		this.message.add(str);//*
+		if (!str.equals(null)) {
+			this.message.add(str);//*
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 
