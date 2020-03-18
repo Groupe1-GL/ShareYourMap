@@ -37,6 +37,14 @@ public class User{
 		return this.name;
 	}
 	
+	public boolean setName(String name) {
+		if (!name.equals(null)) {
+			this.name = name;
+			return true;
+		}
+		return false;
+	}
+	
 	public String getUserInfo() {
 		return "ID: "+String.valueOf(this.userID)+" Username: "+this.name;
 	}
@@ -64,6 +72,24 @@ public class User{
 	public void setMaps(List<Map> m) {
 		this.listMap = m;
 	}
-	
-	
+
+	public boolean setPassword(String password2) {
+		if (!password2.equals(null)) {
+			this.password = password2;
+			return true;
+		}
+		return false;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public boolean setEmail(String email) {
+		if (!email.equals(null)) {
+			this.email = email;
+			return true;
+		}
+		return false;
+	}
 }
