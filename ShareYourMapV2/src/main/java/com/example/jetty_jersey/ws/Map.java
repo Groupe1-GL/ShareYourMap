@@ -18,17 +18,6 @@ public class Map{
 		this.favorite_locations = new ArrayList<Location>();
 	}
 	
-	public static ArrayList<Map> generateMaps(){
-		ArrayList<Map> maps = new ArrayList<Map>();
-		for(int i=0; i<3; i++){
-			Map m = new Map();
-			m.setFavorites(Location.generateLocations());
-			maps.add(m);
-		}
-		return maps;
-	}
-	
-	
 	public int getID() {
 		return this.Map_ID;
 	}

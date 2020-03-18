@@ -19,17 +19,7 @@ public class User{
 		this.email = email;
 		this.listMap = new ArrayList<Map>();		
 	}
-
-	public static ArrayList<User> generateUsers(){
-		ArrayList<User> users = new ArrayList<User>();
-		for(int i=0; i<3; i++) {
-			User u = new User();
-			u.setMaps(Map.generateMaps());
-			users.add(new User());
-		}
-		return users;
-	}
-
+	
 	public int getUserID() {
 		return this.userID;
 	}
