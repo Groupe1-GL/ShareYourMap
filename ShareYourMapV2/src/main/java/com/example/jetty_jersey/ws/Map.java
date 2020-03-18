@@ -52,4 +52,12 @@ public class Map{
 	public boolean isPublic() {
 		return this.isPublic;
 	}
+	
+	public boolean setName(String name) {
+		if (!name.equals(null)) {
+			this.name= name;
+			return true;
+		}
+		return false;
+	}
 }
