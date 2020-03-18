@@ -84,13 +84,13 @@ public class UserResource {
 			u.add(new User(name,password,email));//gérer regex d'email & password encryption
 			return Response
 					.status(201)
-					.("You've been successfully signed up.")
+					.entity("You've been successfully signed up.")
 					.build();
 		}
 		else {
 			return Response
 					.status(400)
-					.("The passwords do not match.")
+					.entity("The passwords do not match.")
 					.build();
 		}
 	}
@@ -338,14 +338,14 @@ public class UserResource {
 	public boolean contributeOnLocation(@PathParam("user-id") int uid,
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
-										@FormPath("message") String message) {
+										@FormParam("message") String message) {
 		for (User us: u) {
 			if (us.getUserID() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						for (Location lo: ma.getLocations()) {
 							if (lo.getID() == lid) {								
-								return lo.putMessage();
+								return lo.putMessage(message);
 							}
 						}
 					}

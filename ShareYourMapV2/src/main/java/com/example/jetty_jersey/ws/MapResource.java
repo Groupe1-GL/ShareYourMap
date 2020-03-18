@@ -58,8 +58,6 @@ public class MapResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{map-id}")
 	public Map getMap(@PathParam("map-id") int mid) {
-		String str = "<ul>\n";
-		//Take on the database all the entry of the user table
 		for (Map ma : m) {
 			if (ma.getID() == mid) {
 				return ma;
