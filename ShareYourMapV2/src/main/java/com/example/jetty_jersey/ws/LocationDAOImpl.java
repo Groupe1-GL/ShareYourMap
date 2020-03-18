@@ -177,8 +177,8 @@ public class LocationDAOImpl implements LocationDAO {
 				for (Map ma: us.getMaps()) {
 					if ((ma.getID() == mid)) {
 						for (Location lo: ma.getLocations()) {
-							if ( (lo.getPosition().getX() < Math.sqrt(Math.pow(x, 2) - Math.pow(y, 2)))
-									&&(lo.getPosition().getY() < Math.sqrt(Math.pow(x, 2) - Math.pow(y, 2))) ){
+							if ( (lo.getPosition().getX() < Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)))
+									&&(lo.getPosition().getY() < Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))) ){
 								res.add(lo);
 							}
 						}
