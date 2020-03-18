@@ -47,7 +47,7 @@ public class MapResource {
 				.entity(str)
 				.build();
 	}
-	*/
+*/
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Map> getMaps(){
 		return m;
