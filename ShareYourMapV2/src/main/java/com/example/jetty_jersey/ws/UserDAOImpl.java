@@ -237,7 +237,7 @@ public class UserDAOImpl implements UserDAO {
 	 * @param	label	the location label
 	 * @return			true if the operation was successful
 	 */
-	public boolean addLocationOnMap(	int uid, 
+	public boolean createLocationOnMap(	int uid, 
 										int mid, 
 										String name, 
 										String descr, 

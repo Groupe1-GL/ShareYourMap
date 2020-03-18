@@ -121,27 +121,12 @@ public class UserResource {
 	 * @return	   list of maps
 	 */
 	 //voir si la réponse est cohérente si l'user n'existe pas
+	//voir si inutile, mais permet d'encapsuler et protéger credentials
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps")
 	public List<Map> getMapsOfUser(@PathParam("user-id") int uid) {
 		return userDAO.getMapsOfUser(uid);
-	}
-	
-	/**
-	 * Creates a new map on the database and link it to the user.
-     *	 
-	 * @param  name 		public map name
-	 * @param  creatorName  save the creator username
-	 * @return 				true if the operation is successful
-	 */
-	@PUT
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps")
-	public boolean createMap(@PathParam("user-id") int uid,
-							 @FormParam("map_name") String name) {
-		return userDAO.createMap(uid, name);
 	}
 	
 	/**
@@ -181,7 +166,7 @@ public class UserResource {
 	}
 	
 	/**
-     * Creates and adds a location on a map selected by its id.
+     * Creates and adds a location on a map selected by its identifier.
 	 * If the map or the location doesn't exist nothing is added.
 	 *
 	 * @param	uid		the user identifier 
@@ -190,6 +175,8 @@ public class UserResource {
 	 * @param	name	the location name
 	 * @param	descr 	the location description
 	 * @param	label	the location label
+	 * @param	x		the latitude position
+	 * @param	y		the longitude position
 	 * @return			true if the operation was successful
 	 */
 	 //voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
@@ -197,14 +184,14 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}/maps/location/")
-	public boolean addLocationOnMap(@PathParam("user-id") int uid,
+	public boolean createLocationOnMap(@PathParam("user-id") int uid,
 									@PathParam("map-id") int mid,
 									@FormParam("name") String name,
 									@FormParam("description") String descr,
 									@FormParam("label") String label,
 									@QueryParam("x") float x,
 									@QueryParam("y") float y){
-		return userDAO.addLocationOnMap(uid, mid, name, descr, label, x, y);
+		return userDAO.createLocationOnMap(uid, mid, name, descr, label, x, y);
 	}
 	
 	/**

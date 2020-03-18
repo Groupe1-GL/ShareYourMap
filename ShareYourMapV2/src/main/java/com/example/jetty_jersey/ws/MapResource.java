@@ -7,10 +7,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.*;
 
 /**
@@ -20,7 +20,6 @@ import java.util.*;
  * @version %I%, %G%
  * @since 1.0
  */
-@Path("/maps")
 public class MapResource {
 	
 	MapDAO mapDAO = new MapDAOImpl();
@@ -33,8 +32,25 @@ public class MapResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/maps")
 	public List<Map> getMaps(){
 		return mapDAO.getMaps();
+	}
+
+	/**
+	 * Creates a new map on the database and link it to the user.
+	 * If the user doesn't exist it returns a null object.
+     *	 
+	 * @return	true if the operation is successful
+	 */
+	@PUT
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/users/{user-id}/maps")
+	public boolean createMap(@PathParam("user-id") int uid,
+						 @FormParam("name") String name,
+						 @QueryParam("access") int access){
+		return mapDAO.createMap(uid, name, access);		
 	}
 	
 	/**
@@ -45,8 +61,8 @@ public class MapResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{map-id}")
-	public Map getMap(@PathParam("map-id") int mid) {
+	@Path("/maps/{map-id}")
+	public Map getMap(@PathParam("map-id") int mid) {		
 		return mapDAO.getMap(mid);
 	}
 	
@@ -59,7 +75,7 @@ public class MapResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{map-id}")
+	@Path("/maps/{map-id}")
 	//voir s'il y a une variable globale de session pour vérifier le current user et/ou
 	// mettre un privilège de modification
 	public boolean editMap(@PathParam("map-id") int mid,
@@ -69,27 +85,15 @@ public class MapResource {
 	
 	/**
 	 * Deletes the selected map.
-	 * If there is not map matching, it will return a null object.
+	 * If no map is matching, it will return a null object.
      *	 
 	 * @return	true if the operation was successful
 	 */
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{map-id}")
+	@Path("/maps/{map-id}")
 	public boolean deleteMap(@PathParam("map-id") int mid) {
 		return mapDAO.deleteMap(mid);
 	}
 	
-	/**
-	 * Returns all the locations of a map selected by its id.
-	 * If there is not map matching, it will return a null object.
-     *	 
-	 * @return	the list of favorite locations
-	 */
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{map-id}/location")
-	public List<Location> getLocations(@PathParam("map-id") int mid) {
-		return mapDAO.getLocations(mid);
-	}
 }

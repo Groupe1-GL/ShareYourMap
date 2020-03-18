@@ -6,7 +6,7 @@ import java.util.List;
 public class Map{
 	private int Map_ID;
 	private String name, creatorName;
-	private boolean isPublic;
+	private boolean access;
 	private List<Location> favorite_locations;
 	private static int id = 1;
 	
@@ -18,6 +18,12 @@ public class Map{
 		this.favorite_locations = new ArrayList<Location>();
 	}
 	
+	public Map(String name, String creator, boolean b) {
+		this.name = name;
+		this.creatorName = creator;
+		this.access = b;
+	}
+
 	public int getID() {
 		return this.Map_ID;
 	}
@@ -39,7 +45,7 @@ public class Map{
 	}
 	
 	public boolean isPublic() {
-		return this.isPublic;
+		return this.access;
 	}
 	
 	public boolean setName(String name) {

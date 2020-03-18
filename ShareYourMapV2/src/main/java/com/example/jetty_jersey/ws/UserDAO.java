@@ -27,7 +27,8 @@ public interface UserDAO {
 	public boolean createMap(			int uid, String name);
 	public boolean addMapOnUser(		int uid, int mid);
 	public boolean removeMapOnUser(		int uid, int mid);
-	public boolean addLocationOnMap(	int uid, 
+	//
+	public boolean createLocationOnMap(	int uid, 
 										int mid, 
 										String name, 
 										String descr, 

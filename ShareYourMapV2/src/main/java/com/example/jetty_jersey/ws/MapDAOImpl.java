@@ -81,4 +81,17 @@ public class MapDAOImpl implements MapDAO {
 		return null;
 	}	
 	
+	/**
+	 * Creates a map.
+     *	 
+	 * @return	the map
+	 */
+	public boolean createMap(int uid, String name, int access) {
+		for (User us: UserDAOImpl.u) {
+			if (us.getUserID() == uid) {
+				return us.getMaps().add(new Map(name, us.getName(), access==1));
+			}
+		}
+		return false;
+	}
 }
