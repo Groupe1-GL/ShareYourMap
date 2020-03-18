@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface EventDAO  extends LocationDAO{
+	
 	public List<Event> getEvents();
+	public 
 	/*
 	public Date getStarting_date();
 	public Date getEnding_date();

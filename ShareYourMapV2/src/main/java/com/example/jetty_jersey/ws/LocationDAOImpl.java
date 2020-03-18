@@ -170,9 +170,12 @@ public class LocationDAOImpl implements LocationDAO {
 	 */
 	public List<Location> nearestLocations(int uid, int mid){
 		List<Location> res = new ArrayList<Location>();
+		//Threshold variable for the area definition (circle radius)
+		//For example an circle area between Paris and Meaux I find via Google Maps sqrt( (48.957426-48.846995)^2 + (2.890384-2.349373)^2 ) = 0.55216655809
+		double threshold = 0.55216655809;
 		for (User us: UserDAOImpl.u) {
-			double x = us.getCurrent_Position().getX();
-			double y = us.getCurrent_Position().getY();
+			double x = Math.abs(us.getCurrent_Position().getX()-threshold);
+			double y = Math.abs(us.getCurrent_Position().getY()-threshold);
 			if (us.getUserID() == uid) {
 				for (Map ma: us.getMaps()) {
 					if ((ma.getID() == mid)) {
