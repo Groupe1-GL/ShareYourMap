@@ -2,6 +2,8 @@ package com.example.jetty_jersey.ws;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LocationDAOImpl implements LocationDAO {
 
@@ -131,6 +133,29 @@ public class LocationDAOImpl implements LocationDAO {
 			}
 		}
 		return false;
+	}
+	
+	/**
+     * Returns the list of locations matching with the keywords.
+	 * If the map or the location doesn't exist or no location matches
+	 * a null object is returned.
+	 *
+	 * @param  value	keywords where location name can match
+	 * @return	   		list of locations
+	 */
+	public List<Location> searchLocation(String ref){
+		List<Location> res = new ArrayList<Location>();
+		Pattern pattern = Pattern.compile(ref);
+		Matcher matcherName;
+		Matcher matcherLabel;
+		for (Location lo: l) {
+			matcherName = pattern.matcher(lo.getName());
+			matcherLabel = pattern.matcher(lo.getLabel());
+			while ((matcherName.find()||matcherLabel.find())&&(!res.contains(lo))) {
+				res.add(lo);
+			}
+		}
+		return l;
 	}
 	
 }

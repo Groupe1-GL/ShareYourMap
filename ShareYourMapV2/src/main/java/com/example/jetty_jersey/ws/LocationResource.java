@@ -3,6 +3,7 @@ package com.example.jetty_jersey.ws;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -11,6 +12,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
+
+import java.util.List;
 
 /**
  * LocationRessource is the class of the locations resource used in the ShareYourMap website.
@@ -76,5 +79,13 @@ public class LocationResource {
 								  @PathParam("location-id") int lid) {
 		return locationDAO.deleteLocation(uid, mid, lid);
 	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/location")
+	public List<Location> searchLocation(@DefaultValue("") @QueryParam("search") String ref) {
+			return locationDAO.searchLocation(ref);
+	}
+	
 	
 }

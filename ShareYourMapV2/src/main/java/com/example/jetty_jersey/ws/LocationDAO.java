@@ -66,6 +66,16 @@ public interface LocationDAO {
 	public boolean deleteLocation(		int uid,
 										int mid,
 										int lid);
+	/**
+     * Returns the list of locations matching with the keywords.
+	 * If the map or the location doesn't exist or no location matches
+	 * a null object is returned.
+	 * 
+	 * @param  value	keywords where location name can match
+	 * @return	   		list of locations
+	 */
+	public List<Location> searchLocation(String value);
+	
 	/*
 	public List<Location> getLocation(String label);
 	public boolean editLocation();  //only creator

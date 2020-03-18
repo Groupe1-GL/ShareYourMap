@@ -36,8 +36,8 @@ public class MapResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps")
 	public boolean createMap(@PathParam("user-id") int uid,
-						 @FormParam("name") String name,
-						 @FormParam("access") int access){
+						     @FormParam("name") String name,
+						 	 @FormParam("access") int access){
 		return mapDAO.createMap(uid, name, access);		
 	}
 	
