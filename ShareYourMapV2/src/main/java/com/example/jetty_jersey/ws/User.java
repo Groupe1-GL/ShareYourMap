@@ -33,6 +33,9 @@ public class User{
 	public int getUserID() {
 		return this.userID;
 	}
+	public int getName() {
+		return this.name;
+	}
 	
 	public String getUserInfo() {
 		return "ID: "+String.valueOf(this.userID)+" Username: "+this.name;
