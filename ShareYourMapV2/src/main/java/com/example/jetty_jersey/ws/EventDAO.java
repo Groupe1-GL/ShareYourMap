@@ -3,7 +3,7 @@ package com.example.jetty_jersey.ws;
 import java.util.Date;
 import java.util.List;
 
-public interface EventDAO {
+public interface EventDAO  extends LocationDAO{
 	public List<Event> getEvents();
 	/*
 	public Date getStarting_date();
