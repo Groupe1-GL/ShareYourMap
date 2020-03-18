@@ -36,8 +36,8 @@ public class LocationResource {
 									@FormParam("name") String name,
 									@FormParam("description") String descr,
 									@FormParam("label") String label,
-									@QueryParam("x") float x,
-									@QueryParam("y") float y){
+									@QueryParam("x") double x,
+									@QueryParam("y") double y){
 		return locationDAO.createLocationOnMap(uid, mid, name, descr, label, x, y);
 	}
 	
@@ -88,5 +88,11 @@ public class LocationResource {
 			return locationDAO.searchLocation(ref);
 	}
 	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/users/{user-id}/maps/{map-id}/location")
+	public List<Location> nearLocations(int uid, int mid){
+		return locationDAO.nearLocations(uid, mid);
+	}
 	
 }

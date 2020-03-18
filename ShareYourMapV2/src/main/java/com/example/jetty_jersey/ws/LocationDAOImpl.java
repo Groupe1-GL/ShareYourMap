@@ -26,8 +26,8 @@ public class LocationDAOImpl implements LocationDAO {
 										String name, 
 										String descr, 
 										String label, 
-										float x, 
-										float y) {
+										double x, 
+										double y) {
 		for (User us: UserDAOImpl.u) {
 			if (us.getUserID() == uid) {
 				for (Map ma: us.getMaps()) {
@@ -156,6 +156,37 @@ public class LocationDAOImpl implements LocationDAO {
 			}
 		}
 		return res;
+	}
+	
+	/**
+     * Returns the nearest locations defined by an area according
+     * to the current position of the user on the selected map.
+     * If there's no locations that match this operation a null
+     * object is returned.
+     * 
+	 * @param	uid		the user identifier
+	 * @param 	mid 	the map identifier	
+	 * @return	   		list of locations
+	 */
+	public List<Location> nearLocations(int uid, int mid){
+		List<Location> res = new ArrayList<Location>();
+		for (User us: UserDAOImpl.u) {
+			double x = us.getCurrent_Position().getX();
+			double y = us.getCurrent_Position().getY();
+			if (us.getUserID() == uid) {
+				for (Map ma: us.getMaps()) {
+					if ((ma.getID() == mid)) {
+						for (Location lo: ma.getLocations()) {
+							if ( (lo.getPosition().getX() < Math.sqrt(Math.pow(x, 2) - Math.pow(y, 2)))
+									&&(lo.getPosition().getY() < Math.sqrt(Math.pow(x, 2) - Math.pow(y, 2))) ){
+								res.add(lo);
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 	
 }

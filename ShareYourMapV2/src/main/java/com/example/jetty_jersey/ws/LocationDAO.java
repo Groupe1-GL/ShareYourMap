@@ -22,8 +22,8 @@ public interface LocationDAO {
 										String name, 
 										String descr, 
 										String label, 
-										float x, 
-										float y);
+										double x, 
+										double y);
 	/**
      * Contributes on the feed of a location by a message.
 	 * If the map or the location doesn't exist nothing is added.
@@ -71,10 +71,22 @@ public interface LocationDAO {
 	 * If the map or the location doesn't exist or no location matches
 	 * a null object is returned.
 	 * 
-	 * @param  value	keywords where location name can match
+	 * @param  ref	keywords where location name can match
 	 * @return	   		list of locations
 	 */
 	public List<Location> searchLocation(String ref);
+	
+	/**
+     * Returns the nearest locations defined by an area according
+     * to the current position of the user on the selected map.
+     * If there's no locations that match this operation a null
+     * object is returned.
+	 * 
+	 * @param	uid		the user identifier
+	 * @param 	mid 	the map identifier	
+	 * @return	   		list of locations
+	 */
+	public List<Location> nearLocations(int uid, int mid);
 	
 	/*
 	public List<Location> getLocation(String label);

@@ -18,7 +18,7 @@ public class Location{
 	}
 	
 	
-	public Location(String name, String creatorName, float x, float y, String descr, String label2) {
+	public Location(String name, String creatorName, double x, double y, String descr, String label2) {
 		this.creatorName = creatorName;
 		this.name = name;
 		Position pos = new Position(x,y);
