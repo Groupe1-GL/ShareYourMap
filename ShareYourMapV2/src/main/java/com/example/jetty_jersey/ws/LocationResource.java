@@ -83,7 +83,8 @@ public class LocationResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/location")
-	public List<Location> searchLocation(@DefaultValue("") @QueryParam("search") String ref) {
+	public List<Location> searchLocation(
+						@DefaultValue("") @QueryParam("search") String ref) {
 			return locationDAO.searchLocation(ref);
 	}
 	
