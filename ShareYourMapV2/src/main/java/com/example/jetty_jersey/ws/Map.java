@@ -10,9 +10,10 @@ public class Map{
 	private List<Location> favorite_locations;
 	private static int id = 1;
 	
-	public Map(String name) {
+	public Map(String name, String creator) {
 		this.favorite_locations = new ArrayList<Location>();
 		this.Map_ID = id++;
+		this.creatorName = creator;
 		this.name = name;
 		this.favorite_locations = new ArrayList<Location>();
 	}
