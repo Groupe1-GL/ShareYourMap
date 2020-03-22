@@ -54,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
 			u.add(new User(name,password,email));//gérer regex d'email & password encryption
 			return Response
 					.status(201)
-					.entity("You've been successfuly signed up.")
+					.entity("You've been successfully signed up.")
 					.build();
 		}
 		else {
