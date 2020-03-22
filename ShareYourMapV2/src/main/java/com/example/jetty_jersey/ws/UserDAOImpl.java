@@ -5,6 +5,11 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
+import javax.jdo.Transaction;
+
 /**
  * UserDAOImpl is the implementation of the UserDAO interface.
  *
