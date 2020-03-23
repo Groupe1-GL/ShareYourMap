@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+/* package com.example.jetty_jersey.ws;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
@@ -224,3 +224,4 @@ public class ExampleResource {
 	}
 	
 }
+*/
