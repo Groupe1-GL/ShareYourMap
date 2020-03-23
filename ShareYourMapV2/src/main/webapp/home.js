@@ -31,6 +31,11 @@ function deleteServerData(url, success){
 }
 
 
+$(function(){
+	getServerData("/ws/users",getUsers)
+});
+
+
 function getUsers(result){
 	var templateExample = _.template($('#templateExample').html());
 
@@ -43,12 +48,8 @@ function getUsers(result){
 
 
 $(function(){
-	getServerData("/ws/homepage",getUsers)
-});
-
-$(function(){
 	$("#addUser").click(function(){
-		putServerData("/ws/homepage",getUsers)
+		putServerData("/ws/users",getUsers)
 	});
 });
 

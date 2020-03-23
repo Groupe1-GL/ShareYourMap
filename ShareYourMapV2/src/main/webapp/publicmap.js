@@ -1,10 +1,3 @@
-function getServerDataTxt(url, success){
-    $.ajax({
-        dataType: "text",
-        url: url
-    }).done(success);
-}
-
 function getServerData(url, success){
     $.ajax({
         dataType: "json",
@@ -38,26 +31,43 @@ $(function(){
 		var map_name = document.getElementById("searchBar").value;
 		if (map_name !=  null && map_name != ""){
 			//getServerData("/ws/maps/"+map_name,getMapsList)
-			getServerDataTxt("/ws/searchmap/search/"+map_name,getMapsList);
 		}
 	});
 });
 
 
-// Return list of locations for the selected map
-$(function(){
-	$("#map").click(function(){
-		var select_map = document.getElementById("map").value;
-		getServerData("/ws/viewmap/1/1"+select_map,getFavInMap)
-		//getServerData("/ws/maps/"+select_map+"/location",getFavInMap)
-	});
-});
+// Display the map with a certain id on click
+function displayMap(id){
+	getServerData("/ws/viewmap/1/"+id,getFavInMap);
+	//getServerData("/ws/maps/"+id,getFavInMap);
+}
 
 
 function getFavInMap(result){
-	var id_template = _.template($('#listLocation').html());
-	_.each(result, function(location) {
-		location_id = id_template(location);
-		$("#favsList").append(location_id);
+	var name_template = _.template($('#listLocation').html());
+	var listFavs = result['locations'];
+	_.each(listFavs, function(location) {
+		location_name = name_template(location);
+		$("#favsList").append(location_name);
     });
 }
+
+
+// Display location's information for a certain id on click
+function displayLocation(id){
+	getServerData("/ws/viewmap/viewlocation/1/1/1",getLocationDetails);
+}
+
+function getLocationDetails(result){
+	document.getElementById("locationPage").style.display = "block";
+	var location_template = _.template($('#locationDetails').html());
+	detail = location_template(result);
+	$("#locationPage").append(detail);
+}
+
+
+//Close location's information page
+function closeLocation(){
+	document.getElementById("locationPage").style.display = "none";
+}
+

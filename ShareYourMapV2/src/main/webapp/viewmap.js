@@ -52,24 +52,21 @@ function deleteServerData(url, success){
 // Return current registered user
 $(function(){
 	var user = "1";
+	getServerData("/ws/viewmap/"+user,getUser)
 	//getServerDataLambda("/users/"+user,getUser);
-	getServerDataLambda("/ws/viewmap/"+user,getUser);
 });
 
 
 function getUser(result){
-	var user_name = _.template("<%=userInfo%>");
-	var user_maps = _.template("<%=userID%>");
+	var user_name = _.template("<h2><%=name%></h2>");	
 	$("#userName").append(user_name(result));
-	
 
 	var id_template = _.template($('#listMap').html());
 	var maps = result['maps'];
 	_.each(maps, function(map) {
 		map_id = id_template(map);
-		$('#mapsList').append(map_id);
+		$('#mapList').append(map_id);
 	 });
-	
 }
 
 
@@ -79,7 +76,6 @@ function getUser(result){
 $(function(){
 	$("#searchFav").click(function(){
 		var location_name = document.getElementById("searchBar").value;
-		
 		//getServerData("/ws/maps/"+select_map+"/location"+location_name,getLocationsList);
 		getServerDataTxt("/ws/searchmap/search/"+location_name,getLocationsList);
 	});
@@ -97,36 +93,15 @@ function getLocationsList(result){
 }
 
 
-//Return list of locations for the selected map
-$(function(){
-	$("#1").click(function(){
-		var select_map = "1";
-		getServerData("/ws/viewmap/1/1"+select_map,getFavInMap)
-		//getServerData("/ws/maps/"+select_map+"/location",getFavInMap)
-	});
-});
-
-
-function getFavInMap(result){
-	var templateExample = _.template($('#templateExample').html());
-
-	var html = templateExample({
-		"attribute":JSON.stringify(result)
-	});
-
-	$("#locationsList").append(html);
-}
-
-
 // Create a new map
 $(function(){
 	$("#createMap").click(function(){
-		//putServerData("/ws/maps",postAddMapToUser)
-		postServerData("/ws/viewmap/1",postAddMapToUser);
+		//putServerData("/ws/users/1/maps",putAddMapToUser)
+		postServerData("/ws/viewmap/1",putAddMapToUser)
 	});
 });
 
-function postAddMapToUser(result){
+function putAddMapToUser(result){
 	var templateExample = _.template($('#templateExample').html());
 
 	var html = templateExample({
@@ -137,14 +112,14 @@ function postAddMapToUser(result){
 }
 
 // Delete a map from user's list of map
-$(function(){
-	$("#deleteMap").click(function(){
+function deleteMap(id){
+		history.go(0);
 		var user = "1";
-		var map = "1";
+		var map = id;
 		//deleteServerData("/users/"+user+"/maps/"+map,deleteMapToUser);
 		deleteServerData("/ws/viewmap/"+user+"/"+map,deleteMapToUser);
-	});
-});
+}
+
 
 function deleteMapToUser(result){
 	var templateExample = _.template($('#templateExample').html());
@@ -160,8 +135,7 @@ function deleteMapToUser(result){
 // Add a new location to the current map
 $(function(){
 	$("#addLocation").click(function(){
-		//putServerData("/ws/location",putAddLocation);
-		putServerData("/ws/viewmap/viewlocation/1/1",putAddLocation);
+		putServerData("/ws/users/1/maps/1/location",putAddLocation);
 	});
 });
 
@@ -176,12 +150,49 @@ function putAddLocation(result){
 }
 
 
+//Display the map with a certain id on click
+function displayMap(id){
+	getServerData("/ws/viewmap/1/1",getFavInMap);
+	//getServerData("/ws/maps/"+id,getFavInMap);
+}
+
+
+function getFavInMap(result){
+	var name_template = _.template($('#listLocation').html());
+	var listFavs = result['locations'];
+	_.each(listFavs, function(location) {
+		location_name = name_template(location);
+		$("#favsList").append(location_name);
+  });
+}
+
+
+//Display location's information for a certain id on click
+function displayLocation(id){
+	getServerData("/ws/viewmap/viewlocation/1/1/1",getLocationDetails);
+}
+
+function getLocationDetails(result){
+	document.getElementById("locationPage").style.display = "block";
+	var location_template = _.template($('#locationDetails').html());
+	detail = location_template(result);
+	$("#locationPage").append(detail);
+}
+
+
+//Close location's information page
+function closeLocation(){
+	document.getElementById("locationPage").style.display = "none";
+}
+
+
 // Edit a location
 $(function(){
 	$("#editLocation").click(function(){
+		var user = "1";
+		var map = "1";
 		var location = "1";
-		//postServerData("/ws/location/"+location,postEditLocation);
-		postServerData("/ws/viewmap/viewlocation/1/1/"+location,postEditLocation);
+		postServerData("/ws/users/"+user+"/maps/"+map+"/location/"+location,postEditLocation);
 	});
 });
 
@@ -201,8 +212,7 @@ $(function(){
 		var user = "1";
 		var map = "1";
 		var location = "1";
-		//deleteServerData("/ws/users/"+user+"/maps/"+map+"/location/"+location,deleteLocationToUser);
-		deleteServerData("/ws/viewmap/viewlocation/1/1/1",deleteLocationToUser);
+		deleteServerData("/ws/users/"+user+"/maps/"+map+"/location/"+location,deleteLocationToUser);
 	});
 });
 
