@@ -3,6 +3,9 @@ package com.example.jetty_jersey.ws;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.annotations.PersistenceCapable;
+
+@PersistenceCapable
 public class Map{
 	private int Map_ID;
 	private String name, creatorName;

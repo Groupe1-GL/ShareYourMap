@@ -1,8 +1,12 @@
 package com.example.jetty_jersey.ws;
 
 import java.util.ArrayList;
+
+import javax.jdo.annotations.PersistenceCapable;
+
 import java.util.*;
 
+@PersistenceCapable
 public class User{
 	private int userID;
 	private String name;

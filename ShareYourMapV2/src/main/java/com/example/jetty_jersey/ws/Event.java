@@ -2,6 +2,9 @@ package com.example.jetty_jersey.ws;
 
 import java.util.Date;
 
+import javax.jdo.annotations.PersistenceCapable;
+
+@PersistenceCapable
 public class Event extends Location{
 	private Date starting_date;
 	private Date ending_date;
