@@ -21,6 +21,9 @@ public class UserDAOImpl implements UserDAO {
 	
 	static List<User> u = new ArrayList<User>();
 	
+	
+	
+	
 	/**
 	 * Returns the list of all registered users.
 	 * If there is not users, it will return a null object.
