@@ -15,56 +15,30 @@ import java.util.*;
 @Path("/")
 public class ExampleResource {
 
-	public static List<User> users = new Arraylist<User>();
-	public static List<Map> maps = new ArrayList<Map>();
+	public static List<User> users = new ArrayList<User>();
+	public static List<Map> maps = Map.generateMap();
+	public static User us = User.getUser();
 
-	Location Mcdo = new Location("Mcdo");
-	Location KFC = new Location("KFC");
-	Location Quick = new Location("Quick");
-	Location Monoprix = new Location("Monoprix");
-	Location Carrefour = new Location("Carrefour");
-	
-	//Creation de map
-	Map m1 = new Map();
-	m1.addLocation(Mcdo);
-	Map m2 = new Map();
-	m2.addLocation(KFC); 
-	m2.addLocation(Monoprix;)
-	Map m3 = new Map();
-	m3.addLocation(Carrefour); 
-	
-	User u1 = new User();
-	u1.putMap(m1);
-	u1.putMap(m2);
-	users.add(u1);
-	User u2 = new User();
-	u2.putMap(m3);
-	users.add(u2);
-	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/homepage")
 	public List<User> getUsers() {  //liste des users
-		return this.users;
+		return ExampleResource.users;
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/homepage")
 	public List<User> addUser() {
-		User u = new User();
-		this.users.add(u);
+		User u = new User(" "," "," ");
+		ExampleResource.users.add(u);
 		return users;
 	}
 	
-	
-	
 	public List<Map> afficheListMap(User u){ //fonction qui retourne la liste de l'utilisateur u
-		return u.listMap;
+		return u.getMaps();
 	}
-	
-	
 	
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -73,21 +47,11 @@ public class ExampleResource {
 		return maps;
 	}
 	
-	@PUT
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/searchmap")
-	public boolean addMap() {
-		Map m = new Map();
-		m.addLocation(new Location());
-		m.addLocation(new Location());
-		return maps.add(m);
-	}
-	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/searchmap/{map.name}")
 	public Map searchMapByName(@PathParam("map.name") String name) {
-		Map m = new Map();
+		Map m = new Map("SearchMap","NoOne");
 		return m;
 	}
 	
@@ -95,10 +59,9 @@ public class ExampleResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/searchmap/{map.id}")
 	public List<Location> getLocations(@PathParam("map.id") String id) {
-		ArrayList<Location> locations = new ArrayList<Location>();
-		locations.add(new Location());
-		locations.add(new Location());
-		return locations;
+		int i = Integer.parseInt(id) - 1;
+		Map m = maps.get(i);
+		return m.getLocations();
 	}
 
 	
@@ -106,13 +69,8 @@ public class ExampleResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/viewmap/{user.id}")
 	public User getUser(@PathParam("user.id") int id) {
-		for(User u: users) {
-			if(u.getUserID()==id) {
-				return u;
-			}
-		}
 		if(id == 1) {
-			return new User();
+			return ExampleResource.us;
 		}
 		return null;
 	}
@@ -121,10 +79,9 @@ public class ExampleResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/viewmap/{user.id}")
 	public boolean addMapOnUser(@PathParam("user.id") int uid) {
-		for(User u: users) {
-			if(u.getUserID()==uid) {
-				return u.getMaps().add(new Map());
-			}
+		if(uid == 1) {
+			ExampleResource.us.putMap(new Map("New Map","David"));
+			return true;
 		}
 		return false;
 	}
@@ -132,15 +89,9 @@ public class ExampleResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/viewmap/{user.id}/{map.id}")
-	public List<Location> getLocationsOnUserMap(@PathParam("user.id") int uid,
+	public Map getUserMap(@PathParam("user.id") int uid,
 								          @PathParam("map.id") int mid) {
-		List<Location> locations = new ArrayList<Location>();
-
-		locations.add(new Location());
-		locations.add(new Location());
-		locations.add(new Location());
-	
-		return locations;
+		return ExampleResource.us.getMaps().get(mid-1);
 	}
 	
 	@DELETE
@@ -148,16 +99,16 @@ public class ExampleResource {
 	@Path("/viewmap/{user.id}/{map.id}")
 	public boolean deleteMapOnUser(@PathParam("user.id") int uid,
 								  @PathParam("map.id") int mid) {
-		for (User us: users) {
-			if (us.getUserID() == uid) {
-				for (Map map: us.getMaps()) {
-					if (map.getID() == mid) {
-						return us.getMaps().remove(map);
-					}
-				}
-			}
-		}
-		return false;
+		return ExampleResource.us.getMaps().remove(mid-1) != null;
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/viewmap/viewlocation/{user.id}/{map.id}/{location.id}")
+	public Location getLocationsOnUserMap(@PathParam("user.id") int uid,
+								          @PathParam("map.id") int mid,
+											@PathParam("location.id") int lid){
+		return ExampleResource.us.getMaps().get(mid-1).getLocations().get(lid-1);
 	}
 	
 	@PUT
@@ -165,17 +116,8 @@ public class ExampleResource {
 	@Path("/viewmap/viewlocation/{user.id}/{map.id}")
 	public boolean addLocationsOnUserMap(@PathParam("user.id") int uid,
 								          @PathParam("map.id") int mid) {
-		Location l1 = new Location();
-		for (User us: users) {
-			if (us.getUserID() == uid) {
-				for (Map map: us.getMaps()) {
-					if (map.getID() == mid) {
-						return map.addLocation(l1);
-					}
-				}
-			}
-		}
-		return false;
+		Location l1 = new Location("New Location","David",201,300,"Description"," ");
+		return ExampleResource.us.getMaps().get(mid-1).addLocation(l1);
 	}
 	
 	@POST
@@ -207,20 +149,8 @@ public class ExampleResource {
 	public boolean deleteLocationsOnUserMap(@PathParam("user.id") int uid,
 								          @PathParam("map.id") int mid,
 								        @PathParam("location.id") int lid) {
-		for (User us: users) {
-			if (us.getUserID() == uid) {
-				for (Map map: us.getMaps()) {
-					if (map.getID() == mid) {
-						for (Location lo: map.getLocations()) {
-							if (lo.getID() == lid) {
-								return map.getLocations().remove(lo);
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
+		return ExampleResource.us.getMaps().get(mid-1).getLocations().remove(lid-1) != null;
 	}
 	
 }
+

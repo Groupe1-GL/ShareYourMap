@@ -34,11 +34,24 @@ public class Location{
 
 	public static ArrayList<Location> generateLocations(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		for(int i=0; i<3;i++) {
-			locations.add(new Location());
-		}
+		Location Monoprix = new Location("Monoprix","David",21,32,"Cher"," ");
+		Location Carrefour = new Location("Carrefour","David",1,362,"Proche"," ");
+		locations.add(Carrefour);
+		locations.add(Monoprix);
 		return locations;
 	}
+	
+	public static ArrayList<Location> generateLocations2(){
+		ArrayList<Location> locations = new ArrayList<Location>();
+		Location Mcdo = new Location("Mcdo","David",621,32,"Filet O fish"," ");
+		Location KFC = new Location("KFC","David",1,2,"Poulet"," ");
+		Location Quick = new Location("Quick","David",2,3,"Bof"," ");
+		locations.add(Mcdo);
+		locations.add(KFC);
+		locations.add(Quick);
+		return locations;
+	}
+
 	
 	
 	public int getID() {

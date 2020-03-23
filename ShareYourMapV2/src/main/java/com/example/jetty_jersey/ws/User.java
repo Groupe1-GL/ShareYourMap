@@ -24,6 +24,12 @@ public class User{
 		this.listMap = new ArrayList<Map>();		
 	}
 	
+	public static User getUser() {
+		User u = new User("David","ddd","deeefe@gmail.com");
+		u.setMaps(Map.generateMap());
+		return u;
+	}
+	
 	public int getUserID() {
 		return this.userID;
 	}
