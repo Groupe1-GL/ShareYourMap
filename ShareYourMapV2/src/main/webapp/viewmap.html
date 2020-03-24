@@ -6,18 +6,40 @@
 	</head>
 	<body>
 	
+		<script id="mapHeader" type="text/template">
+			<h2><%=name%> <button id="editMap">Edit</button></h2>
+		</script>
+
 		<script id="listMap" type="text/template">
 			<li> <button class="map" onclick="displayMap(<%= id %>)"> <%= name %> </button> <button id="deleteMap"  onclick="deleteMap(<%= id %>)"> X </button> </li>
 		</script>
 
 		<script id="listLocation" type="text/template">
-			<li><button onclick="displayLocation(<%= id %>)"> <%= name %> </button></li>
+			<li><button onclick="displayLocation(<%= id %>)"> <%= name %> </button> <button id="editLoc">Edit</button></li>
+		</script>
+
+		<script id="newMapTemplate" type="text/template">
+			<h1>New map <button onclick="closeMap()" >X</button></h1>
+			<form action="/ws/users/<%= id %>/maps" method="POST" enctype="application/x-www-form-urlencoded">
+				Map's name <input type="text" name="name">
+				Public map <input type="checkbox" name="access">
+				<input type="submit" value="Create">
+			</form>
+		</script>
+
+		<script id="editMapTemplate" type="text/template">
+			<h1><%= name %> <button onclick="closeMap()" >X</button></h1>
+			<form action="/ws/users/<%= uid %>/maps/<%= id%>" method="POST" enctype="application/x-www-form-urlencoded">
+				Map's name <input type="text" name="name" value="<%= name%>">
+				Public map <input type="checkbox" name="access" value="<%= access%>">
+				<input type="submit" value="Edit">
+			</form>
 		</script>
 
 		<script id="locationDetails" type="text/template">
 			<h1> 
 				<%= name %>
-				<button id="closeLocation" onclick="closeLocation()" >Close</button>
+				<button onclick="closeLocation()" >X</button>
 			</h1>
 			<p> Adresse </p>
 			<h2>Description</h2>
@@ -31,6 +53,7 @@
 			<button id="deleteLocation">DeleteLocation</button>
 			<div id="resDeleteLocation"></div>
 		</script>
+		
 
 		<div>
 			<div>
@@ -44,26 +67,23 @@
 				</p>
 				
 				<div>
-					<ul id="mapList">
-					</ul>
+					<ul id="mapList"></ul>
 					<div id="resDeleteMap"></div>
 				</div>
 				
 				<div>
 					<button id="publicMap" onClick="document.location='publicmap.html'">View public maps</button>
-					<button id="createMap" onclick="history.go(0)">Create a new map</button>
-					<div id="resAddMap"></div>
+					<button onclick="createNewMap()">Create a new map</button>
 				</div>
 			</div>
 			<div>
-				<h2>Current map</h2>
-				<div id="currentMap">
+				<div id="currentMap"></div>
+				<div id="viewCurrentMap">
 					<button id="addLocation">AddLocation</button>
 					<div id="resAddLocation"></div>
 					<div id="favsList"></div>
-					
-					<div id="locationPage"></div>
-				
+					<div id="locationPage" hidden></div>
+					<div id="viewMap" hidden></div>
 				</div>
 			</div>
 		</div>

@@ -18,16 +18,25 @@
 				<h1>ShareYourMap</h1>
 				<p>Find your <b>favorites places and event</b> everywhere in the world in less than 5 clicks.</p>
 			</div>
-			<div>
+			<div id="connection">
 				<div>
-					<p>List of users</p>
-					<input type="text" id="mail" name="mail">
-					<input type="password" id="psw" name="psw">
-					<button id="sign_in" onClick="document.location='publicmap.html'">Sign in</button>
-					<button id="addUser" onClick="document.location='publicmap.html'">Sign up</button>
+					Mail address <input type="text" id="mail" name="mail">
+					Password <input type="password" id="psw" name="psw">
+					<button id="sign_in">Sign in</button>
 				</div>
-				<div id="usersList"></div>
+				<button onClick="newUser()">New user</button>
 			</div>
+			<div id="newUser" hidden>
+				<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
+				    Mail address <input type="text" name="email">
+					Username <input type="text" name="username">
+					Password <input type="password" name="passwd">
+					Confirm password <input type="password" name="cpasswd">
+				    <input type="submit" value="Sign Up"/>
+				</form>
+				<button onClick="connect()">Already registered</button>
+			</div>
+			<p id="usersList"></p>
 		</div>
 		
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>

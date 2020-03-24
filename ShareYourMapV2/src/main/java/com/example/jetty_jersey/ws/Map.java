@@ -37,6 +37,17 @@ public class Map{
 		maps.add(m2);
 		return maps;
 	}
+	
+	public static ArrayList<Map> generateMap2(){
+		ArrayList <Map> maps = new ArrayList<Map>();
+		Map m1 = new Map("Shop","Emrick");
+		m1.setFavorites(Location.generateLocations());
+		Map m2 = new Map("Bouffe","Emrick");
+		m2.setFavorites(Location.generateLocations2());
+		maps.add(m1);
+		maps.add(m2);
+		return maps;
+	}
 
 	public int getID() {
 		return this.Map_ID;

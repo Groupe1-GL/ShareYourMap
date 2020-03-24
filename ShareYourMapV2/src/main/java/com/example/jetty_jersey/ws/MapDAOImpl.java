@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 
 public class MapDAOImpl implements MapDAO {
 	
-	static List<Map> m = new ArrayList<Map>();
-	static List<Location> l = new ArrayList<Location>();
+	static List<Map> m = Map.generateMap();
+	static List<Location> l = Location.generateLocations();
 	
 	/**
 	 * Returns the list of all maps.

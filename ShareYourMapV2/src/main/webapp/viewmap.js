@@ -29,13 +29,23 @@ function putServerData(url, success){
     }).done(success);
 }
 
-function postServerData(url, success){
+function postServerData(url){
     $.ajax({
     	type: 'POST',
         dataType: "json",
         url: url
+    });
+}
+
+
+function postServerDataCallBack(url, success){
+    $.ajax({
+    	type: 'DELETE',
+        dataType: "json",
+        url: url
     }).done(success);
 }
+
 
 function deleteServerData(url, success){
     $.ajax({
@@ -67,6 +77,9 @@ function getUser(result){
 		map_id = id_template(map);
 		$('#mapList').append(map_id);
 	 });
+	
+	var createMap = _.template($('#newMapTemplate').html());
+	$("#viewMap").append(createMap(result));
 }
 
 
@@ -94,30 +107,22 @@ function getLocationsList(result){
 
 
 // Create a new map
-$(function(){
-	$("#createMap").click(function(){
-		//putServerData("/ws/users/1/maps",putAddMapToUser)
-		postServerData("/ws/viewmap/1",putAddMapToUser)
-	});
-});
+function createNewMap(){
+	document.getElementById("newMap").style.display = "block";
+}
 
-function putAddMapToUser(result){
-	var templateExample = _.template($('#templateExample').html());
-
-	var html = templateExample({
-		"attribute":JSON.stringify(result)
-	});
-
-	$("#resAddMap").append(html);
+//Close map's information page
+function closeMap(){
+	document.getElementById("newMap").style.display = "none";
 }
 
 // Delete a map from user's list of map
 function deleteMap(id){
-		history.go(0);
 		var user = "1";
 		var map = id;
 		//deleteServerData("/users/"+user+"/maps/"+map,deleteMapToUser);
 		deleteServerData("/ws/viewmap/"+user+"/"+map,deleteMapToUser);
+		history.go(0);
 }
 
 
@@ -129,6 +134,34 @@ function deleteMapToUser(result){
 	});
 
 	$("#resDeleteMap").append(html);
+}
+
+
+
+//Display the map with a certain id on click
+function displayMap(id){
+	getServerData("/ws/viewmap/1/1",getFavInMap);
+	//getServerData("/ws/maps/"+id,getFavInMap);
+}
+
+
+function getFavInMap(result){
+	var uid = {"uid":1};
+	var dataEdit = $.extend(uid,result);
+	
+	var map_name = _.template($('#mapHeader').html());
+	$("#currentMap").html(map_name(result));
+	
+	var loc_name_template = _.template($('#listLocation').html());
+	var listFavs = result['locations'];
+	_.each(listFavs, function(location) {
+		location_name = loc_name_template(location);
+		$("#favsList").html(location_name);
+	});
+	
+	var editMap = _.template($('editMapTemplate').html());
+	editHTML = editMap(dataEdit);
+	$("#viewMap").html(editMap);
 }
 
 
@@ -146,24 +179,7 @@ function putAddLocation(result){
 		"attribute":JSON.stringify(result)
 	});
 
-	$("#resAddLocation").append(html);
-}
-
-
-//Display the map with a certain id on click
-function displayMap(id){
-	getServerData("/ws/viewmap/1/1",getFavInMap);
-	//getServerData("/ws/maps/"+id,getFavInMap);
-}
-
-
-function getFavInMap(result){
-	var name_template = _.template($('#listLocation').html());
-	var listFavs = result['locations'];
-	_.each(listFavs, function(location) {
-		location_name = name_template(location);
-		$("#favsList").append(location_name);
-  });
+	$("#resAddLocation").html(html);
 }
 
 
@@ -176,7 +192,7 @@ function getLocationDetails(result){
 	document.getElementById("locationPage").style.display = "block";
 	var location_template = _.template($('#locationDetails').html());
 	detail = location_template(result);
-	$("#locationPage").append(detail);
+	$("#locationPage").html(detail);
 }
 
 
@@ -192,7 +208,7 @@ $(function(){
 		var user = "1";
 		var map = "1";
 		var location = "1";
-		postServerData("/ws/users/"+user+"/maps/"+map+"/location/"+location,postEditLocation);
+		postServerDataCallBack("/ws/users/"+user+"/maps/"+map+"/location/"+location,postEditLocation);
 	});
 });
 
@@ -203,7 +219,7 @@ function postEditLocation(result){
 		"attribute":JSON.stringify(result)
 	});
 
-	$("#resEditLocation").append(html);
+	$("#resEditLocation").html(html);
 }
 
 // Delete a location
@@ -223,5 +239,5 @@ function deleteLocationToUser(result){
 		"attribute":JSON.stringify(result)
 	});
 
-	$("#resDeleteLocation").append(html);
+	$("#resDeleteLocation").html(html);
 }

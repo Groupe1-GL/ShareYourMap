@@ -6,50 +6,37 @@ function getServerData(url, success){
     }).done(success);
 }
 
-function putServerData(url, success){
-    $.ajax({
-    	type: 'PUT',
-        dataType: "json",
-        url: url
-    }).done(success);
-}
-
-function postServerData(url, success){
-    $.ajax({
-    	type: 'POST',
-        dataType: "json",
-        url: url
-    }).done(success);
-}
-
-function deleteServerData(url, success){
-    $.ajax({
-    	type: 'DELETE',
-        dataType: "json",
-        url: url
-    }).done(success);
-}
-
-
 $(function(){
-	getServerData("/ws/users",getUsers)
+	$('#sign_in').click(function(){
+		getServerData("/ws/users",validConnection);
+	});
 });
 
 
-function getUsers(result){
+function validConnection(result){
 	var templateExample = _.template($('#templateExample').html());
 
 	var html = templateExample({
 		"attribute":JSON.stringify(result)
 	});
 
-	$("#usersList").append(html);
+	var passwd = document.getElementById('psw').value;
+	var email = document.getElementById('mail').value;
+	for (const us in result) {
+		//if(us['password']===passwd && us['email']===email){
+			document.location='publicmap.html';
+			break;
+		//}
+	}
 }
 
+function newUser(){
+	document.getElementById("newUser").style.display = "block";
+	document.getElementById("connection").style.display = "none";
+}
 
-$(function(){
-	$("#addUser").click(function(){
-		putServerData("/ws/users",getUsers)
-	});
-});
+function connect(){
+	document.getElementById("newUser").style.display = "none";
+	document.getElementById("connection").style.display = "block";
+}
 

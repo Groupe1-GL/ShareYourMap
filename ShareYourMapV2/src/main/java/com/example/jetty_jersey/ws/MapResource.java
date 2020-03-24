@@ -44,6 +44,7 @@ public class MapResource {
 						     @FormParam("name") String name,
 						 	 @FormParam("access") int access){
 		return mapDAO.createMap(uid, name, access);		
+		
 	}
 	
 	

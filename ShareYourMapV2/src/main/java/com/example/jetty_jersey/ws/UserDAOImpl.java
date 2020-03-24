@@ -19,10 +19,7 @@ import javax.jdo.Transaction;
  */
 public class UserDAOImpl implements UserDAO {
 	
-	static List<User> u = new ArrayList<User>();
-	
-	
-	
+	static List<User> u = User.generateUsers();
 	
 	/**
 	 * Returns the list of all registered users.

@@ -18,7 +18,7 @@ function getMapsList(result){
 	var id_template = _.template($('#listPublicMap').html());
 	_.each(result, function(map) {
 		map_id = id_template(map);
-		$('#mapsList').append(map_id);
+		$('#mapsList').html(map_id);
     });
 }
 
@@ -38,23 +38,28 @@ $(function(){
 
 // Display the map with a certain id on click
 function displayMap(id){
-	getServerData("/ws/viewmap/1/"+id,getFavInMap);
+	var id_norm = id-1;
+	getServerData("/ws/viewmap/1/"+id_norm,getFavInMap);
 	//getServerData("/ws/maps/"+id,getFavInMap);
 }
 
 
 function getFavInMap(result){
+	var map_name = _.template("<h2><%= name %></h2>");
+	$("#currentMap").html(map_name(result));
+	
 	var name_template = _.template($('#listLocation').html());
 	var listFavs = result['locations'];
 	_.each(listFavs, function(location) {
 		location_name = name_template(location);
-		$("#favsList").append(location_name);
+		$("#favsList").html(location_name);
     });
 }
 
 
 // Display location's information for a certain id on click
 function displayLocation(id){
+	var id_norm = id-1;
 	getServerData("/ws/viewmap/viewlocation/1/1/1",getLocationDetails);
 }
 
@@ -62,7 +67,7 @@ function getLocationDetails(result){
 	document.getElementById("locationPage").style.display = "block";
 	var location_template = _.template($('#locationDetails').html());
 	detail = location_template(result);
-	$("#locationPage").append(detail);
+	$("#locationPage").html(detail);
 }
 
 

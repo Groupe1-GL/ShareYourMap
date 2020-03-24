@@ -25,9 +25,20 @@ public class User{
 	}
 	
 	public static User getUser() {
-		User u = new User("David","ddd","deeefe@gmail.com");
-		u.setMaps(Map.generateMap());
-		return u;
+		User u1 = new User("David","ddd","deeefe@gmail.com");
+		u1.setMaps(Map.generateMap());
+		return u1;
+	}
+	
+	public static ArrayList<User> generateUsers() {
+		ArrayList<User> users = new ArrayList<User>();
+		User u1 = new User("David","ddd","deeefe@gmail.com");
+		u1.setMaps(Map.generateMap());
+		User u2 = new User("Emrick","ss","ssafe@gmail.com");
+		u2.setMaps(Map.generateMap2());
+		users.add(u1);
+		users.add(u2);
+		return users;
 	}
 	
 	public int getUserID() {
