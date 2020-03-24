@@ -82,8 +82,22 @@ function getUser(result){
 	$("#viewMap").append(createMap(result));
 }
 
+$(function(){
+	var map = L.map('map').setView([48.8266496,2.3826648], 20); // LIGNE 14
+
+    var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
+        attribution: '© OpenStreetMap contributors',
+    });
+    map.addLayer(osmLayer);
+});
+
 
 //---------------------		Actions on click		---------------------	
+
+
+function centreMap(x,y){
+	var map = L.map('map').setView([x,y], 20);
+}
 
 //Return list of location with "location_name" (searchBar value) in their name 
 $(function(){
