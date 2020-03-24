@@ -22,10 +22,9 @@ public class Location{
 	}
 	
 	
-	public Location(String name, String creatorName, double x, double y, String descr, String label2) {
+	public Location(String name, String creatorName, double x, double y, String descr, String label) {
 		this.creatorName = creatorName;
 		this.name = name;
-		Position pos = new Position(x,y);
 		this.pos = new Position(x,y);
 		this.description = descr;
 		this.label = label;
