@@ -26,14 +26,14 @@
 				</div>
 				<button onClick="newUser()">New user</button>
 			</div>
-			<div id="newUser" hidden>
+			<div id="newUser" >
 				<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
 					<table>
 					    <tr><th><label>E-mail address:</label></th><td><input type="text" name="email"></td></tr>
 						<tr><th><label>Username:</label></th><td><input type="text" name="username"></td></tr>
 						<tr><th><label>Password:</label></th><td><input type="password" name="passwd"></td></tr>
 						<tr><th><label>Confirm password:</label></th><td><input type="password" name="cpasswd"></td></tr>
-					    <tr><td><input type="submit" value="Sign Up"/></td></tr>
+					    <tr><th></th><td><input type="submit" value="Sign Up" style="float: right;"/></td></tr>
 					</table>
 				</form>
 				<button onClick="connect()">Already registered</button>
