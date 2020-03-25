@@ -1,3 +1,13 @@
+/* PUBLICMAP
+ * Functions to navigate in the page collecting all the public maps
+ * @link src/main/webapp/publicmap.html 
+ */
+
+/*
+ * Send the GET request ot the server
+ * @param {string} 	 url			The url of the request
+ * @param {void} success 		The callback function
+ */
 function getServerData(url, success){
     $.ajax({
         dataType: "json",
@@ -5,24 +15,30 @@ function getServerData(url, success){
     }).done(success);
 }
 
-//		---------------------		Automatic actions		---------------------		
-$(function(){
-	var map = L.map('map').setView([48.8266496,2.3826648], 20); // LIGNE 14
+/*		---------------------		Automatic actions		---------------------		*/	
 
-    var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
+// Initialize the initial map display in the page (center on the EIDD)
+$(function(){
+	var map = L.map('map').setView([48.8266496,2.3826648], 20)
+
+    var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
     });
     map.addLayer(osmLayer);
 });
 
-// Return list of public maps
+// Send the request to have the list of public maps
 $(function(){
-	getServerData("/ws/searchmap",getMapsList);
-	//getServerData("/ws/maps",getMapsList);
+	getServerData("/ws/searchmap",displayMapsList);
+	//getServerData("/ws/maps",displayMapsList);
 });
 
 
-function getMapsList(result){
+/*
+ * Display maps in a list of button based on the 'listPublicMap' template
+ * @param {List<Map>}	The list of public map stocked in the database
+ */
+function displayMapsList(result){
 	var id_template = _.template($('#listPublicMap').html());
 	_.each(result, function(map) {
 		map_id = id_template(map);
@@ -31,13 +47,18 @@ function getMapsList(result){
 }
 
 
-//		---------------------		Actions on click		---------------------		
+/*		---------------------		Actions on click		---------------------		*/
 
-function centreMap(x,y){
+/*
+ * Center a map 
+ * @param {float} x		The longitude value to center the map
+ * @param {float} y		The latitude value to center the map
+ */
+function centerMap(x,y){
 	var map = L.map('map').setView([x,y], 20);
 }
 
-// Return list of maps with "map_name" (searchBar value) in their name 
+// Send the request to have the list of maps with "map_name" (searchBar value) in their name 
 $(function(){
 	$("#searchMap").click(function(){
 		var map_name = document.getElementById("searchBar").value;
@@ -48,15 +69,20 @@ $(function(){
 });
 
 
-// Display the map with a certain id on click
+/*
+ * Send the request to have the map with a certain id
+ * @param {long} id		The id of the wanted map
+ */
 function displayMap(id){
-	var id_norm = id-1;
-	getServerData("/ws/viewmap/1/"+id_norm,getFavInMap);
-	//getServerData("/ws/maps/"+id,getFavInMap);
+	getServerData("/ws/viewmap/1/1",mapDetails);
+	//getServerData("/ws/maps/"+id,mapDetails);
 }
 
-
-function getFavInMap(result){
+/*
+ * Display information of the current map in the page with different templates
+ * @param {Map} result		The current map
+ */
+function mapDetails(result){
 	var map_name = _.template("<h2><%= name %></h2>");
 	$("#currentMap").html(map_name(result));
 	
@@ -69,19 +95,26 @@ function getFavInMap(result){
 }
 
 
-// Display location's information for a certain id on click
+/*
+ * Send the request to have the favs with a certain id
+ * @param {long} id		The id of the wanted favorite
+ */
 function displayLocation(id){
-	var id_norm = id-1;
-	getServerData("/ws/viewmap/viewlocation/1/1/1",getLocationDetails);
+	getServerData("/ws/viewmap/viewlocation/1/1/1",locationDetails);
 }
 
-function getLocationDetails(result){
+/*
+ * Display information of the current favs in the page with the 'locationDetails' template
+ * @param {Location} result		The current favorite
+ */
+function locationDetails(result){
 	document.getElementById("locationPage").style.display = "block";
 	var location_template = _.template($('#locationDetails').html());
 	detail = location_template(result);
 	$("#locationPage").html(detail);
 }
 
+/* -------------------------------- Display location elements  -------------------------------- */
 
 //Close location's information page
 function closeLocation(){
