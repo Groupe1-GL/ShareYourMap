@@ -1,18 +1,3 @@
-function getServerDataTxt(url, success){
-    $.ajax({
-    	type: 'GET',
-        dataType: "text",
-        url: url
-    }).done(success);
-}
-
-function getServerDataLambda(url, success){
-    $.ajax({
-    	type: 'GET',
-        url: url
-    }).done(success);
-}
-
 function getServerData(url, success){
     $.ajax({
     	type:'GET',
@@ -40,7 +25,7 @@ function postServerData(url){
 
 function postServerDataCallBack(url, success){
     $.ajax({
-    	type: 'DELETE',
+    	type: 'POST',
         dataType: "json",
         url: url
     }).done(success);
@@ -52,7 +37,7 @@ function deleteServerData(url, success){
     	type: 'DELETE',
         dataType: "json",
         url: url
-    }).done(success);
+    });
 }
 
 
@@ -63,7 +48,7 @@ function deleteServerData(url, success){
 $(function(){
 	var user = "1";
 	getServerData("/ws/viewmap/"+user,getUser)
-	//getServerDataLambda("/users/"+user,getUser);
+	//getServerData("/users/"+user,getUser);
 });
 
 
@@ -75,13 +60,14 @@ function getUser(result){
 	var maps = result['maps'];
 	_.each(maps, function(map) {
 		map_id = id_template(map);
-		$('#mapList').append(map_id);
+		$('#mapList').html(map_id);
 	 });
-	
+/*	
 	var createMap = _.template($('#newMapTemplate').html());
-	$("#viewMap").append(createMap(result));
+	$("#viewMap").append(createMap(result));*/
 }
 
+// Display the initial map
 $(function(){
 	var map = L.map('map').setView([48.8266496,2.3826648], 20); // LIGNE 14
 
@@ -94,8 +80,8 @@ $(function(){
 
 //---------------------		Actions on click		---------------------	
 
-
-function centreMap(x,y){
+// Re center a map
+function centerMap(x,y){
 	var map = L.map('map').setView([x,y], 20);
 }
 
@@ -104,7 +90,7 @@ $(function(){
 	$("#searchFav").click(function(){
 		var location_name = document.getElementById("searchBar").value;
 		//getServerData("/ws/maps/"+select_map+"/location"+location_name,getLocationsList);
-		getServerDataTxt("/ws/searchmap/search/"+location_name,getLocationsList);
+		getServerData("/ws/searchmap/search/"+location_name,getLocationsList);
 	});
 });
 
@@ -116,18 +102,20 @@ function getLocationsList(result){
 		"attribute":JSON.stringify(result)
 	});
 
-	$("#locationsList").append(html);
+	$("#locationsList").html(html);
 }
 
 
 // Create a new map
 function createNewMap(){
-	document.getElementById("newMap").style.display = "block";
+	document.getElementById("viewMap").style.display = "block";
+	var createMap = _.template($('#newMapTemplate').html());
+	$("#viewMap").html(createMap());
 }
 
 //Close map's information page
 function closeMap(){
-	document.getElementById("newMap").style.display = "none";
+	document.getElementById("viewMap").style.display = "none";
 }
 
 // Delete a map from user's list of map
@@ -135,21 +123,9 @@ function deleteMap(id){
 		var user = "1";
 		var map = id;
 		//deleteServerData("/users/"+user+"/maps/"+map,deleteMapToUser);
-		deleteServerData("/ws/viewmap/"+user+"/"+map,deleteMapToUser);
+		deleteServerData("/ws/viewmap/"+user+"/"+map);
 		history.go(0);
 }
-
-
-function deleteMapToUser(result){
-	var templateExample = _.template($('#templateExample').html());
-
-	var html = templateExample({
-		"attribute":JSON.stringify(result)
-	});
-
-	$("#resDeleteMap").append(html);
-}
-
 
 
 //Display the map with a certain id on click
@@ -242,16 +218,7 @@ $(function(){
 		var user = "1";
 		var map = "1";
 		var location = "1";
-		deleteServerData("/ws/users/"+user+"/maps/"+map+"/location/"+location,deleteLocationToUser);
+		deleteServerData("/ws/users/"+user+"/maps/"+map+"/location/"+location);
+		history.go(0);
 	});
 });
-
-function deleteLocationToUser(result){
-	var templateExample = _.template($('#templateExample').html());
-
-	var html = templateExample({
-		"attribute":JSON.stringify(result)
-	});
-
-	$("#resDeleteLocation").html(html);
-}
