@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
@@ -25,17 +26,16 @@ public class UserResource {
 	
 	UserDAO userDAO = new UserDAOImpl();
 	
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getUsers(){
 		return userDAO.getUsers();
 	}
 	
-	
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)	
+	@Produces(MediaType.TEXT_HTML)	
 	public Response createUser(
 		@FormParam("username") String name,
 		@FormParam("passwd") String password,
@@ -44,6 +44,26 @@ public class UserResource {
 		return userDAO.createUser(name, password, cpassword, email);
 	}
 	
+	/*  This service tunnels the PUT request because the HTML Standard don't support PUT requests on
+	 *	forms.
+	 */
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_HTML)	
+	public Response emptyPOST(
+		@FormParam("username") String name,
+		@FormParam("passwd") String password,
+		@FormParam("cpasswd") String cpassword,
+		@FormParam("email") String email,
+		@FormParam("_METHOD") String method) {
+		if (method.equals("PUT"))
+			return createUser(name, password, cpassword, email);
+		else
+			return Response
+						.status(500)
+						.entity("There is not a POST request on this URI")
+						.build();
+	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

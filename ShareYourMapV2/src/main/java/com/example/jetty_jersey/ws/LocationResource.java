@@ -22,6 +22,7 @@ import java.util.List;
  * @version %I%, %G%
  * @since 1.0
  */
+@Path("/")
 public class LocationResource {
 	
 	LocationDAO locationDAO = new LocationDAOImpl();
@@ -91,7 +92,8 @@ public class LocationResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps/{map-id}/location")
-	public List<Location> nearestLocations(int uid, int mid){
+	public List<Location> nearestLocations(@PathParam("user-id") int uid, 
+										   @PathParam("map-id") int mid){
 		return locationDAO.nearestLocations(uid, mid);
 	}
 	

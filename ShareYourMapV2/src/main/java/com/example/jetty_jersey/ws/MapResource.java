@@ -24,6 +24,7 @@ import java.util.*;
  * @version %I%, %G%
  * @since 1.0
  */
+@Path("/")
 public class MapResource {
 	
 	MapDAO mapDAO = new MapDAOImpl();
@@ -78,7 +79,8 @@ public class MapResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/maps")
+	@Path("/mapsearch")
+	//voir pour fusionner deux WS mapsearch et locsearch afin de préciser la recherche /searchbar
 	public List<Map> searchMap(
 			@DefaultValue("") @QueryParam("search") String ref) {
 		return mapDAO.searchMap(ref);

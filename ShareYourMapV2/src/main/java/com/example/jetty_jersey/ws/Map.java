@@ -10,19 +10,20 @@ public class Map{
 	private int Map_ID;
 	private String name, creatorName;
 	private boolean access;
-	private List<Location> favorite_locations;
+	private List<Location> favoriteLocations;
 	private static int id = 1;
 	
 	public Map(String name, String creator) {
-		this.favorite_locations = new ArrayList<Location>();
+		this.favoriteLocations = new ArrayList<Location>();
 		this.Map_ID = id++;
 		this.creatorName = creator;
 		this.name = name;
-		this.favorite_locations = new ArrayList<Location>();
+		this.favoriteLocations = new ArrayList<Location>();
 	}
 	
 	public Map(String name, String creator, boolean b) {
 		this.name = name;
+		this.favoriteLocations = new ArrayList<Location>();
 		this.creatorName = creator;
 		this.access = b;
 	}
@@ -58,15 +59,15 @@ public class Map{
 	}
 	
 	public List<Location> getLocations() {
-		return this.favorite_locations;
+		return this.favoriteLocations;
 	}
 	
 	public void setLocation(List<Location> locs) {
-		this.favorite_locations = locs;
+		this.favoriteLocations = locs;
 	}
 	
 	public boolean addLocation(Location l) {
-		return this.favorite_locations.add(l);		
+		return this.favoriteLocations.add(l);		
 	}
 	
 	public boolean isPublic() {

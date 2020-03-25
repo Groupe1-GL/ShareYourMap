@@ -13,7 +13,7 @@ public class User{
 	private String password; //ADD
 	private String email; //ADD
 	private List<Map> listMap; 
-	private Position current_position;
+	private Position currentPosition;
 	private static int id = 1;
 	
 	public User(String name, String password, String email) {
@@ -56,7 +56,6 @@ public class User{
 		LocationDAOImpl.l.add(l1);
 	}
 	
-	
 	public int getUserID() {
 		return this.userID;
 	}
@@ -86,9 +85,9 @@ public class User{
 		listMap.remove(m);
 	}
 
-	public Position getCurrent_Position() {
+	public Position getcurrentPosition() {
 		// TODO Auto-generated method stub
-		return this.current_position;
+		return this.currentPosition;
 	}
 	
 	public List<Map> getMaps() {
@@ -118,5 +117,9 @@ public class User{
 			return true;
 		}
 		return false;
+	}
+	
+	public String getEmail() {
+		return this.email;
 	}
 }

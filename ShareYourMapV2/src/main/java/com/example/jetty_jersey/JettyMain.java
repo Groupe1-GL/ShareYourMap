@@ -1,4 +1,5 @@
 package com.example.jetty_jersey;
+import com.example.jetty_jersey.ws.*;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -16,6 +17,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 public class JettyMain {
 
 	public static void main(String[] args) throws Exception {
+		User.init();
 		// Initialize the server
 		Server server = new Server();
 

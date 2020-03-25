@@ -18,7 +18,7 @@
 				<h1>ShareYourMap</h1>
 				<p>Find your <b>favorites places and event</b> everywhere in the world in less than 5 clicks.</p>
 			</div>
-			<div id="connection">
+			<div id="connexion">
 				<div>
 					Mail address <input type="text" id="mail" name="mail">
 					Password <input type="password" id="psw" name="psw">
@@ -27,13 +27,14 @@
 				<button onClick="newUser()">New user</button>
 			</div>
 			<div id="newUser" >
-				<form action="/ws/users" method="PUT" enctype="application/x-www-form-urlencoded">
+				<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
+					<input type="hidden" name="_METHOD" value="PUT"/> 
 					<table>
 					    <tr><th><label>E-mail address:</label></th><td><input type="text" name="email"></td></tr>
-						<tr><th><label>Username:</label></th><td><input type="text" name="username"></td></tr>
+						<tr><th><label>Username:</label></th><td><input type="text" name="username" ></td></tr>
 						<tr><th><label>Password:</label></th><td><input type="password" name="passwd"></td></tr>
 						<tr><th><label>Confirm password:</label></th><td><input type="password" name="cpasswd"></td></tr>
-					    <tr><th></th><td><input type="submit" value="Sign Up" style="float: right;"/></td></tr>
+					    <tr><th></th><td><input type="submit" id="sign_up" value="Sign Up" style="float: right;"/></td></tr>
 					</table>
 				</form>
 				<button onClick="connect()">Already registered</button>
