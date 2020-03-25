@@ -28,11 +28,13 @@
 			</div>
 			<div id="newUser" hidden>
 				<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
-				    Mail address <input type="text" name="email">
-					Username <input type="text" name="username">
-					Password <input type="password" name="passwd">
-					Confirm password <input type="password" name="cpasswd">
-				    <input type="submit" value="Sign Up"/>
+					<table>
+					    <tr><th><label>E-mail address:</label></th><td><input type="text" name="email"></td></tr>
+						<tr><th><label>Username:</label></th><td><input type="text" name="username"></td></tr>
+						<tr><th><label>Password:</label></th><td><input type="password" name="passwd"></td></tr>
+						<tr><th><label>Confirm password:</label></th><td><input type="password" name="cpasswd"></td></tr>
+					    <tr><td><input type="submit" value="Sign Up"/></td></tr>
+					</table>
 				</form>
 				<button onClick="connect()">Already registered</button>
 			</div>
