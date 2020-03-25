@@ -26,20 +26,36 @@ public class User{
 	
 	public static User getUser() {
 		User u1 = new User("David","ddd","deeefe@gmail.com");
-		u1.setMaps(Map.generateMap());
+		u1.setMaps(Map.generateMaps());
 		return u1;
 	}
 	
 	public static ArrayList<User> generateUsers() {
 		ArrayList<User> users = new ArrayList<User>();
 		User u1 = new User("David","ddd","deeefe@gmail.com");
-		u1.setMaps(Map.generateMap());
+		u1.setMaps(Map.generateMaps());
 		User u2 = new User("Emrick","ss","ssafe@gmail.com");
 		u2.setMaps(Map.generateMap2());
 		users.add(u1);
 		users.add(u2);
 		return users;
 	}
+	
+	///
+	
+	public static void init() {
+		User u1 = new User("David","123","david@mail.com");
+		Map m1 = new Map("Magasins","David", true);
+		u1.getMaps().add(m1);
+		Location l1 = new Location("Monoprix","David",21,32,"descr","label");
+		m1.getLocations().add(l1);
+		
+		//add on db
+		UserDAOImpl.u.add(u1);
+		MapDAOImpl.m.add(m1);
+		LocationDAOImpl.l.add(l1);
+	}
+	
 	
 	public int getUserID() {
 		return this.userID;

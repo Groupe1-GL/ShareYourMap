@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 
 public class LocationDAOImpl implements LocationDAO {
 
-	static List<Location> l = Location.generateLocations2();
-	
+	//static List<Location> l = Location.generateLocations();
+	static List<Location> l = new ArrayList<Location>();
 	/**
      * Creates and adds a location on a map selected by its id.
 	 * If the map or the location doesn't exist nothing is added.

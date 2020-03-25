@@ -34,8 +34,8 @@ public class UserResource {
 	
 	
 	@PUT
-	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)	
 	public Response createUser(
 		@FormParam("username") String name,
 		@FormParam("passwd") String password,

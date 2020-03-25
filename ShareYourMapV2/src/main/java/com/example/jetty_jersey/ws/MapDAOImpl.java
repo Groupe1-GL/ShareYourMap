@@ -8,9 +8,8 @@ import java.util.regex.Pattern;
 
 public class MapDAOImpl implements MapDAO {
 	
-	static List<Map> m = Map.generateMap();
-	static List<Location> l = Location.generateLocations();
-	
+	//static List<Map> m = Map.generateMaps();
+	static List<Map> m = new ArrayList<Map>();
 	/**
 	 * Returns the list of all maps.
 	 * If there is no maps, it will return a null object.

@@ -27,12 +27,12 @@ public class Map{
 		this.access = b;
 	}
 	
-	public static ArrayList<Map> generateMap(){
+	public static ArrayList<Map> generateMaps(){
 		ArrayList <Map> maps = new ArrayList<Map>();
 		Map m1 = new Map("Magasin","David");
-		m1.setFavorites(Location.generateLocations());
+		m1.setLocation(Location.generateLocations());
 		Map m2 = new Map("Fast Food","David");
-		m2.setFavorites(Location.generateLocations2());
+		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);
 		return maps;
@@ -41,9 +41,9 @@ public class Map{
 	public static ArrayList<Map> generateMap2(){
 		ArrayList <Map> maps = new ArrayList<Map>();
 		Map m1 = new Map("Shop","Emrick");
-		m1.setFavorites(Location.generateLocations());
+		m1.setLocation(Location.generateLocations());
 		Map m2 = new Map("Bouffe","Emrick");
-		m2.setFavorites(Location.generateLocations2());
+		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);
 		return maps;
@@ -61,7 +61,7 @@ public class Map{
 		return this.favorite_locations;
 	}
 	
-	public void setFavorites(List<Location> locs) {
+	public void setLocation(List<Location> locs) {
 		this.favorite_locations = locs;
 	}
 	
