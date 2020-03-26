@@ -27,12 +27,11 @@ public interface UserDAO {
 	 * @param username	a public string identifier of the user
 	 * @param passwd	the password
 	 * @param cpasswd	confirmation of the previous password entry
-	 * @param email		the email of the user
+	 * 
 	 */
 	public Response createUser( 		String name, 
 										String password, 
-										String cpassword, 
-										String email);
+										String cpassword);
 	/**
      * Returns the user selected by his id.
 	 *
@@ -48,14 +47,12 @@ public interface UserDAO {
 	 * @param  opasswd 	the user's current password
 	 * @param  passwd	new password
 	 * @param  cpasswd  confirmation of the new password to avoid mistake
-	 * @param  email	email of the user
 	 * @return	   		the user object
 	 */
 	public Response editUser(   		int uid, 
 										String opassword, 
 										String password, 
-										String cpassword, 
-										String email);
+										String cpassword);
 	/**
      * Deletes the user selected by his id.
 	 * A user can delete himself only.
@@ -93,6 +90,15 @@ public interface UserDAO {
 	 * @return	   true if the operation was successful
 	 */
 	public boolean removeMapOnUser(		int uid, int mid);
+	
+	/**
+     * Connect a user on the website and redirect it to his map page.
+	 *
+	 * @param	username 			the user identifier 
+	 * @param	password	the user's password 
+	 * @return	   			a text that describe the response
+	 */
+	public Response connectUser(		String username, String password);
 	
 	
 }

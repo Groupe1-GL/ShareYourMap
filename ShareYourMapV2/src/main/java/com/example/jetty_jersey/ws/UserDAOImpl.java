@@ -3,6 +3,7 @@ package com.example.jetty_jersey.ws;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import javax.jdo.PersistenceManager;
@@ -40,12 +41,11 @@ public class UserDAOImpl implements UserDAO {
 	 * @param username	a public string identifier of the user
 	 * @param passwd	the password
 	 * @param cpasswd	confirmation of the previous password entry
-	 * @param email		the email of the user
+	 * @return			a text that describe the response
 	 */
 	public Response createUser( 		String name, 
 										String password, 
-										String cpassword, 
-										String email) {
+										String cpassword) {
 		for (User us : u){
 			if (us.getName().equals(name)){
 				return Response
@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO {
 		//Check if the passwords are equals
 		if (password.equals(cpassword)){
 			//Encrypt & Insert into the database
-			u.add(new User(name,password,email));//gérer regex d'email & password encryption
+			u.add(new User(name,password));//gérer regex d'email & password encryption
 			return Response
 					.status(201)
 					.entity("You've been successfully signed up.")
@@ -93,14 +93,12 @@ public class UserDAOImpl implements UserDAO {
 	 * @param  opasswd 	the user's current password
 	 * @param  passwd	new password
 	 * @param  cpasswd  confirmation of the new password to avoid mistake
-	 * @param  email	email of the user
-	 * @return	   		the user object
+	 * @return	   		a text that describe the response
 	 */
 	public Response editUser(   		int uid, 
 										String opassword, 
 										String password, 
-										String cpassword, 
-										String email) { 
+										String cpassword) { 
 		for (User us: u) {
 			if (us.getUserID() == uid) {
 				if (!opassword.equals(null)&&!password.equals(null)&&!cpassword.equals(null)){
@@ -114,18 +112,9 @@ public class UserDAOImpl implements UserDAO {
 								.build();
 					}
 				}
-				if (!email.equals(null)) {
-					boolean valid_mail = us.setEmail(email);//ADD setEmail regex
-					if (!valid_mail) {
-						return Response
-								.status(400)
-								.entity("The e-mail is incorrect.")
-								.build();
-					}
-				}
 				return Response
 						.status(200)
-						.entity("Modification successfuly updated!")
+						.entity("Password successfully updated!")
 						.build();
 			}					
 		}
@@ -213,6 +202,29 @@ public class UserDAOImpl implements UserDAO {
 			}
 		}
 		return false;
+	}
+	
+	/**
+     * Connect a user on the website and redirect it to his map page.
+	 *
+	 * @param	username 			the username 
+	 * @param	password	the user's password 
+	 * @return	   			a text that describe the response
+	 */
+	public Response connectUser(		String username, String password) {
+		for (User us: u) {
+			if (us.getName().equals(username)&&us.getPassword().equals(password)) {
+				return Response.status(Response.Status.SEE_OTHER)
+			            .header(HttpHeaders.LOCATION, "/publicmap.html")//g�rer l'affichage des maps de David
+			            			//comment ? avec auth puis get maps ?
+			            .header("X-Foo", "bar")
+			            .build();
+			}
+		}
+		 return Response
+				 	.status(402)
+		            .entity("Username and password do not match")
+		            .build();
 	}
 	
 }

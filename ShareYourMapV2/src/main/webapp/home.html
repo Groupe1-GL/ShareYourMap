@@ -4,6 +4,7 @@
 	<head>
 	<meta charset="utf8">
 	<title>ShareYourMap</title>
+	<link rel="stylesheet" type="text/css" href="src_share_your_map/css/modal.css">
 	</head>
 	<body>
 
@@ -14,38 +15,94 @@
 		</script>
 
 		<div>
+		<!-- je propose qu'on affiche deux boutons "Sign Up" et "Sign In" qui vont 
+		afficher deux modals pour s'inscrire ou se connecter -->
 			<div>
 				<h1>ShareYourMap</h1>
 				<p>Find your <b>favorites places and event</b> everywhere in the world in less than 5 clicks.</p>
 			</div>
-			<div id="connexion">
-				<div>
-					Mail address <input type="text" id="mail" name="mail">
-					Password <input type="password" id="psw" name="psw">
-					<button id="sign_in">Sign in</button>
-				</div>
-				<button onClick="newUser()">New user</button>
+			
+			<h2>Sign In</h2>
+
+			<!-- Trigger/Open The Modal -->
+			<button class="modal-button" href="#myModal1">Connection</button>
+			
+			<!-- The Modal -->
+			<div id="myModal1" class="modal">
+			
+			  <!-- Modal content -->
+			  <div class="modal-content">
+			    <div class="modal-header">
+			      <span class="close">×</span>
+			      <h2>ShareYourMap</h2>
+			    </div>
+			    <div class="modal-body">
+			    		<div id="connection">
+							<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
+								<input type="hidden" name="_METHOD" value="POST"/> 
+								<table>
+									<tr><th><label>Username:</label></th><td><input type="text" name="username" required></td></tr>
+									<tr><th><label>Password:</label></th><td><input type="password" name="passwd" required></td></tr>
+									<tr><th></th><td><input type="submit" id="sign_in" value="Sign In" style="float: right;"/></td></tr>
+									
+								</table>
+							</form>
+							<!--   <button onClick="newUser()">New user</button> -->
+						</div>
+			    </div>
+			    <div class="modal-footer">
+			      <h3>A student projet - 2020</h3>
+			    </div>
+			  </div>
+			
 			</div>
-			<div id="newUser" >
-				<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
-					<input type="hidden" name="_METHOD" value="PUT"/> 
-					<table>
-					    <tr><th><label>E-mail address:</label></th><td><input type="text" name="email"></td></tr>
-						<tr><th><label>Username:</label></th><td><input type="text" name="username" ></td></tr>
-						<tr><th><label>Password:</label></th><td><input type="password" name="passwd"></td></tr>
-						<tr><th><label>Confirm password:</label></th><td><input type="password" name="cpasswd"></td></tr>
-					    <tr><th></th><td><input type="submit" id="sign_up" value="Sign Up" style="float: right;"/></td></tr>
-					</table>
-				</form>
-				<button onClick="connect()">Already registered</button>
+
+			<h2>Sign Up</h2>
+			
+			<!-- Trigger/Open The Modal -->
+			<button class="modal-button" href="#myModal2">Subscription</button>
+			
+			<!-- The Modal -->
+			<div id="myModal2" class="modal">
+			
+			  <!-- Modal content -->
+			  <div class="modal-content">
+			    <div class="modal-header">
+			      <span class="close">×</span>
+			      <h2>ShareYourMap</h2>
+			    </div>
+			    <div class="modal-body">
+			    		<div id="newUser" >
+							<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
+								<input type="hidden" name="_METHOD" value="PUT"/> 
+								<table >
+									<tr><th><label style="float: left;">Username:</label></th><td><input type="text" name="username" required></td></tr>
+									<tr><th><label style="float: left;">Password:</label></th><td><input type="password" name="passwd" required></td></tr>
+									<tr><th><label style="float: left;">Confirm password:</label></th><td><input type="password" name="cpasswd" required></td></tr>
+								    <tr><th></th><td><input type="submit" id="sign_up" value="Sign Up" style="float: right;"/></td></tr>
+								</table>
+							</form>
+							<!-- <button onClick="connect()">Already registered</button>  -->
+						</div>
+			    </div>
+			    <div class="modal-footer">
+			      <h3>A student projet - 2020</h3>
+			    </div>
+			  </div>
+			
 			</div>
+			
+			
+			
+			<div>
 			<p id="usersList"></p>
-		</div>
+			</div>
 		
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 		<script type="text/javascript" src="home.js"></script>
 		
-		
+
 	</body>
+	<script src="src_share_your_map/js/modal.js"></script>
 </html>

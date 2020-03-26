@@ -7,7 +7,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
@@ -39,9 +38,8 @@ public class UserResource {
 	public Response createUser(
 		@FormParam("username") String name,
 		@FormParam("passwd") String password,
-		@FormParam("cpasswd") String cpassword,
-		@FormParam("email") String email) {
-		return userDAO.createUser(name, password, cpassword, email);
+		@FormParam("cpasswd") String cpassword) {
+		return userDAO.createUser(name, password, cpassword);
 	}
 	
 	/*  This service tunnels the PUT request because the HTML Standard don't support PUT requests on
@@ -50,19 +48,17 @@ public class UserResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_HTML)	
-	public Response emptyPOST(
+	public Response connectUser(
 		@FormParam("username") String name,
 		@FormParam("passwd") String password,
 		@FormParam("cpasswd") String cpassword,
-		@FormParam("email") String email,
 		@FormParam("_METHOD") String method) {
-		if (method.equals("PUT"))
-			return createUser(name, password, cpassword, email);
-		else
-			return Response
-						.status(500)
-						.entity("There is not a POST request on this URI")
-						.build();
+		if (method.equals("PUT")&&!cpassword.equals(null)) {
+			return createUser(name, password, cpassword);
+		}
+		else {
+			return userDAO.connectUser(name,password);
+		}
 	}
 	
 	@GET
@@ -81,9 +77,8 @@ public class UserResource {
 		@PathParam("user-id") int uid,
 		@FormParam("opasswd") String opassword,
 		@FormParam("passwd") String password,
-		@FormParam("cpasswd") String cpassword,
-		@FormParam("email") String email) {//voir si on modifie current_position
-		return userDAO.editUser(uid, opassword, password, cpassword, email);
+		@FormParam("cpasswd") String cpassword) {//voir si on modifie current_position
+		return userDAO.editUser(uid, opassword, password, cpassword);
 	}
 	
 	

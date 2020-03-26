@@ -16,25 +16,24 @@ public class User{
 	private Position currentPosition;
 	private static int id = 1;
 	
-	public User(String name, String password, String email) {
+	public User(String name, String password) {
 		this.userID=id++;
 		this.name = name;
 		this.password = password;
-		this.email = email;
 		this.listMap = new ArrayList<Map>();		
 	}
 	
 	public static User getUser() {
-		User u1 = new User("David","ddd","deeefe@gmail.com");
+		User u1 = new User("David","ddd");
 		u1.setMaps(Map.generateMaps());
 		return u1;
 	}
 	
 	public static ArrayList<User> generateUsers() {
 		ArrayList<User> users = new ArrayList<User>();
-		User u1 = new User("David","ddd","deeefe@gmail.com");
+		User u1 = new User("David","ddd");
 		u1.setMaps(Map.generateMaps());
-		User u2 = new User("Emrick","ss","ssafe@gmail.com");
+		User u2 = new User("Emrick","ss");
 		u2.setMaps(Map.generateMap2());
 		users.add(u1);
 		users.add(u2);
@@ -44,7 +43,7 @@ public class User{
 	///
 	
 	public static void init() {
-		User u1 = new User("David","123","david@mail.com");
+		User u1 = new User("David","123");
 		Map m1 = new Map("Magasins","David", true);
 		u1.getMaps().add(m1);
 		Location l1 = new Location("Monoprix","David",21,32,"descr","label");
@@ -110,16 +109,5 @@ public class User{
 	public String getPassword() {
 		return this.password;
 	}
-
-	public boolean setEmail(String email) {
-		if (!email.equals(null)) {
-			this.email = email;
-			return true;
-		}
-		return false;
-	}
 	
-	public String getEmail() {
-		return this.email;
-	}
 }
