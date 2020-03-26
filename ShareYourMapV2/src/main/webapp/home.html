@@ -4,7 +4,6 @@
 	<head>
 	<meta charset="utf8">
 	<title>ShareYourMap</title>
-	<link rel="stylesheet" type="text/css" href="src_share_your_map/css/modal.css">
 	</head>
 	<body>
 
@@ -21,20 +20,7 @@
 				<h1>ShareYourMap</h1>
 				<p>Find your <b>favorites places and event</b> everywhere in the world in less than 5 clicks.</p>
 			</div>
-			
-			<!-- Trigger/Open The Modal -->
-			<button class="modal-button" href="#myModal1">Sign In</button>
-			
-			<!-- The Modal -->
-			<div id="myModal1" class="modal">
-			
-			  <!-- Modal content -->
-			  <div class="modal-content">
-			    <div class="modal-header">
-			      <span class="close">×</span>
-			      <h2>ShareYourMap</h2>
-			    </div>
-			    <div class="modal-body">
+		
 			    		<div id="connection">
 							<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
 								<input type="hidden" name="_METHOD" value="POST"/> 
@@ -45,29 +31,10 @@
 									
 								</table>
 							</form>
-							<!--   <button onClick="newUser()">New user</button> -->
-						</div>
-			    </div>
-			    <div class="modal-footer">
-			      <h3>A student projet - 2020</h3>
-			    </div>
-			  </div>
-			
+							 <button onClick="newUser()">New user</button>
+						
 			</div>
 
-			<!-- Trigger/Open The Modal -->
-			<button class="modal-button" href="#myModal2">Sign Up</button>
-			
-			<!-- The Modal -->
-			<div id="myModal2" class="modal">
-			
-			  <!-- Modal content -->
-			  <div class="modal-content">
-			    <div class="modal-header">
-			      <span class="close">×</span>
-			      <h2>ShareYourMap</h2>
-			    </div>
-			    <div class="modal-body">
 			    		<div id="newUser" >
 							<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
 								<input type="hidden" name="_METHOD" value="PUT"/> 
@@ -78,17 +45,8 @@
 								    <tr><th></th><td><input type="submit" id="sign_up" value="Sign Up" style="float: right;"/></td></tr>
 								</table>
 							</form>
-							<!-- <button onClick="connect()">Already registered</button>  -->
-						</div>
-			    </div>
-			    <div class="modal-footer">
-			      <h3>A student projet - 2020</h3>
-			    </div>
-			  </div>
-			
-			</div>
-			
-			
+							 <button onClick="connect()">Already registered</button> 
+					
 			
 			<div>
 			<p id="usersList"></p>
@@ -100,5 +58,4 @@
 		
 
 	</body>
-	<script src="src_share_your_map/js/modal.js"></script>
 </html>
