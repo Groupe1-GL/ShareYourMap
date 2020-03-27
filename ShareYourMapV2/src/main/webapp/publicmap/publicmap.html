@@ -3,8 +3,8 @@
 	<head>
 	<meta charset="ISO-8859-1">
 	<title>PublicMap</title>
-	 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
  
 	</head>
 	<body>
@@ -14,7 +14,9 @@
 		</script>
 
 		<script id="listFavs" type="text/template">
-			<li><button onclick="displayFav(<%= id %>)"> <%= name %> </button></li>
+			<li><button 
+				<% if(1) {%> class="event" <%} else{ %> class="location" <%}%>			
+				onclick="displayFav(<%= id %>)"> <%= name %> </button></li>
 		</script>
 
 		<script id="listPublicMap" type="text/template">
@@ -35,6 +37,7 @@
 			<p></p>
 		</script>
 
+		
 		<div>
 			<div>
 				<h1>ShareYourMap</h1>
@@ -49,7 +52,7 @@
 					<ul id="mapList"></ul>
 				</div>
 				<div>
-					<button id="viewMap" onClick="document.location='viewmap.html'">View my maps</button>
+					<button id="viewMap" onClick="document.location='../viewmap/viewmap.html'">View my maps</button>
 				</div>
 			</div>
 			
@@ -69,7 +72,7 @@
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 		<script type="text/javascript" src="publicmap.js"></script>
-		<script type="text/javascript" src="./commonFiles/displayElem.js"></script>
+		<script type="text/javascript" src="../commonFiles/displayElem.js"></script>
 		
 		
 	</body>

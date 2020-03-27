@@ -49,11 +49,11 @@ function mapDetails(result){
 	var map_name = _.template($('#mapHeader').html());
 	$("#currentMap").html(map_name(result));
 	
-	var loc_name_template = _.template($('#listFavs').html());
+	var fav_template = _.template($('#listFavs').html());
 	var listFavs = result['locations'];
 	_.each(listFavs, function(location) {
-		location_name = loc_name_template(location);
-		$("#favsList").html(location_name);
+		fav_name_type = fav_template(location);
+		$("#favsList").html(fav_name_type);
 	});
 	
 	var editMap = _.template($('editMapTemplate').html());

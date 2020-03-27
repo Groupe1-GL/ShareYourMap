@@ -7,12 +7,6 @@
 	</head>
 	<body>
 
-		<script id="templateExample" type="text/template">
-			<div>
-				<%= attribute %>
-			</div>
-		</script>
-
 		<div>
 			<div>
 				<h1>ShareYourMap</h1>
@@ -21,11 +15,9 @@
 				<div id="connection">
 					<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
 						<input type="hidden" name="_METHOD" value="POST"/> 
-						<table>
-							<tr><th><label>Username:</label></th><td><input type="text" name="username" required></td></tr>
-							<tr><th><label>Password:</label></th><td><input type="password" name="passwd" required></td></tr>
-							<tr><th></th><td><input type="submit" id="sign_in" value="Sign In" style="float: right;"/></td></tr>
-						</table>
+						<input type="text" placeholder="Username" name="username" required>
+						<input type="password"  placeholder="Password" name="passwd" required>
+						<input type="submit" id="sign_in" value="Sign In"/>
 					</form>
 					<button onClick="newUser()">New user</button>
 						
@@ -33,17 +25,14 @@
 				<div id="newUser" >
 					<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
 						<input type="hidden" name="_METHOD" value="PUT"/> 
-						<table >
-							<tr><th><label style="float: left;">Username:</label></th><td><input type="text" name="username" required></td></tr>
-							<tr><th><label style="float: left;">Password:</label></th><td><input type="password" name="passwd" required></td></tr>
-							<tr><th><label style="float: left;">Confirm password:</label></th><td><input type="password" name="cpasswd" required></td></tr>
-							<tr><th></th><td><input type="submit" id="sign_up" value="Sign Up" style="float: right;"/></td></tr>
-						</table>
+						<input type="text" placeholder="Username" name="username" required>
+						<input type="password" placeholder="Password" name="passwd" required>
+						<input type="password" placeholder="Confirm password" name="cpasswd" required>
+						<input type="submit" id="sign_up" value="Sign Up">
 					</form>
 					<button onClick="connect()">Already registered</button> 
 				</div>			
 			<div>
-			<p id="usersList"></p>
 			</div>
 		
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
