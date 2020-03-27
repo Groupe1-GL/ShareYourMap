@@ -16,7 +16,7 @@ import java.util.*;
 public class ExampleResource {
 
 	public static List<User> users = new ArrayList<User>();
-	public static List<Map> maps = Map.generateMap();
+	public static List<Map> maps = Map.generateMap2();
 	public static User us = User.getUser();
 
 	
@@ -31,7 +31,7 @@ public class ExampleResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/homepage")
 	public List<User> addUser() {
-		User u = new User(" "," "," ");
+		User u = new User(" "," ");
 		ExampleResource.users.add(u);
 		return users;
 	}
