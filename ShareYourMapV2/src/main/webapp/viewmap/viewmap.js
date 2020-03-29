@@ -77,6 +77,15 @@ function editMap(uid,mid){
 	$("#viewMap").html(editMap(editDetails));
 }
 
+
+/*
+ * Display the element in which a user can share a map
+ * @param {int} mid		the id of the current map
+ */
+function shareMap(mid){
+	
+}
+
 /*
  * Delete a map from user's list of map
  * @param {int} uid		the id of the current user
@@ -89,11 +98,14 @@ function deleteMap(uid,mid){
 /*
  * Display the element in which a user can create a fav
  * @param {int} uid		the id of the current user
+ * @param {float} x		The longitude value of the new favorite
+ * @param {float} y		The latitude value of the new favorite
  */
-function createFav(id){
+function createFav(uid,mid,x,y){
+	var details = {"uid":uid, "mid":mid, "x":x, "y":y};
 	document.getElementById("viewFav").style.display = "block";
-	var editMap = _.template($('#newFavTemplate').html());
-	$("#viewFav").html(editMap());
+	var newFav = _.template($('#newFavTemplate').html());
+	$("#viewFav").html(newFav(details));
 }
 
 // Close fav's information page

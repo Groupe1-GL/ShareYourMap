@@ -11,11 +11,15 @@
 	
 		<script id="mapHeader" type="text/template">
 			<h2><%=name%></h2>
-			<button onclick="createFav(1)">Create a new Fav</button>
+			<button onclick="createFav(1,0,43,54)">Create a new Fav</button>
 		</script>
 
 		<script id="listMap" type="text/template">
-			<li> <button class="map" onclick="displayMap(<%= id %>)"> <%= name %> </button> <button onclick="editMap(1,1)">Edit</button> <button id="deleteMap"  onclick="deleteMap(1,1)"> X </button> </li>
+			<li> <button class="map" onclick="displayMap(<%= id %>)"> <%= name %> </button> 
+					<button onclick="editMap(1,1)">Edit</button> 
+					<button onclick="shareMap(1)">Share</button> 
+					<button id="deleteMap"  onclick="deleteMap(1,1)"> X </button> 
+			</li>
 		</script>
 
 		<script id="listFavs" type="text/template">
@@ -44,27 +48,35 @@
 		</script>
 
 		<script id="favDetails" type="text/template">
-			<h1> 
-				<%= name %>
-				<button onclick="closeFav()" >X</button>
-			</h1>
-			<p> Adresse </p>
-			<h2>Description</h2>
-			<p> <%= description%> </p>
-			<h2>Tags</h2>
-			<p> <%= label%> </p>
-			<h2>Pictures</h2>
-			<p></p>
+			<div id="detail">
+				<h1> 
+					<%= name %>
+					<button onclick="closeFav()" >X</button>
+				</h1>
+				<p> Adresse </p>
+				<h2>Description</h2>
+				<p> <%= description%> </p>
+				<h2>Tags</h2>
+				<p> <%= label%> </p>
+				<h2>Pictures</h2>
+				<p></p>
+				<button onclick="itinerary(2,2)">Go</button>
+			</div>
+			<div id="goToLocation" hidden>
+			</div>
 		</script>
 		
 		<script id="newFavTemplate" type="text/template">
 			<h1>New fav <button onclick="closeFav()" >X</button></h1>
-			<form action="/ws/users/1/maps/1/location?x=3.453&y=2.434" method="POST" enctype="application/x-www-form-urlencoded">
+			<form action="/ws/users/<%= uid %>/maps/<%= mid %>/location?x=<%= x %>&y=<%= y %>" method="POST" enctype="application/x-www-form-urlencoded">
 				Fav's name <input type="text" name="name">
 				Description <input type="text" name="description">
 				Label <input type="text" name="label">
 				<input type="submit" value="Create">
 			</form>
+		</script>
+
+		<script id="itineraryTemplate" type="text/template">
 		</script>
 
 		<div>
@@ -89,9 +101,9 @@
 			<div>
 				<div id="currentMap"></div>
 				<div id="viewCurrentMap">
+					<div id="viewMap" hidden></div>
 					<div id="favsList"></div>
 					<div id="viewFav" hidden></div>
-					<div id="viewMap" hidden></div>
 				</div>
 			</div>
 			<div id="map" style="height: 450px; width: 400px"></div>

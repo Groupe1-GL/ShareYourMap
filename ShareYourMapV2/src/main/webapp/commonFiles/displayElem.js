@@ -7,17 +7,31 @@ function getServerData(url, success){
 }
 
 //---------------------		Automatic actions		---------------------		
+var map = L.map('map');
+var popup = new L.Popup();
 
 //Initialize the initial map display in the page (center on the EIDD)
 $(function(){
-	var map = L.map('map').setView([48.8266496,2.3826648], 20); // LIGNE 14
-
+	map.setView([48.8266496,2.3826648], 20);
     var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
         attribution: '© OpenStreetMap contributors',
     });
     map.addLayer(osmLayer);
+    map.on('click', viewFav);
+    map.on('dblclick', addFav);
 });
 
+function viewFav(e) {
+	 popup
+     .setLatLng(e.latlng)
+     .setContent("You clicked the map at " + e.latlng.lat.toString())
+     .openOn(map);
+    displayFav(0);
+}
+
+function addFav(e) {
+	//createFav(1,0,e.latlng.lat,e.latlng.lng);
+}
 
 //---------------------		Actions on click		---------------------	
 
@@ -27,7 +41,7 @@ $(function(){
  * @param {float} y		The latitude value to center the map
  */
 function centerMap(x,y){
-	var map = L.map('map').setView([x,y], 20);
+	map.setView([x,y], 20);
 }
 
 /*
@@ -81,7 +95,15 @@ function favDetails(result){
 	$("#viewFav").html(detail);
 }
 
-
+/*
+ * Display the element in which a find an itinerary to the location
+ * @param {float} x		The longitude value to the location
+ * @param {float} y		The latitude value to the location
+ */
+function itinerary(x,y){
+	
+}
+	
 //Close fav's information page
 function closeFav(){
 	document.getElementById("viewFav").style.display = "none";
