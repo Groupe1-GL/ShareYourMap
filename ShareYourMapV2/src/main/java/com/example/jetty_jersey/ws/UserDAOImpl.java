@@ -215,7 +215,7 @@ public class UserDAOImpl implements UserDAO {
 		for (User us: u) {
 			if (us.getName().equals(username)&&us.getPassword().equals(password)) {
 				return Response.status(Response.Status.SEE_OTHER)
-			            .header(HttpHeaders.LOCATION, "/publicmap.html")//gérer l'affichage des maps de David
+			            .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")//gérer l'affichage des maps de David
 			            			//comment ? avec auth puis get maps ?
 			            .header("X-Foo", "bar")
 			            .build();
