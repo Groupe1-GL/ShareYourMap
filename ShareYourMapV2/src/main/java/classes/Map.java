@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+package classes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 
 @PersistenceCapable
 public class Map{
-	private int Map_ID;
+	private int map_ID;
 	private String name, creatorName;
 	private boolean access;
 	private List<Location> favoriteLocations;
@@ -15,13 +15,14 @@ public class Map{
 	
 	public Map(String name, String creator) {
 		this.favoriteLocations = new ArrayList<Location>();
-		this.Map_ID = id++;
+		this.map_ID = id++;
 		this.creatorName = creator;
 		this.name = name;
 		this.favoriteLocations = new ArrayList<Location>();
 	}
 	
 	public Map(String name, String creator, boolean b) {
+		this.map_ID = id++;
 		this.name = name;
 		this.favoriteLocations = new ArrayList<Location>();
 		this.creatorName = creator;
@@ -30,20 +31,20 @@ public class Map{
 	
 	public static ArrayList<Map> generateMaps(){
 		ArrayList <Map> maps = new ArrayList<Map>();
-		Map m1 = new Map("Magasin","David");
+		Map m1 = new Map("Magasin","David",true);
 		m1.setLocation(Location.generateLocations());
-		Map m2 = new Map("Fast Food","David");
+		Map m2 = new Map("Fast Food","David",false);
 		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);
 		return maps;
 	}
 	
-	public static ArrayList<Map> generateMap2(){
+	public static ArrayList<Map> generateMaps2(){
 		ArrayList <Map> maps = new ArrayList<Map>();
-		Map m1 = new Map("Shop","Emrick");
+		Map m1 = new Map("Shop","Emrick",false);
 		m1.setLocation(Location.generateLocations());
-		Map m2 = new Map("Bouffe","Emrick");
+		Map m2 = new Map("Manger","Emrick",true);
 		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);
@@ -51,7 +52,7 @@ public class Map{
 	}
 
 	public int getID() {
-		return this.Map_ID;
+		return this.map_ID;
 	}
 	
 	public String getName() {
@@ -70,8 +71,11 @@ public class Map{
 		return this.favoriteLocations.add(l);		
 	}
 	
-	public boolean isPublic() {
-		return this.access;
+	public String getAccess() {
+		if(this.access) {
+			return "1";
+		}
+		return "0";
 	}
 	
 	public boolean setName(String name) {

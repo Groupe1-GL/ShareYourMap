@@ -1,9 +1,10 @@
-package com.example.jetty_jersey.ws;
+package classes;
 
 import java.util.ArrayList;
 
 import javax.jdo.annotations.PersistenceCapable;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @PersistenceCapable
@@ -23,6 +24,7 @@ public class Location{
 	
 	
 	public Location(String name, String creatorName, double x, double y, String descr, String label) {
+		this.LocID = id++;
 		this.creatorName = creatorName;
 		this.name = name;
 		this.pos = new Position(x,y);
@@ -33,8 +35,8 @@ public class Location{
 
 	public static ArrayList<Location> generateLocations(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Monoprix = new Location("Monoprix","David",21,32,"Cher"," ");
-		Location Carrefour = new Location("Carrefour","David",1,362,"Proche"," ");
+		Location Monoprix = new Location("Monoprix","David",48.8318214,2.362692,"Cher"," ");
+		Location Carrefour = new Location("Carrefour","David",48.831824,2.362692,"Proche"," ");
 		locations.add(Carrefour);
 		locations.add(Monoprix);
 		return locations;
@@ -42,58 +44,49 @@ public class Location{
 	
 	public static ArrayList<Location> generateLocations2(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Mcdo = new Location("Mcdo","David",621,32,"Filet O fish"," ");
-		Location KFC = new Location("KFC","David",1,2,"Poulet"," ");
-		Location Quick = new Location("Quick","David",2,3,"Bof"," ");
+		Location Mcdo = new Location("Mcdo","David",48.8272921,2.3780381,"Filet O fish"," ");
+		Location KFC = new Location("KFC","David",48.8298797,2.3397636,"Poulet"," ");
+		Location Quick = new Location("Quick","David",48.8310552,2.3172679,"Bof"," ");
+		LocalDateTime s = LocalDateTime.now();
+		LocalDateTime e = LocalDateTime.now().plusDays(2);
+		Event Cafe = new Event("Honorine","David",48.826498,2.380959,"Chocolat","Breakfast", s,e);
 		locations.add(Mcdo);
 		locations.add(KFC);
 		locations.add(Quick);
+		locations.add(Cafe);
 		return locations;
 	}
 
-	
 	
 	public int getID() {
 		return this.LocID;
 	}
 	
-	public String getLocation() {
-		// TODO Auto-generated method stub
-		return this.name;
-	}
-	
 	public Position getPosition() {
-		// TODO Auto-generated method stub
 		return this.pos;
 	}
 	
 	public String getLabel() {
-		// TODO Auto-generated method stub
 		return this.label;
 	}
 	
 	public String getDescription(){
-		// TODO Auto-generated method stub
 		return this.description;
 	}
 	
 	public void putDescription(String str){
-		// TODO Auto-generated method stub
 		description += str;
 	}
 	
 	public void deleteDescription(){
-		// TODO Auto-generated method stub
 		description = null;
 	}
 	
 	public List<String> getMessage(){
-		// TODO Auto-generated method stub
 		return this.message;
 	}
 	
 	public boolean putMessage(String str){
-		// TODO Auto-generated method stub
 		if (!str.equals(null)) {
 			this.message.add(str);//*
 			return true;
@@ -102,10 +95,8 @@ public class Location{
 			return false;
 		}
 	}
-	
 
 	public void deleteMessage(){
-		// TODO Auto-generated method stub
 		message = null;
 	}
 
@@ -145,5 +136,14 @@ public class Location{
 	public String getName() {
 		return this.name;
 	}
+	
+	public String getEvent() {
+		if(this instanceof Event) {
+			return "1";
+		}
+		return "0";
+	}
 
 }
+
+

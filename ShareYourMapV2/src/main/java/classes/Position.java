@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+package classes;
 
 
 

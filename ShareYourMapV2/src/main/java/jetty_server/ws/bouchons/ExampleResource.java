@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+package jetty_server.ws.bouchons;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
@@ -10,13 +10,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
+import classes.Location;
+import classes.Map;
+import classes.User;
+
 import java.util.*;
 
 @Path("/")
 public class ExampleResource {
 
 	public static List<User> users = new ArrayList<User>();
-	public static List<Map> maps = Map.generateMap2();
+	public static List<Map> maps = Map.generateMaps2();
 	public static User us = User.getUser();
 
 	

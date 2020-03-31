@@ -1,3 +1,20 @@
+/* VIEWMAP
+ * Functions to navigate in the page collecting all the public maps
+ * @link src/main/webapp/viewmap
+ */
+
+//---------------------		Global variables	---------------------
+var current_user_id = 1;
+var current_map_id = 6;
+var current_fav_id = 1;
+
+//----------------------	Server functions	---------------------
+
+/*
+ * Send the GET request ot the server
+ * @param {string} 	 url			The url of the request
+ * @param {void} success 		The callback function
+ */
 function getServerData(url, success){
     $.ajax({
     	type:'GET',
@@ -6,6 +23,11 @@ function getServerData(url, success){
     }).done(success);
 }
 
+/*
+ * Send the DELETE request ot the server
+ * @param {string} 	 url			The url of the request
+ * @param {void} success 		The callback function
+ */
 function deleteServerData(url,success){
     $.ajax({
     	type: 'DELETE',
@@ -15,15 +37,13 @@ function deleteServerData(url,success){
 }
 
 
-//---------------------		Automatic actions		---------------------		
+//-------------------		Automatic actions		-----------------		
 
 
 // Return current registered user
 $(function(){
-	var user = "1";
-	getServerData("/ws/users/"+user,getUser);
+	getServerData("/ws/users/"+current_user_id,getUser);
 });
-
 
 
 /*
@@ -32,29 +52,26 @@ $(function(){
  */
 function getUser(result){
 	var user_name = _.template("<h2><%=name%></h2>");	
-	$("#userName").append(user_name(result));
+	$("#userName").html(user_name(result));
 
+	document.getElementById('mapList').innerHTML = "";
 	var id_template = _.template($('#listMap').html());
 	var maps = result['maps'];
 	_.each(maps, function(map) {
 		map_id = id_template(map);
-		$('#mapList').html(map_id);
+		$('#mapList').append(map_id);
 	 });
-/*	
-	var createMap = _.template($('#newMapTemplate').html());
-	$("#viewMap").append(createMap(result));*/
 }
 
 
 //---------------------		Actions on click		---------------------	
 
-
 /*
  * Display the element in which a user can create a map
  * @param {int} uid		the id of the current user
  */
-function createNewMap(uid){
-	user_id = {"uid": uid};
+function createNewMap(){
+	user_id = {"uid":current_user_id};
 	document.getElementById("viewMap").style.display = "block";
 	var createMap = _.template($('#newMapTemplate').html());
 	$("#viewMap").html(createMap(user_id));
@@ -65,13 +82,22 @@ function closeMap(){
 	document.getElementById("viewMap").style.display = "none";
 }
 
-/*
- * Display the element in which a user can edit a map
- * @param {int} uid		the id of the current user
+/* 
+ * Send the request to get the map to edit
  * @param {int} mid		the id of the current map
  */
-function editMap(uid,mid){
-	editDetails = {"uid":uid,"mid":mid};
+function editMap(mid){
+	getServerData("/ws/maps/6",showEditMap);
+}
+
+/*
+ * Display the element in which a user can edit a map
+ * @param {Map} result		The map to edit
+ */
+function showEditMap(result){
+	uid = {"uid":current_user_id};
+	editDetails = $.extend(uid,result);
+	
 	document.getElementById("viewMap").style.display = "block";
 	var editMap = _.template($('#editMapTemplate').html());
 	$("#viewMap").html(editMap(editDetails));
@@ -88,11 +114,10 @@ function shareMap(mid){
 
 /*
  * Delete a map from user's list of map
- * @param {int} uid		the id of the current user
- * @param {int} mid		the id of the current map
+ * @param {int} mid		the id of the map
  */
-function deleteMap(uid,mid){
-	deleteServerData("/ws/users/"+uid+"/maps/"+mid,refresh);
+function deleteMap(mid){
+	deleteServerData("/ws/users/"+current_user_id+"/maps/"+mid,refresh);
 }
 
 /*
@@ -101,8 +126,8 @@ function deleteMap(uid,mid){
  * @param {float} x		The longitude value of the new favorite
  * @param {float} y		The latitude value of the new favorite
  */
-function createFav(uid,mid,x,y){
-	var details = {"uid":uid, "mid":mid, "x":x, "y":y};
+function createFav(x,y){
+	var details = {"uid":current_user_id, "mid":current_map_id, "x":x, "y":y};
 	document.getElementById("viewFav").style.display = "block";
 	var newFav = _.template($('#newFavTemplate').html());
 	$("#viewFav").html(newFav(details));
@@ -117,8 +142,8 @@ function closeFav(){
 
 
 // Delete a location
-function deleteFav(uid,mid,lid){
-	deleteServerData("/ws/users/"+uid+"/maps/"+mid+"/location/1",refresh);
+function deleteFav(lid){
+	deleteServerData("/ws/users/"+current_user_id+"/maps/"+current_map_id+"/location/"+lid,refresh);
 }
 
 // Refresh 

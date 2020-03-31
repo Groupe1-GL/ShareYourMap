@@ -1,6 +1,6 @@
 /* PUBLICMAP
  * Functions to navigate in the page collecting all the public maps
- * @link src/main/webapp/publicmap.html 
+ * @link src/main/webapp/publicmap
  */
 
 /*
@@ -23,14 +23,17 @@ $(function(){
 });
 
 /*
- * Display maps in a list of button based on the 'listPublicMap' template
+ * Display public maps in a list of button based on the 'listPublicMap' template
  * @param {List<Map>}	The list of public map stocked in the database
  */
 function displayMapsList(result){
-	var id_template = _.template($('#listPublicMap').html());
+	document.getElementById('mapList').innerHTML = "";
+	var map_template = _.template($('#listPublicMap').html());
 	_.each(result, function(map) {
-		map_id = id_template(map);
-		$('#mapList').html(map_id);
+		if(map['access']=="1"){
+			map_display = map_template(map);
+			$('#mapList').append(map_display);
+		}
     });
 }
 

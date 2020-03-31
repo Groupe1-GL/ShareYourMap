@@ -1,6 +1,7 @@
-package com.example.jetty_jersey.ws;
+package jetty_server.ws;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -13,7 +14,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
 
-import com.example.jetty_jersey.ws.Map;
+import classes.Map;
+import dao.MapDAO;
+import dao.MapDAOImpl;
 
 import java.util.*;
 
@@ -41,7 +44,7 @@ public class MapResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps")
-	public boolean createMap(@PathParam("user-id") int uid,
+	public Response createMap(@PathParam("user-id") int uid,
 						     @FormParam("name") String name,
 						 	 @FormParam("access") int access){
 		return mapDAO.createMap(uid, name, access);		

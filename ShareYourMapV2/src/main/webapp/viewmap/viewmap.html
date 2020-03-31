@@ -8,41 +8,44 @@
  
 	</head>
 	<body>
-	
-		<script id="mapHeader" type="text/template">
-			<h2><%=name%></h2>
-			<button onclick="createFav(1,0,43,54)">Create a new Fav</button>
-		</script>
 
 		<script id="listMap" type="text/template">
 			<li> <button class="map" onclick="displayMap(<%= id %>)"> <%= name %> </button> 
-					<button onclick="editMap(1,1)">Edit</button> 
-					<button onclick="shareMap(1)">Share</button> 
-					<button id="deleteMap"  onclick="deleteMap(1,1)"> X </button> 
+					<button onclick="editMap(<%=id%>)">Edit</button> 
+					<button onclick="shareMap(<%=id%>)">Share</button> 
+					<button id="deleteMap"  onclick="deleteMap(<%=id%>)"> X </button> 
 			</li>
 		</script>
 
+		<script id="mapHeader" type="text/template">
+			<h2><%=name%></h2>
+			<button onclick="createFav(0,0)">Create a new Fav</button>
+		</script>
+		
+		
 		<script id="listFavs" type="text/template">
 			<li>
-				<button onclick="displayFav(<%= id %>)"> <%= name %> </button> <button onclick="deleteFav(1,1,<%= id %>)">X</button>
-				<br>Short description
+				<button 
+				<% if(event==1) {%> class="event" <%} else{ %> class="location" <%}%>	
+				onclick="displayFav(<%= id %>)"> <%= name %> </button> 
+				<button onclick="deleteFav(<%= id %>)">X</button>
 			</li>
 		</script>
 
 		<script id="newMapTemplate" type="text/template">
 			<h1>New map <button onclick="closeMap()" >X</button></h1>
-			<form action="/ws/users/<%= uid %>/maps" method="POST" enctype="application/x-www-form-urlencoded">
+			<form action="/ws/users/<%= uid %>/maps" method="PUT" enctype="application/x-www-form-urlencoded">
 				Map's name <input type="text" name="name">
-				Public map <input type="checkbox" name="access" value="1">
+				Public map <input type="text" name="access" value="1">
 				<input type="submit" value="Create">
 			</form>
 		</script>
 
 		<script id="editMapTemplate" type="text/template">
-			<h1>CurrentMap <button onclick="closeMap()" >X</button></h1>
-			<form action="/ws/users/<%= uid%>/maps/<%= mid%>" method="POST" enctype="application/x-www-form-urlencoded">
-				Map's name <input type="text" name="name" value="name">
-				Public map <input type="checkbox" name="access" value="true">
+			<h1><%=name%><button onclick="closeMap()" >X</button></h1>
+			<form action="/ws/users/<%=uid%>/maps/<%=id%>" method="POST" enctype="application/x-www-form-urlencoded">
+				Map's name <input type="text" name="name" value="<%=name%>">
+				Public map <input type="text" name="access" value="1">
 				<input type="submit" value="Edit">
 			</form>
 		</script>
@@ -54,12 +57,23 @@
 					<button onclick="closeFav()" >X</button>
 				</h1>
 				<p> Adresse </p>
-				<h2>Description</h2>
-				<p> <%= description%> </p>
-				<h2>Tags</h2>
-				<p> <%= label%> </p>
-				<h2>Pictures</h2>
-				<p></p>
+				<p>
+					<h2>Description</h2>
+					<%= description%>
+				</p>
+				<% if(event==1) {%> 
+					<p>
+						<h2>Duration</h2>
+						From <%= starting%> To <%= ending%>
+					</p>
+				<%}%>	
+				<p>
+					<h2>Tags</h2>
+					<%= label%> 
+				</p>
+				<p>
+					<h2>Pictures</h2>
+				</p>
 				<button onclick="itinerary(2,2)">Go</button>
 			</div>
 			<div id="goToLocation" hidden>
@@ -72,6 +86,10 @@
 				Fav's name <input type="text" name="name">
 				Description <input type="text" name="description">
 				Label <input type="text" name="label">
+				Start <input type="date" name="startDate" value="2020-03-30">
+				<input type="time" name="startTime">
+				End <input type="date" name="endDate" value="2020-03-30">
+				<input type="time" name="endTime">
 				<input type="submit" value="Create">
 			</form>
 		</script>
@@ -95,14 +113,14 @@
 				
 				<div>
 					<button id="publicMap" onClick="document.location='../publicmap/publicmap.html'">View public maps</button>
-					<button onclick="createNewMap(1)">Create a new map</button>
+					<button onclick="createNewMap()">Create a new map</button>
 				</div>
 			</div>
 			<div>
 				<div id="currentMap"></div>
 				<div id="viewCurrentMap">
 					<div id="viewMap" hidden></div>
-					<div id="favsList"></div>
+					<ul id="favsList"></ul>
 					<div id="viewFav" hidden></div>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+package jetty_server.ws;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
@@ -12,6 +12,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
+
+import classes.Location;
+import dao.LocationDAO;
+import dao.LocationDAOImpl;
 
 import java.util.List;
 

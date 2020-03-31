@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+package classes;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,7 @@ import java.util.*;
 public class User{
 	private int userID;
 	private String name;
-	private String password; //ADD
-	private String email; //ADD
+	private String password;
 	private List<Map> listMap; 
 	private Position currentPosition;
 	private static int id = 1;
@@ -24,35 +23,20 @@ public class User{
 	}
 	
 	public static User getUser() {
-		User u1 = new User("David","ddd");
-		u1.setMaps(Map.generateMaps());
+		User u1 = new User("Paul","ddd");
+		u1.setMaps(Map.generateMaps2());
 		return u1;
 	}
 	
 	public static ArrayList<User> generateUsers() {
 		ArrayList<User> users = new ArrayList<User>();
 		User u1 = new User("David","ddd");
-		u1.setMaps(Map.generateMaps());
+		u1.setMaps(Map.generateMaps2());
 		User u2 = new User("Emrick","ss");
-		u2.setMaps(Map.generateMap2());
+		u2.setMaps(Map.generateMaps());
 		users.add(u1);
 		users.add(u2);
 		return users;
-	}
-	
-	///
-	
-	public static void init() {
-		User u1 = new User("David","123");
-		Map m1 = new Map("Magasins","David", true);
-		u1.getMaps().add(m1);
-		Location l1 = new Location("Monoprix","David",21,32,"descr","label");
-		m1.getLocations().add(l1);
-		
-		//add on db
-		UserDAOImpl.u.add(u1);
-		MapDAOImpl.m.add(m1);
-		LocationDAOImpl.l.add(l1);
 	}
 	
 	public int getUserID() {
@@ -75,22 +59,18 @@ public class User{
 	}
 	
 	public void putMap(Map m) {
-		// TODO Auto-generated method stub
 		listMap.add(m);
 	}
 
 	public void deleteMap(Map m) {
-		// TODO Auto-generated method stub
 		listMap.remove(m);
 	}
 
-	public Position getcurrentPosition() {
-		// TODO Auto-generated method stub
+	public Position getCurrentPosition() {
 		return this.currentPosition;
 	}
 	
 	public List<Map> getMaps() {
-		// TODO Auto-generated method stub
 		return this.listMap;
 	}
 	
