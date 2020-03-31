@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+package jetty_server.ws;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
@@ -11,6 +11,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import classes.Map;
+import classes.User;
+import dao.UserDAO;
+import dao.UserDAOImpl;
+
 import java.util.*;
 
 /**

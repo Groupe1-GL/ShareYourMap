@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+package jetty_server.ws.bouchons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,20 +8,22 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import classes.User;
+
 
 @PersistenceCapable
-public class MapContainer {
-
+public class UserContainer {
+	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)//
 	protected Long id = null;
 	
 	@Persistent
-	protected List<Map> maps = null;
+	protected List<User> users = null;
 
-	public MapContainer() {
+	public UserContainer() {
 		super();
-		this.maps = new ArrayList<Map>();
+		this.users = new ArrayList<User>();
 	}
 
 	public Long getId() {
@@ -32,12 +34,11 @@ public class MapContainer {
 		this.id = id;
 	}
 
-	public List<Map> getMaps() {
-		return this.maps;
+	public List<User> getUsers() {
+		return this.users;
 	}
 
-	public void setMaps(List<Map> Maps) {
-		this.maps = maps;
+	public void setUsers(List<User> Users) {
+		this.users = users;
 	}
-	
 }

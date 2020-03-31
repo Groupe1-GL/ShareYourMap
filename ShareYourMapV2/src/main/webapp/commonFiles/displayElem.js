@@ -1,3 +1,22 @@
+/* DISPLAY ELEMENTS
+ * Functions to display maps and locations details
+ */
+
+//----------------------	Global variables	-------------------------
+
+var map = L.map('map');
+var popup = new L.Popup();
+var current_user_id = 1;
+var current_map_id = 6;
+var current_fav_id = 1;
+
+//----------------------	Server function		-------------------------
+
+/*
+ * Send the GET request ot the server
+ * @param {string} 	 url			The url of the request
+ * @param {void} success 		The callback function
+ */
 function getServerData(url, success){
     $.ajax({
     	type:'GET',
@@ -7,10 +26,8 @@ function getServerData(url, success){
 }
 
 //---------------------		Automatic actions		---------------------		
-var map = L.map('map');
-var popup = new L.Popup();
 
-//Initialize the initial map display in the page (center on the EIDD)
+// Initialize the initial map display in the page (center on the EIDD)
 $(function(){
 	map.setView([48.8266496,2.3826648], 20);
     var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
@@ -24,13 +41,13 @@ $(function(){
 function viewFav(e) {
 	 popup
      .setLatLng(e.latlng)
-     .setContent("You clicked the map at " + e.latlng.lat.toString())
+     .setContent("You clicked the map at " + e.latlng.toString())
      .openOn(map);
-    displayFav(0);
+    //displayFav(0);
 }
 
 function addFav(e) {
-	//createFav(1,0,e.latlng.lat,e.latlng.lng);
+	createFav(e.latlng.lat,e.latlng.lng);
 }
 
 //---------------------		Actions on click		---------------------	
@@ -49,6 +66,7 @@ function centerMap(x,y){
  * @param {long} id		The id of the wanted map
  */
 function displayMap(id){
+	current_map_id = id;
 	getServerData("/ws/maps/"+id,mapDetails);
 }
 
@@ -56,43 +74,46 @@ function displayMap(id){
  * Display information of the current map in the page with different templates
  * @param {Map} result		The current map
  */
-function mapDetails(result){
-	var uid = {"uid":1};
-	var dataEdit = $.extend(uid,result);
-	
+function mapDetails(result){	
 	var map_name = _.template($('#mapHeader').html());
 	$("#currentMap").html(map_name(result));
 	
+	document.getElementById('favsList').innerHTML = "";
 	var fav_template = _.template($('#listFavs').html());
 	var listFavs = result['locations'];
 	_.each(listFavs, function(location) {
 		fav_name_type = fav_template(location);
-		$("#favsList").html(fav_name_type);
+		$("#favsList").append(fav_name_type);
 	});
-	
-	var editMap = _.template($('editMapTemplate').html());
-	editHTML = editMap(dataEdit);
-	$("#viewMap").html(editMap);
 }
 
 
 /*
- * Send the request to have the favs with a certain id
+ * Send the request to have the current map and search for the fav with a certain id
  * @param {long} id		The id of the wanted favorite
  */
 function displayFav(id){
-	getServerData("/ws/viewmap/viewlocation/1/1/1",favDetails);							// !! A changer !!
+	current_fav_id = id;
+	getServerData("/ws/maps/"+current_map_id,favDetails);						
 }
 
 /*
- * Display information of the current favs in the page with the 'favDetails' template
- * @param {Location} result		The current favorite
+ * Get the location for an certain id
+ * And display information of this favs in the page with the 'favDetails' template
+ * @param {Map} result	The current map
+ * @param {long} id		The id of the wanted favorite
  */
 function favDetails(result){
-	document.getElementById("viewFav").style.display = "block";
-	var location_template = _.template($('#favDetails').html());
-	detail = location_template(result);
-	$("#viewFav").html(detail);
+	_.each(result['locations'], function(location) {
+		if(location['id']==current_fav_id){
+			document.getElementById("viewFav").style.display = "block";
+			var location_template = _.template($('#favDetails').html());
+			detail = location_template(location);
+			$("#viewFav").html(detail);
+			centerMap(parseFloat(location['position']['x']),parseFloat(location['position']['y']));
+		}
+	});
+	return null;
 }
 
 /*

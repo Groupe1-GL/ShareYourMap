@@ -1,15 +1,19 @@
-package com.example.jetty_jersey.ws;
+package dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
+import classes.Map;
+import classes.User;
+
+/*
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+*/
 
 /**
  * UserDAOImpl is the implementation of the UserDAO interface.
@@ -21,7 +25,6 @@ import javax.jdo.Transaction;
 public class UserDAOImpl implements UserDAO {
 	
 	static List<User> u = User.generateUsers();
-	//static List<User> u = new ArrayList<User>();
 	
 	/**
 	 * Returns the list of all registered users.
@@ -31,6 +34,29 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	public List<User> getUsers() {
 		return u;
+	}
+	
+	
+	/**
+     * Connect a user on the website and redirect it to his map page.
+	 *
+	 * @param	username 			the username 
+	 * @param	password	the user's password 
+	 * @return	   			a text that describe the response
+	 */
+	public Response connectUser(		String username, String password) {
+		for (User us: u) {
+			if (us.getName().equals(username)&&us.getPassword().equals(password)) {
+				return Response.status(Response.Status.SEE_OTHER)
+			            .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
+			            .header("X-Foo", "bar")
+			            .build();
+			}
+		}
+		 return Response
+				 	.status(402)
+		            .entity("Username and password do not match")
+		            .build();
 	}
 	
 	/**
@@ -57,7 +83,7 @@ public class UserDAOImpl implements UserDAO {
 		//Check if the passwords are equals
 		if (password.equals(cpassword)){
 			//Encrypt & Insert into the database
-			u.add(new User(name,password));//gÃ©rer regex d'email & password encryption
+			u.add(new User(name,password));
 			return Response
 					.status(201)
 					.entity("You've been successfully signed up.")
@@ -77,7 +103,7 @@ public class UserDAOImpl implements UserDAO {
 	 * @param  uid the user identifier 
 	 * @return	   the user object
 	 */
-	public User getUser(				int uid) {
+	public User getUser(int uid) {
 		for (User us: u) {
 			if (us.getUserID() == uid)
 				return us;
@@ -204,27 +230,5 @@ public class UserDAOImpl implements UserDAO {
 		return false;
 	}
 	
-	/**
-     * Connect a user on the website and redirect it to his map page.
-	 *
-	 * @param	username 			the username 
-	 * @param	password	the user's password 
-	 * @return	   			a text that describe the response
-	 */
-	public Response connectUser(		String username, String password) {
-		for (User us: u) {
-			if (us.getName().equals(username)&&us.getPassword().equals(password)) {
-				return Response.status(Response.Status.SEE_OTHER)
-			            .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")//gérer l'affichage des maps de David
-			            			//comment ? avec auth puis get maps ?
-			            .header("X-Foo", "bar")
-			            .build();
-			}
-		}
-		 return Response
-				 	.status(402)
-		            .entity("Username and password do not match")
-		            .build();
-	}
 	
 }

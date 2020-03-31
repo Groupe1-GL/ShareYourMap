@@ -22,7 +22,7 @@
 					<button onClick="newUser()">New user</button>
 						
 				</div>
-				<div id="newUser" >
+				<div id="newUser" hidden>
 					<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
 						<input type="hidden" name="_METHOD" value="PUT"/> 
 						<input type="text" placeholder="Username" name="username" required>
@@ -31,8 +31,7 @@
 						<input type="submit" id="sign_up" value="Sign Up">
 					</form>
 					<button onClick="connect()">Already registered</button> 
-				</div>			
-			<div>
+				</div>	
 			</div>
 		
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>

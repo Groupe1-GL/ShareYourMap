@@ -1,9 +1,13 @@
-package com.example.jetty_jersey.ws;
+package dao;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import classes.Location;
+import classes.Map;
+import classes.User;
 
 public class LocationDAOImpl implements LocationDAO {
 
@@ -174,8 +178,8 @@ public class LocationDAOImpl implements LocationDAO {
 		//For example a circle area between Paris and Meaux I find via Google Maps sqrt( (48.957426-48.846995)^2 + (2.890384-2.349373)^2 ) = 0.55216655809
 		double threshold = 0.55216655809;
 		for (User us: UserDAOImpl.u) {
-			double x = Math.abs(us.getcurrentPosition().getX()-threshold);
-			double y = Math.abs(us.getcurrentPosition().getY()-threshold);
+			double x = Math.abs(us.getCurrentPosition().getX()-threshold);
+			double y = Math.abs(us.getCurrentPosition().getY()-threshold);
 			if (us.getUserID() == uid) {
 				for (Map ma: us.getMaps()) {
 					if ((ma.getID() == mid)) {

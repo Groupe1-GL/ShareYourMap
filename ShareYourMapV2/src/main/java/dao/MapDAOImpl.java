@@ -1,15 +1,22 @@
-package com.example.jetty_jersey.ws;
+package dao;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
+
+import classes.Location;
+import classes.Map;
+import classes.User;
+
 
 public class MapDAOImpl implements MapDAO {
 	
-	static List<Map> m = Map.generateMaps();
-	//static List<Map> m = new ArrayList<Map>();
+	static List<Map> m = Map.generateMaps2();
+
 	/**
 	 * Returns the list of all maps.
 	 * If there is no maps, it will return a null object.
@@ -17,7 +24,7 @@ public class MapDAOImpl implements MapDAO {
 	 * @return	the maps on the database
 	 */
 	public List<Map> getMaps(){
-		return m;
+		return MapDAOImpl.m;
 	}
 	
 	/**
@@ -27,7 +34,7 @@ public class MapDAOImpl implements MapDAO {
 	 * @return	the map
 	 */
 	public Map getMap(int mid) {
-		for (Map ma : m) {
+		for (Map ma : MapDAOImpl.m) {
 			if (ma.getID() == mid) {
 				return ma;
 			}
@@ -40,15 +47,21 @@ public class MapDAOImpl implements MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public boolean createMap(int uid, String name, int access) {
+	public Response createMap(int uid, String name, int access) {
 		for (User us: UserDAOImpl.u) {
 			if (us.getUserID() == uid) {
 				Map newMap = new Map(name, us.getName(), access==1);
 				MapDAOImpl.m.add(newMap);
-				return us.getMaps().add(newMap);
+				return Response.status(Response.Status.SEE_OTHER)
+			            .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
+			            .header("X-Foo", "bar")
+			            .build();
 			}
 		}
-		return false;
+		return Response
+			 	.status(402)
+	            .entity("Unvalid creation")
+	            .build();
 	}
 	
 	/**

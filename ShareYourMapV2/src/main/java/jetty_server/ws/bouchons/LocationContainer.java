@@ -1,4 +1,4 @@
-package com.example.jetty_jersey.ws;
+package jetty_server.ws.bouchons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,20 +8,22 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import classes.Location;
+
 
 @PersistenceCapable
-public class EventContainer {
+public class LocationContainer {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)//
 	protected Long id = null;
 	
 	@Persistent
-	protected List<Event> events = null;
+	protected List<Location> locations = null;
 
-	public EventContainer() {
+	public LocationContainer() {
 		super();
-		this.events = new ArrayList<Event>();
+		this.locations = new ArrayList<Location>();
 	}
 
 	public Long getId() {
@@ -32,12 +34,12 @@ public class EventContainer {
 		this.id = id;
 	}
 
-	public List<Event> getEvents() {
-		return this.events;
+	public List<Location> getLocations() {
+		return this.locations;
 	}
 
-	public void setEvents(List<Event> Events) {
-		this.events = Events;
+	public void setLocations(List<Location> Locations) {
+		this.locations = locations;
 	}
 	
 }

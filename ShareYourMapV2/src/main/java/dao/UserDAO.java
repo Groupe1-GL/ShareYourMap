@@ -1,7 +1,10 @@
-package com.example.jetty_jersey.ws;
+package dao;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
+
+import classes.Map;
+import classes.User;
 
 /**
  * UserDAO is the interface of the Data Access Object of users.

@@ -1,6 +1,10 @@
-package com.example.jetty_jersey.ws;
+package dao;
 
 import java.util.List;
+import javax.ws.rs.core.Response;
+
+import classes.Location;
+import classes.Map;
 
 /**
  * MapDAO is the interface of the Data Access Object of maps.
@@ -30,7 +34,7 @@ public interface MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public boolean createMap(int uid, String creator, int access);
+	public Response createMap(int uid, String creator, int access);
 	/**
 	 * Edits a map selected by its id.
 	 * If there is not map matching, it will modify nothing.

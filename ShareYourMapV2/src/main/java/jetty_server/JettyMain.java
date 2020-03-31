@@ -1,6 +1,4 @@
-package com.example.jetty_jersey;
-import com.example.jetty_jersey.ws.*;
-
+package jetty_server;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -17,7 +15,6 @@ import org.glassfish.jersey.servlet.ServletContainer;
 public class JettyMain {
 
 	public static void main(String[] args) throws Exception {
-		User.init();
 		// Initialize the server
 		Server server = new Server();
 
@@ -30,7 +27,7 @@ public class JettyMain {
 
 		// Configure Jersey
 		ResourceConfig rc = new ResourceConfig();
-		rc.packages(true, "com.example.jetty_jersey.ws");
+		rc.packages(true, "jetty_server.ws");
 		rc.register(JacksonFeature.class);
 		rc.register(LoggingFilter.class);
 

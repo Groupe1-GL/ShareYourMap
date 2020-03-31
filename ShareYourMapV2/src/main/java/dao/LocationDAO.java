@@ -1,6 +1,8 @@
-package com.example.jetty_jersey.ws;
+package dao;
 
 import java.util.List;
+
+import classes.Location;
 
 public interface LocationDAO {
 	
