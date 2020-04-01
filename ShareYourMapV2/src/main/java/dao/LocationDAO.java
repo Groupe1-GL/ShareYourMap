@@ -17,6 +17,8 @@ public interface LocationDAO {
 	 * @param	name	the location name
 	 * @param	descr 	the location description
 	 * @param	label	the location label
+	 * @param	x		the longitude
+	 * @param	y		the latitude
 	 * @return			true if the operation was successful
 	 */
 	public boolean createLocationOnMap(	int uid, 

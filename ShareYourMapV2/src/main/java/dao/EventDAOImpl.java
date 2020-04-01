@@ -1,11 +1,19 @@
 package dao;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import classes.Event;
+import classes.Location;
+import classes.Map;
+import classes.User;
 
-public interface EventDAO  extends LocationDAO{
+public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
+
+	static List<Event> e = new ArrayList<Event>();
 	
 	/**
      * Creates and adds a location on a map selected by its id.
@@ -31,7 +39,21 @@ public interface EventDAO  extends LocationDAO{
 										double x, 
 										double y,
 										LocalDateTime start,
-										LocalDateTime end);
+										LocalDateTime end) {
+		for (User us: UserDAOImpl.u) {
+			if (us.getUserID() == uid) {
+				for (Map ma: us.getMaps()) {
+					if (ma.getID() == mid) {
+						Event newEvent = new Event(name, us.getName(), x, y, descr, label, start, end);
+						EventDAOImpl.e.add(newEvent);
+						ma.getEvents().add(newEvent);
+						return true;
+					}
+				}
+			}
+		}
+		return false;		
+	}
 	
 	/**
      * Gives the next events according to the current time on the current map.
@@ -39,6 +61,18 @@ public interface EventDAO  extends LocationDAO{
 	 * @param	mid		the map identifier
 	 * @return			an event list
 	 */
-	public List<Event> nextEvents(int mid);
+	public List<Event> nextEvents(int mid) {
+		List<Event> res = new ArrayList<Event>();
+		for (Map ma: MapDAOImpl.m) {
+			if (ma.getID() == mid) {
+				for (Event ev : ma.getEvents()) {
+					if (ev.getStart().isAfter(LocalDateTime.now())) {
+						res.add(ev);
+					}
+				}
+			}
+		}
+		return res;
+	}
 	
 }

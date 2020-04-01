@@ -11,7 +11,7 @@ import java.util.*;
 public class Location{
 	private int LocID;
 	private String name, creatorName, description;
-	private List<String> message;//*
+	private List<String> message;
 	private Position pos;
 	private String label;
 	private static int id = 1;
@@ -22,7 +22,6 @@ public class Location{
 		this.name = "Location"+String.valueOf(this.LocID);
 	}
 	
-	
 	public Location(String name, String creatorName, double x, double y, String descr, String label) {
 		this.LocID = id++;
 		this.creatorName = creatorName;
@@ -31,8 +30,7 @@ public class Location{
 		this.description = descr;
 		this.label = label;
 	}
-
-
+	
 	public static ArrayList<Location> generateLocations(){
 		ArrayList<Location> locations = new ArrayList<Location>();
 		Location Monoprix = new Location("Monoprix","David",48.8318214,2.362692,"Cher"," ");
@@ -57,7 +55,6 @@ public class Location{
 		return locations;
 	}
 
-	
 	public int getID() {
 		return this.LocID;
 	}
