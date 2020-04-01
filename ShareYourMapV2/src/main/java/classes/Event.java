@@ -42,11 +42,13 @@ public class Event extends Location{
 	public void setStart(LocalDateTime start) {
 		this.start = start;
 	}
-
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public LocalDateTime getEnd() {
 		return end;
 	}
-
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
 	}
