@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import javax.jdo.annotations.PersistenceCapable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @PersistenceCapable
 public class Event extends Location{
 	private LocalDateTime start;
@@ -43,12 +45,12 @@ public class Event extends Location{
 		this.start = start;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	public LocalDateTime getEnd() {
 		return end;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
 	}
