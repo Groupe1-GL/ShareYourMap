@@ -42,7 +42,7 @@ function deleteServerData(url,success){
 
 // Return current registered user
 $(function(){
-	getServerData("/ws/users/"+current_user_id,getUser);
+	getServerData(`/ws/users/${current_user_id}`,getUser);
 });
 
 
@@ -77,17 +77,13 @@ function createNewMap(){
 	$("#viewMap").html(createMap(user_id));
 }
 
-// Close map's information element
-function closeMap(){
-	document.getElementById("viewMap").style.display = "none";
-}
 
 /* 
  * Send the request to get the map to edit
  * @param {int} mid		the id of the current map
  */
 function editMap(mid){
-	getServerData("/ws/maps/6",showEditMap);
+	getServerData(`/ws/maps/${mid}`,showEditMap);
 }
 
 /*
@@ -109,7 +105,10 @@ function showEditMap(result){
  * @param {int} mid		the id of the current map
  */
 function shareMap(mid){
-	
+	link = {"link": "localhost:8080/ws/users?_METHOD=POST&username=David&passwd=ddd"};
+	document.getElementById("shareMapModal").style.display = "block";
+	var sharingLink = _.template($('#shareMapTemplate').html());
+	$("#shareMapModal").html(sharingLink(link));
 }
 
 /*
@@ -117,7 +116,7 @@ function shareMap(mid){
  * @param {int} mid		the id of the map
  */
 function deleteMap(mid){
-	deleteServerData("/ws/users/"+current_user_id+"/maps/"+mid,refresh);
+	deleteServerData(`/ws/users/${current_user_id}/maps/${mid}`,refresh);
 }
 
 /*
@@ -133,17 +132,12 @@ function createFav(x,y){
 	$("#viewFav").html(newFav(details));
 }
 
-// Close fav's information page
-function closeFav(){
-	document.getElementById("viewFav").style.display = "none";
-}
-
 // Edit a location
 
 
 // Delete a location
 function deleteFav(lid){
-	deleteServerData("/ws/users/"+current_user_id+"/maps/"+current_map_id+"/location/"+lid,refresh);
+	deleteServerData(`/ws/users/${current_user_id}/maps/${current_map_id}/location/${lid}`,refresh);
 }
 
 // Refresh 

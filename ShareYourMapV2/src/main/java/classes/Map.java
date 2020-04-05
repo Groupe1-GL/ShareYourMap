@@ -30,11 +30,19 @@ public class Map{
 		this.access = b;
 	}
 	
+	public Map(int ID, String name, String creator, boolean b) {
+		this.map_ID = ID;
+		this.name = name;
+		this.locations = new ArrayList<Location>();
+		this.creatorName = creator;
+		this.access = b;
+	}
+	
 	public static ArrayList<Map> generateMaps(){
 		ArrayList <Map> maps = new ArrayList<Map>();
-		Map m1 = new Map("Magasin","David",true);
+		Map m1 = new Map(1,"Magasin","David",true);
 		m1.setLocation(Location.generateLocations());
-		Map m2 = new Map("Fast Food","David",false);
+		Map m2 = new Map(2,"Fast Food","David",false);
 		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);
@@ -43,9 +51,9 @@ public class Map{
 	
 	public static ArrayList<Map> generateMaps2(){
 		ArrayList <Map> maps = new ArrayList<Map>();
-		Map m1 = new Map("Shop","Emrick",false);
+		Map m1 = new Map(3,"Shop","Emrick",false);
 		m1.setLocation(Location.generateLocations());
-		Map m2 = new Map("Manger","Emrick",true);
+		Map m2 = new Map(4,"Manger","Emrick",true);
 		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);

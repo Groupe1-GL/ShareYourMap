@@ -60,7 +60,7 @@ public class MapDAOImpl implements MapDAO {
 		}
 		return Response
 			 	.status(402)
-	            .entity("Unvalid creation")
+	            .entity("Unvalid creation"+uid)
 	            .build();
 	}
 	

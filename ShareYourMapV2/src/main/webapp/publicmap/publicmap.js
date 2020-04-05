@@ -36,15 +36,3 @@ function displayMapsList(result){
 		}
     });
 }
-
-/*		---------------------		Actions on click		---------------------		*/
-
-// Send the request to have the list of maps with "map_name" (searchBar value) in their name 
-$(function(){
-	$("#searchMap").click(function(){
-		var map_name = document.getElementById("searchBar").value;
-		if (map_name !=  null && map_name != ""){
-			getServerData("/ws/mapsearch/?search="+map_name,displayMapsList)
-		}
-	});
-});

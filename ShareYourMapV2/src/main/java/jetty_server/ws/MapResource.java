@@ -40,9 +40,9 @@ public class MapResource {
 	}
 
 	
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/users/{user-id}/maps")
 	public Response createMap(@PathParam("user-id") int uid,
 						     @FormParam("name") String name,
@@ -83,7 +83,6 @@ public class MapResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/mapsearch")
-	//voir pour fusionner deux WS mapsearch et locsearch afin de préciser la recherche /searchbar
 	public List<Map> searchMap(
 			@DefaultValue("") @QueryParam("search") String ref) {
 		return mapDAO.searchMap(ref);

@@ -31,10 +31,20 @@ public class Location{
 		this.label = label;
 	}
 	
+	public Location(int ID, String name, String creatorName, double x, double y, String descr, String label) {
+		this.LocID = ID;
+		this.creatorName = creatorName;
+		this.name = name;
+		this.pos = new Position(x,y);
+		this.description = descr;
+		this.label = label;
+	}
+	
+	
 	public static ArrayList<Location> generateLocations(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Monoprix = new Location("Monoprix","David",48.8318214,2.362692,"Cher"," ");
-		Location Carrefour = new Location("Carrefour","David",48.831824,2.362692,"Proche"," ");
+		Location Monoprix = new Location(1,"Monoprix","David",48.8318214,2.362692,"Cher"," ");
+		Location Carrefour = new Location(2,"Carrefour","David",48.831824,2.362692,"Proche"," ");
 		locations.add(Carrefour);
 		locations.add(Monoprix);
 		return locations;
@@ -42,12 +52,12 @@ public class Location{
 	
 	public static ArrayList<Location> generateLocations2(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Mcdo = new Location("Mcdo","David",48.8272921,2.3780381,"Filet O fish"," ");
-		Location KFC = new Location("KFC","David",48.8298797,2.3397636,"Poulet"," ");
-		Location Quick = new Location("Quick","David",48.8310552,2.3172679,"Bof"," ");
+		Location Mcdo = new Location(3,"Mcdo","David",48.8272921,2.3780381,"Filet O fish"," ");
+		Location KFC = new Location(4,"KFC","David",48.8298797,2.3397636,"Poulet"," ");
+		Location Quick = new Location(5,"Quick","David",48.8310552,2.3172679,"Bof"," ");
 		LocalDateTime s = LocalDateTime.now();
 		LocalDateTime e = LocalDateTime.now().plusDays(2);
-		Event Cafe = new Event("Honorine","David",48.826498,2.380959,"Chocolat","Breakfast", s,e);
+		Event Cafe = new Event(6,"Honorine","David",48.826498,2.380959,"Chocolat","Breakfast", s,e);
 		locations.add(Mcdo);
 		locations.add(KFC);
 		locations.add(Quick);

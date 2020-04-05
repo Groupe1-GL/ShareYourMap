@@ -32,7 +32,7 @@ public class LocationResource {
 	LocationDAO locationDAO = new LocationDAOImpl();
 	
 	//voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps/{map-id}/location")

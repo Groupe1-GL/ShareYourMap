@@ -96,35 +96,7 @@ public class UserResource {
 		return userDAO.deleteUser(uid);
 	}
 	
-	
-	 //voir si la réponse est cohérente si l'user n'existe pas
-	//voir si inutile, mais permet d'encapsuler et protéger credentials
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps")
-	public List<Map> getMapsOfUser(@PathParam("user-id") int uid) {
-		return userDAO.getMapsOfUser(uid);
-	}
-	
-	
-	 //voir si la réponse est cohérente si l'user et/ou la map n'existent pas
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps/{map-id}")
-	public boolean addMapOnUser(@PathParam("user-id") int uid,
-								@PathParam("map-id") int mid) {
-		return userDAO.addMapOnUser(uid, mid);
-	}
-	
-	
-	 //voir si la réponse est cohérente si l'user et/ou la map n'existent pas
-	@DELETE
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps/{map-id}")
-	public boolean removeMapOnUser(@PathParam("user-id") int uid,
-								   @PathParam("map-id") int mid) {
-		return userDAO.removeMapOnUser(uid, mid);
-	}
+
+
 	
 }

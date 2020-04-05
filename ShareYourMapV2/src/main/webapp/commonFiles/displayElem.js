@@ -7,7 +7,7 @@
 var map = L.map('map');
 var popup = new L.Popup();
 var current_user_id = 1;
-var current_map_id = 6;
+var current_map_id = 1;
 var current_fav_id = 1;
 
 //----------------------	Server function		-------------------------
@@ -67,7 +67,7 @@ function centerMap(x,y){
  */
 function displayMap(id){
 	current_map_id = id;
-	getServerData("/ws/maps/"+id,mapDetails);
+	getServerData(`/ws/maps/${id}`,mapDetails);
 }
 
 /*
@@ -94,7 +94,7 @@ function mapDetails(result){
  */
 function displayFav(id){
 	current_fav_id = id;
-	getServerData("/ws/maps/"+current_map_id,favDetails);						
+	getServerData(`/ws/maps/${current_map_id}`,favDetails);						
 }
 
 /*
@@ -104,6 +104,7 @@ function displayFav(id){
  * @param {long} id		The id of the wanted favorite
  */
 function favDetails(result){
+
 	_.each(result['locations'], function(location) {
 		if(location['id']==current_fav_id){
 			document.getElementById("viewFav").style.display = "block";
@@ -125,7 +126,7 @@ function itinerary(x,y){
 	
 }
 	
-//Close fav's information page
-function closeFav(){
-	document.getElementById("viewFav").style.display = "none";
+//Close element
+function closeElement(id){
+	document.getElementById(id).style.display = "none";
 }

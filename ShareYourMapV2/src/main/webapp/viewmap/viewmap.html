@@ -4,17 +4,22 @@
 	<meta charset="ISO-8859-1">
 	<title>ViewMap</title>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
- 
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+	<link rel="stylesheet" type="text/css" href="../commonFiles/generalStyle.css">
 	</head>
 	<body>
 
 		<script id="listMap" type="text/template">
 			<li> <button class="map" onclick="displayMap(<%= id %>)"> <%= name %> </button> 
-					<button onclick="editMap(<%=id%>)">Edit</button> 
-					<button onclick="shareMap(<%=id%>)">Share</button> 
-					<button id="deleteMap"  onclick="deleteMap(<%=id%>)"> X </button> 
+					<button onclick="editMap(<%= id %>)">Edit</button> 
+					<button onclick="shareMap(<%= id %>)">Share</button> 
+					<button id="deleteMap"  onclick="deleteMap(<%= id %>)"> X </button> 
 			</li>
+		</script>
+
+		<script id="shareMapTemplate" type="text/template">
+			<p>You can share this map with the following link :</p>
+			<p><%= link %></p>
 		</script>
 
 		<script id="mapHeader" type="text/template">
@@ -33,16 +38,16 @@
 		</script>
 
 		<script id="newMapTemplate" type="text/template">
-			<h1>New map <button onclick="closeMap()" >X</button></h1>
-			<form action="/ws/users/<%= uid %>/maps" method="PUT" enctype="application/x-www-form-urlencoded">
-				Map's name <input type="text" name="name">
-				Public map <input type="text" name="access" value="1">
+			<h1>New map <button onclick="closeElement('viewMap')" >X</button></h1>
+			<form action="/ws/users/<%= uid %>/maps" method="POST" enctype="application/x-www-form-urlencoded">
+				Map's name <input type="text" placeholder="Name" name="name">
+				Public map <input type="text" name="access" placeholder="0:private, 1:public">
 				<input type="submit" value="Create">
 			</form>
 		</script>
 
 		<script id="editMapTemplate" type="text/template">
-			<h1><%=name%><button onclick="closeMap()" >X</button></h1>
+			<h1><%=name%><button onclick="closeElement('viewMap')" >X</button></h1>
 			<form action="/ws/users/<%=uid%>/maps/<%=id%>" method="POST" enctype="application/x-www-form-urlencoded">
 				Map's name <input type="text" name="name" value="<%=name%>">
 				Public map <input type="text" name="access" value="1">
@@ -51,37 +56,43 @@
 		</script>
 
 		<script id="favDetails" type="text/template">
-			<div id="detail">
-				<h1> 
-					<%= name %>
-					<button onclick="closeFav()" >X</button>
-				</h1>
-				<p> Adresse </p>
-				<p>
-					<h2>Description</h2>
-					<%= description%>
-				</p>
-				<% if(event==1) {%> 
-					<p>
-						<h2>Duration</h2>
-						From <%= starting%> To <%= ending%>
-					</p>
-				<%}%>	
-				<p>
-					<h2>Tags</h2>
-					<%= label%> 
-				</p>
-				<p>
+			<div id="detail" class="wrapper">
+				<div class="header">
+					<h1 class="title"> 
+						<%= name %>
+						<button onclick="closeElement('viewFav')" >X</button>
+					</h1>
+					<p class="address"> Address </p>
+				</div>
+				<div class="description">
+					<div class="descrip">
+						<h2>Description</h2>
+						<%= description%>
+					</div>
+					<div class="duration">
+					<% if(event==1) {%> 
+						<p>
+							<h2>Duration</h2>
+						</p>
+					<%}%>	
+					</div>
+					<div classs="tags">
+						<h2>Tags</h2>
+						<%= label%> 
+					</div>
+				</div>
+				<div class="pictures">
 					<h2>Pictures</h2>
-				</p>
-				<button onclick="itinerary(2,2)">Go</button>
-			</div>
-			<div id="goToLocation" hidden>
+				</div>
+				<div class="itinerary">
+					<button onclick="itinerary(2,2)">Go</button>
+					<div id="goToLocation" hidden></div>
+				</div>
 			</div>
 		</script>
 		
 		<script id="newFavTemplate" type="text/template">
-			<h1>New fav <button onclick="closeFav()" >X</button></h1>
+			<h1>New fav <button onclick="closeElement('viewFav')" >X</button></h1>
 			<form action="/ws/users/<%= uid %>/maps/<%= mid %>/location?x=<%= x %>&y=<%= y %>" method="POST" enctype="application/x-www-form-urlencoded">
 				Fav's name <input type="text" name="name">
 				Description <input type="text" name="description">
@@ -97,10 +108,11 @@
 		<script id="itineraryTemplate" type="text/template">
 		</script>
 
-		<div>
-			<div>
-				<h1>ShareYourMap</h1>
-				<button id="sign_out" onClick="document.location='../home.html'">X</button>
+		<div class="grid-container">
+			<div class="side_bar">
+				<h1>
+					ShareYourMap <button id="sign_out" onClick="document.location='../home.html'">X</button>
+				</h1>
 				<div id="userName"></div>
 				<form action="/ws/location" method="GET" enctype="application/x-www-form-urlencoded">
 					Search favorites <input type="text" id="searchBar" name="search">
@@ -115,16 +127,14 @@
 					<button id="publicMap" onClick="document.location='../publicmap/publicmap.html'">View public maps</button>
 					<button onclick="createNewMap()">Create a new map</button>
 				</div>
-			</div>
-			<div>
 				<div id="currentMap"></div>
-				<div id="viewCurrentMap">
-					<div id="viewMap" hidden></div>
-					<ul id="favsList"></ul>
-					<div id="viewFav" hidden></div>
-				</div>
+				<div id="viewMap"></div>
+				<ul id="favsList"></ul>
+				<div id="viewFav"></div>
 			</div>
-			<div id="map" style="height: 450px; width: 400px"></div>
+			<div class="leaflet">
+				<div id="map" class="map_leaflet"></div>
+			</div>
 		</div>
 		
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>

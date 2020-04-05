@@ -1,8 +1,6 @@
 package classes;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import javax.jdo.annotations.PersistenceCapable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -17,6 +15,13 @@ public class Event extends Location{
 		this.start = start;
 		this.end = end;
 	}
+	
+	public Event(int ID, String name, String creatorName, double x, double y, String descr, String label, LocalDateTime start, LocalDateTime end) {
+		super(ID,name, creatorName, x, y, descr, label);
+		this.start = start;
+		this.end = end;
+	}
+	
 /*
 	public String getStarting() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
