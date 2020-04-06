@@ -1,0 +1,66 @@
+html {
+    background-color: #181847;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 23% 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas: "side_bar leaflet";
+  }
+
+.map_leaflet {
+    position: absolute;
+    top:0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+}
+
+.side_bar {
+    color: white;
+    text-align: center;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas: "header ." "pictures description" "msgs msgs" "itinerary .";
+  }
+  
+  .header {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas: "title" "address";
+    grid-area: header;
+  }
+  
+  .title { grid-area: title; }
+  
+  .address { grid-area: address; }
+  
+  .pictures { grid-area: pictures; }
+  
+  .description {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas: "descrip" "duration" "tags";
+    grid-area: description;
+  }
+  
+  .descrip { grid-area: descrip; }
+  
+  .duration { grid-area: duration; }
+  
+  .tags { grid-area: tags; }
+  
+  .msgs { grid-area: msgs; }
+ 
+  .itinerary { grid-area: itinerary; }

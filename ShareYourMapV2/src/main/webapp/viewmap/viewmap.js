@@ -132,6 +132,18 @@ function createFav(x,y){
 	$("#viewFav").html(newFav(details));
 }
 
+/*
+ * Display the element to create/edit an Event
+ */
+function eventDiv(){
+	if (document.getElementById("editEvent").style.display == "block") {
+		document.getElementById("editEvent").style.display = "none";
+	}
+	else {
+		document.getElementById("editEvent").style.display = "block";
+	}
+}
+
 // Edit a location
 
 

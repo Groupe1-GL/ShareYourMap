@@ -5,10 +5,15 @@
 //----------------------	Global variables	-------------------------
 
 var map = L.map('map');
-var popup = new L.Popup();
 var current_user_id = 1;
 var current_map_id = 1;
 var current_fav_id = 1;
+var markers = L.layerGroup();
+var heartLoc = L.icon({
+    iconUrl: '../../resources/heart-icon-20.png',
+	iconSize:     [38, 95],
+	iconAnchor:   [1, 1],
+});
 
 //----------------------	Server function		-------------------------
 
@@ -28,27 +33,11 @@ function getServerData(url, success){
 //---------------------		Automatic actions		---------------------		
 
 // Initialize the initial map display in the page (center on the EIDD)
-$(function(){
-	map.setView([48.8266496,2.3826648], 20);
-    var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
-        attribution: '© OpenStreetMap contributors',
-    });
-    map.addLayer(osmLayer);
-    map.on('click', viewFav);
-    map.on('dblclick', addFav);
-});
 
-function viewFav(e) {
-	 popup
-     .setLatLng(e.latlng)
-     .setContent("You clicked the map at " + e.latlng.toString())
-     .openOn(map);
-    //displayFav(0);
-}
-
-function addFav(e) {
-	createFav(e.latlng.lat,e.latlng.lng);
-}
+map.setView([48.8266496,2.3826648], 20);
+var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+map.addLayer(osmLayer);
+map.on('dblclick', addFav);
 
 //---------------------		Actions on click		---------------------	
 
@@ -59,6 +48,13 @@ function addFav(e) {
  */
 function centerMap(x,y){
 	map.setView([x,y], 20);
+}
+
+/*
+ * On double click on the map, open the element to create a new fav at this address
+ */
+function addFav(e) {
+	createFav(e.latlng.lat,e.latlng.lng);
 }
 
 /*
@@ -74,17 +70,23 @@ function displayMap(id){
  * Display information of the current map in the page with different templates
  * @param {Map} result		The current map
  */
-function mapDetails(result){	
+function mapDetails(result){
+	markers.clearLayers();
+	
 	var map_name = _.template($('#mapHeader').html());
 	$("#currentMap").html(map_name(result));
 	
 	document.getElementById('favsList').innerHTML = "";
 	var fav_template = _.template($('#listFavs').html());
+
 	var listFavs = result['locations'];
 	_.each(listFavs, function(location) {
 		fav_name_type = fav_template(location);
 		$("#favsList").append(fav_name_type);
+		var marker = L.marker([location['position']['x'],location['position']['y']]).on('click',displayFav(location['id']));
+		markers.addLayer(marker);
 	});
+	map.addLayer(markers);
 }
 
 

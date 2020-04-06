@@ -15,4 +15,3 @@ function connect() {
 	document.getElementById("newUser").style.display = "none";
 	document.getElementById("connection").style.display = "block";
 }
-

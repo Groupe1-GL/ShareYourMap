@@ -1,0 +1,36 @@
+.user {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "present form_inputs";
+    gap: 10%;
+    height: auto;
+    width: 50%;
+    margin: auto;
+    padding: 30px;
+    background-color: white;
+}
+
+input[type="text"],
+input[type="password"] {
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    padding: 10px;
+    -webkit-appearance: none;
+    border: none;
+    border-bottom: 1px rgb(117, 117, 117) solid;
+    outline: 0;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border: none;
+    border-bottom: 1px rgb(34, 199, 1) solid;
+}
+
+input[type="text"]:valid,
+input[type="password"]:valid {
+    border: 1px rgb(34, 199, 1) solid;
+}

@@ -41,7 +41,7 @@
 			<h1>New map <button onclick="closeElement('viewMap')" >X</button></h1>
 			<form action="/ws/users/<%= uid %>/maps" method="POST" enctype="application/x-www-form-urlencoded">
 				Map's name <input type="text" placeholder="Name" name="name">
-				Public map <input type="text" name="access" placeholder="0:private, 1:public">
+				Public map <input type="checkbox" name="access" value="1" checked>
 				<input type="submit" value="Create">
 			</form>
 		</script>
@@ -50,7 +50,7 @@
 			<h1><%=name%><button onclick="closeElement('viewMap')" >X</button></h1>
 			<form action="/ws/users/<%=uid%>/maps/<%=id%>" method="POST" enctype="application/x-www-form-urlencoded">
 				Map's name <input type="text" name="name" value="<%=name%>">
-				Public map <input type="text" name="access" value="1">
+				Public map <input type="checkbox" name="access" value="1" checked>
 				<input type="submit" value="Edit">
 			</form>
 		</script>
