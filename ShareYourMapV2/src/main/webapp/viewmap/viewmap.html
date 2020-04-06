@@ -110,27 +110,25 @@
 
 		<div class="grid-container">
 			<div class="side_bar">
-				<h1>
+				<h1><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
 					ShareYourMap <button id="sign_out" onClick="document.location='../home.html'">X</button>
 				</h1>
 				<div id="userName"></div>
 				<form action="/ws/location" method="GET" enctype="application/x-www-form-urlencoded">
-					Search favorites <input type="text" id="searchBar" name="search">
+					Favorites <input type="text" id="searchBar" name="search">
 					<input type="submit" id="sign_in" value="Search"/>
 				</form>
 				
-				<div>
-					<ul id="mapList"></ul>
-				</div>
+				<ul id="mapList"></ul>
 				
-				<div>
-					<button id="publicMap" onClick="document.location='../publicmap/publicmap.html'">View public maps</button>
-					<button onclick="createNewMap()">Create a new map</button>
-				</div>
 				<div id="currentMap"></div>
+				<button onclick="createNewMap()">Create a new map</button>
 				<div id="viewMap"></div>
 				<ul id="favsList"></ul>
 				<div id="viewFav"></div>
+				<div class="button_group">
+					Public <a href="../publicmap/publicmap.html"><img src='../resources/buttonPublic.png' height="55px" width="55px"/></a>
+				</div>
 			</div>
 			<div class="leaflet">
 				<div id="map" class="map_leaflet"></div>

@@ -12,6 +12,7 @@
 		<div class="grid-container">
 			<div class="side_bar">
 				<h1>ShareYourMap</h1>
+				<img src="./resources/heart_localisation.png"/>
 				<p>Find your <b>favorites places and event</b> everywhere in the world in less than 5 clicks.</p>
 			</div>
 			<div class="leaflet">
@@ -21,6 +22,7 @@
 					</div>
 					<div class="form_inputs">
 						<div id="connection">
+							<h2>Connection</h2>
 							<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
 								<input type="hidden" name="_METHOD" value="POST"/> 
 								<input type="text" placeholder="Username" name="username" required>
@@ -31,6 +33,7 @@
 								
 						</div>
 						<div id="newUser" hidden>
+							<h2>Sign up</h2>
 							<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
 								<input type="hidden" name="_METHOD" value="PUT"/> 
 								<input type="text" placeholder="Username" name="username" required>

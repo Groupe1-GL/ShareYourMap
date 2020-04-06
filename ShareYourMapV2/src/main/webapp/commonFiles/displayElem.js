@@ -10,9 +10,9 @@ var current_map_id = 1;
 var current_fav_id = 1;
 var markers = L.layerGroup();
 var heartLoc = L.icon({
-    iconUrl: '../../resources/heart-icon-20.png',
-	iconSize:     [38, 95],
-	iconAnchor:   [1, 1],
+    iconUrl: "../resources/heart_localisation.png",
+	iconSize:     [45, 45],
+	iconAnchor:   [21, 42],
 });
 
 //----------------------	Server function		-------------------------
@@ -83,7 +83,7 @@ function mapDetails(result){
 	_.each(listFavs, function(location) {
 		fav_name_type = fav_template(location);
 		$("#favsList").append(fav_name_type);
-		var marker = L.marker([location['position']['x'],location['position']['y']]).on('click',displayFav(location['id']));
+		var marker = L.marker([location['position']['x'],location['position']['y']],{icon:heartLoc}).on('click',displayFav(location['id']));
 		markers.addLayer(marker);
 	});
 	map.addLayer(markers);
