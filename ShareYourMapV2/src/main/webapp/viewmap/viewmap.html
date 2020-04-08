@@ -10,7 +10,7 @@
 	<body>
 
 		<script id="listMap" type="text/template">
-			<li> <button class="map" onclick="displayMap(<%= id %>)"> <%= name %> </button> 
+			<li><button class="map" onclick="displayMap(<%= id %>)"><%= name %> </button> 
 					<button onclick="editMap(<%= id %>)">Edit</button> 
 					<button onclick="shareMap(<%= id %>)">Share</button> 
 					<button id="deleteMap"  onclick="deleteMap(<%= id %>)"> X </button> 
@@ -24,7 +24,7 @@
 
 		<script id="mapHeader" type="text/template">
 			<h2><%=name%></h2>
-			<button onclick="createFav(0,0)">Create a new Fav</button>
+			<button onclick="createNewFav(0,0)">Create a new Fav</button>
 		</script>
 		
 		
@@ -32,18 +32,15 @@
 			<li>
 				<button 
 				<% if(event==1) {%> class="event" <%} else{ %> class="location" <%}%>	
-				onclick="displayFav(<%= id %>)"> <%= name %> </button> 
+				onclick="displayFav(<%= id %>)"><%= name %> </button> 
 				<button onclick="deleteFav(<%= id %>)">X</button>
 			</li>
 		</script>
 
 		<script id="newMapTemplate" type="text/template">
 			<h1>New map <button onclick="closeElement('viewMap')" >X</button></h1>
-			<form action="/ws/users/<%= uid %>/maps" method="POST" enctype="application/x-www-form-urlencoded">
-				Map's name <input type="text" placeholder="Name" name="name">
-				Public map <input type="checkbox" name="access" value="1" checked>
-				<input type="submit" value="Create">
-			</form>
+				Map's name <input id="map_name" type="text" placeholder="Name" name="name">
+				<button onclick="createMap()">Create</button>
 		</script>
 
 		<script id="editMapTemplate" type="text/template">
@@ -95,12 +92,11 @@
 			<h1>New fav <button onclick="closeElement('viewFav')" >X</button></h1>
 			<form action="/ws/users/<%= uid %>/maps/<%= mid %>/location?x=<%= x %>&y=<%= y %>" method="POST" enctype="application/x-www-form-urlencoded">
 				Fav's name <input type="text" name="name">
+				<div id="address_input" hidden>Address <input type="text" name="address"></div>
 				Description <input type="text" name="description">
 				Label <input type="text" name="label">
-				Start <input type="date" name="startDate" value="2020-03-30">
-				<input type="time" name="startTime">
-				End <input type="date" name="endDate" value="2020-03-30">
-				<input type="time" name="endTime">
+				Start <input type="datetime-local" name="start">
+				End <input type="datetime-local" name="end">
 				<input type="submit" value="Create">
 			</form>
 		</script>
@@ -111,11 +107,11 @@
 		<div class="grid-container">
 			<div class="side_bar">
 				<h1><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-					ShareYourMap <button id="sign_out" onClick="document.location='../home.html'">X</button>
+					ShareYourMap <button onclick="document.location='../home.html'">X</button>
 				</h1>
 				<div id="userName"></div>
 				<form action="/ws/location" method="GET" enctype="application/x-www-form-urlencoded">
-					Favorites <input type="text" id="searchBar" name="search">
+					Favorites <input class="search_input" type="text" id="searchBar" name="search">
 					<input type="submit" id="sign_in" value="Search"/>
 				</form>
 				
@@ -127,7 +123,7 @@
 				<ul id="favsList"></ul>
 				<div id="viewFav"></div>
 				<div class="button_group">
-					Public <a href="../publicmap/publicmap.html"><img src='../resources/buttonPublic.png' height="55px" width="55px"/></a>
+					<a href="../publicmap/publicmap.html"><img src='../resources/buttonPublic.png'/></a>
 				</div>
 			</div>
 			<div class="leaflet">

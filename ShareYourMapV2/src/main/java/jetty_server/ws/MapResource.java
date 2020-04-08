@@ -38,16 +38,13 @@ public class MapResource {
 	public List<Map> getMaps(){
 		return mapDAO.getMaps();
 	}
-
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_PLAIN)
-	@Path("/users/{user-id}/maps")
-	public Response createMap(@PathParam("user-id") int uid,
-						     @FormParam("name") String name,
-						 	 @FormParam("access") int access){
-		return mapDAO.createMap(uid, name, access);		
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/users/{user-id}/maps/{name}")
+	public boolean createMap(@PathParam("user-id") int uid,
+						     @PathParam("name") String name){
+		return mapDAO.createMap(uid, name);		
 		
 	}
 	

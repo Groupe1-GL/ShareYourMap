@@ -34,7 +34,7 @@ public interface MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public Response createMap(int uid, String creator, int access);
+	public boolean createMap(int uid, String creator);
 	/**
 	 * Edits a map selected by its id.
 	 * If there is not map matching, it will modify nothing.

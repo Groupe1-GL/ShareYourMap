@@ -54,7 +54,7 @@ function centerMap(x,y){
  * On double click on the map, open the element to create a new fav at this address
  */
 function addFav(e) {
-	createFav(e.latlng.lat,e.latlng.lng);
+	createNewFav(e.latlng.lat,e.latlng.lng);
 }
 
 /*

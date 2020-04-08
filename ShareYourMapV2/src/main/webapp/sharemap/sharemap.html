@@ -17,7 +17,7 @@
 			<li>
 				<button 
 				<% if(event==1) {%> class="event" <%} else{ %> class="location" <%}%>			
-				onclick="displayFav(<%= id %>)"> <%= name %> </button></li>
+				onclick="displayFav(<%= id %>)"><%= name %> </button></li>
 		</script>
 
 		<script id="favDetails" type="text/template">
@@ -48,9 +48,9 @@
 		<div>
 			<div>
 				<h1><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-					ShareYourMap <button id="sign_out" onClick="document.location='../home.html'">X</button>
+					ShareYourMap <button id="sign_out" onClick="document.location='../home.html'"><b>Home</b></button>
 				</h1>
-				<button id="home" onClick="document.location='../home.html'">Home</button>
+				<a href="../home.html">Home</a>
 			</div>
 			<div id="currentMap"></div>
 			<div id="viewCurrentMap">

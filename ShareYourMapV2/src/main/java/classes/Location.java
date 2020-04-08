@@ -43,8 +43,8 @@ public class Location{
 	
 	public static ArrayList<Location> generateLocations(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Monoprix = new Location(1,"Monoprix","David",48.8318214,2.362692,"Cher"," ");
-		Location Carrefour = new Location(2,"Carrefour","David",48.831824,2.362692,"Proche"," ");
+		Location Monoprix = new Location(1,"Monoprix","David",48.830211167315326, 2.3784144024565013,"Cher"," ");
+		Location Carrefour = new Location(2,"Carrefour","David",48.83211100128898, 2.362379298178112,"Proche"," ");
 		locations.add(Carrefour);
 		locations.add(Monoprix);
 		return locations;
@@ -52,12 +52,12 @@ public class Location{
 	
 	public static ArrayList<Location> generateLocations2(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Mcdo = new Location(3,"Mcdo","David",48.8272921,2.3780381,"Filet O fish"," ");
-		Location KFC = new Location(4,"KFC","David",48.8298797,2.3397636,"Poulet"," ");
-		Location Quick = new Location(5,"Quick","David",48.8310552,2.3172679,"Bof"," ");
+		Location Mcdo = new Location(3,"Mcdo","David",48.826792697264764,2.378913867792432,"Filet O fish"," ");
+		Location KFC = new Location(4,"KFC","David",48.828830387756604, 2.3552615002566095,"Poulet"," ");
+		Location Quick = new Location(5,"Quick","David",48.87568498530489, 2.326958388281866,"Bof"," ");
 		LocalDateTime s = LocalDateTime.now();
 		LocalDateTime e = LocalDateTime.now().plusDays(2);
-		Event Cafe = new Event(6,"Honorine","David",48.826498,2.380959,"Chocolat","Breakfast", s,e);
+		Event Cafe = new Event(6,"Honorine","David",48.826510168645356, 2.3809641010924447,"Chocolat","Breakfast", s,e);
 		locations.add(Mcdo);
 		locations.add(KFC);
 		locations.add(Quick);

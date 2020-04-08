@@ -36,6 +36,19 @@ function deleteServerData(url,success){
     }).done(success);
 }
 
+/*
+ * Send the PUT request ot the server
+ * @param {string} 	 url			The url of the request
+ * @param {void} success 		The callback function
+ */
+function postServerData(url,success){
+    $.ajax({
+    	type: 'POST',
+        dataType: "json",
+        url: url
+    }).done(success);
+}
+
 
 //-------------------		Automatic actions		-----------------		
 
@@ -51,7 +64,7 @@ $(function(){
  * @param {JSON: User}		the current user
  */
 function getUser(result){
-	var user_name = _.template("<h2><%=name%></h2>");	
+	var user_name = _.template("<h2><%=name%> maps</h2>");	
 	$("#userName").html(user_name(result));
 
 	document.getElementById('mapList').innerHTML = "";
@@ -77,6 +90,13 @@ function createNewMap(){
 	$("#viewMap").html(createMap(user_id));
 }
 
+
+// Send the request to create a map
+function createMap(){
+	name = document.getElementById("map_name").value;
+	//putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
+	postServerData(`/ws/u/${current_user_id}/maps/oooooo`,refresh);
+}
 
 /* 
  * Send the request to get the map to edit
@@ -125,12 +145,16 @@ function deleteMap(mid){
  * @param {float} x		The longitude value of the new favorite
  * @param {float} y		The latitude value of the new favorite
  */
-function createFav(x,y){
+function createNewFav(x,y){
 	var details = {"uid":current_user_id, "mid":current_map_id, "x":x, "y":y};
 	document.getElementById("viewFav").style.display = "block";
 	var newFav = _.template($('#newFavTemplate').html());
 	$("#viewFav").html(newFav(details));
+	if (x==0 && y==0) {
+		document.getElementById("address_input").style.display = "block";
+	}
 }
+
 
 /*
  * Display the element to create/edit an Event

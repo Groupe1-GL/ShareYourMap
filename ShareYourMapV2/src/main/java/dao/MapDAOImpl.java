@@ -47,21 +47,15 @@ public class MapDAOImpl implements MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public Response createMap(int uid, String name, int access) {
+	public boolean createMap(int uid, String name) {
 		for (User us: UserDAOImpl.u) {
 			if (us.getUserID() == uid) {
-				Map newMap = new Map(name, us.getName(), access==1);
+				Map newMap = new Map(name, us.getName());
 				MapDAOImpl.m.add(newMap);
-				return Response.status(Response.Status.SEE_OTHER)
-			            .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
-			            .header("X-Foo", "bar")
-			            .build();
+				return true;
 			}
 		}
-		return Response
-			 	.status(402)
-	            .entity("Unvalid creation"+uid)
-	            .build();
+		return false;
 	}
 	
 	/**

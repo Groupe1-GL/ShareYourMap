@@ -6,10 +6,6 @@ html {
   vertical-align: text-top;
 }
 
-button {
-  vertical-align: middle;
-}
-
 .grid-container {
     display: grid;
     grid-template-columns: 23% 1fr;
@@ -31,19 +27,23 @@ button {
     text-align: center;
 }
 
+.search_input {
+  background-image: url("../resources/search.png");
+  background-repeat: no-repeat;
+  background-position: 2.5px;
+  padding: 3px;
+  text-indent: 18px;
+}
+
 .button_group {
   position: fixed;
+  display: block;
   bottom: 0;
   left: 10%;
   margin: 15px;
-  text-align: right;
   align-content: flex-end;
-  color:white;
 }
 
-a.button_group{
-  display: block;
-}
 
 .wrapper {
     display: grid;

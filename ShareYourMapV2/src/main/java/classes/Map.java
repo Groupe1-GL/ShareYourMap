@@ -20,6 +20,7 @@ public class Map{
 		this.creatorName = creator;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
+		this.access = false;
 	}
 	
 	public Map(String name, String creator, boolean b) {
