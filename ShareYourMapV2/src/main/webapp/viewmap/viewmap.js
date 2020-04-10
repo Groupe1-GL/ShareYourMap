@@ -5,7 +5,7 @@
 
 //---------------------		Global variables	---------------------
 var current_user_id = 1;
-var current_map_id = 6;
+var current_map_id = "dzed";
 var current_fav_id = 1;
 
 //----------------------	Server functions	---------------------
@@ -95,7 +95,6 @@ function createNewMap(){
 function createMap(){
 	name = document.getElementById("map_name").value;
 	//putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
-	postServerData(`/ws/u/${current_user_id}/maps/oooooo`,refresh);
 }
 
 /* 
@@ -119,16 +118,15 @@ function showEditMap(result){
 	$("#viewMap").html(editMap(editDetails));
 }
 
-
 /*
  * Display the element in which a user can share a map
  * @param {int} mid		the id of the current map
  */
 function shareMap(mid){
-	link = {"link": "localhost:8080/ws/users?_METHOD=POST&username=David&passwd=ddd"};
-	document.getElementById("shareMapModal").style.display = "block";
+	link = {"link": "localhost:8080/ws/maps/?id="+mid};
+	document.getElementById("shareMap").style.display = "block";
 	var sharingLink = _.template($('#shareMapTemplate').html());
-	$("#shareMapModal").html(sharingLink(link));
+	$("#shareMap").html(sharingLink(link));
 }
 
 /*

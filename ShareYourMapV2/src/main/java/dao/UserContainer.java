@@ -1,4 +1,4 @@
-package jetty_server.ws.bouchons;
+package dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,22 +8,22 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import classes.Event;
+import classes.User;
 
 
 @PersistenceCapable
-public class EventContainer {
-
+public class UserContainer {
+	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)//
 	protected Long id = null;
 	
 	@Persistent
-	protected List<Event> events = null;
+	protected List<User> users = null;
 
-	public EventContainer() {
+	public UserContainer() {
 		super();
-		this.events = new ArrayList<Event>();
+		this.users = new ArrayList<User>();
 	}
 
 	public Long getId() {
@@ -34,12 +34,11 @@ public class EventContainer {
 		this.id = id;
 	}
 
-	public List<Event> getEvents() {
-		return this.events;
+	public List<User> getUsers() {
+		return this.users;
 	}
 
-	public void setEvents(List<Event> Events) {
-		this.events = Events;
+	public void setUsers(List<User> Users) {
+		this.users = users;
 	}
-	
 }

@@ -1,5 +1,13 @@
 html {
     background-color: #181847;
+    line-height: 170%;
+}
+
+.top_div {
+  position: absolute;
+  top:5%;
+  left: 32%;
+  z-index: 2;
 }
 
 .logo {
@@ -7,19 +15,20 @@ html {
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: 23% 1fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
-    grid-template-areas: "side_bar leaflet";
-  }
+  display: grid;
+  grid-template-columns: 23% 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas: "side_bar leaflet";
+  z-index: 1;
+}
 
 .map_leaflet {
     position: absolute;
     top:0;
     height: 100%;
     width: 76.7%;
-    z-index: 2;
+    z-index: 1;
 }
 
 .side_bar {
@@ -44,14 +53,23 @@ html {
   align-content: flex-end;
 }
 
+.view {
+  width: 60%;
+  height: auto;
+  background-color: white;
+  padding: 15px;
+  padding-bottom: 30px;
+  color: black;
+}
 
 .wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    gap: 1px 1px;
-    grid-template-areas: "header ." "pictures description" "msgs msgs" "itinerary .";
-  }
+  height: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 1px 1px;
+  grid-template-areas: "header ." "pictures description" "msgs msgs" "itinerary .";
+}
   
   .header {
     display: grid;

@@ -113,6 +113,13 @@
 		    <version>4.4.1-1</version>
 		</dependency>
 		
+		<!-- Passay -->
+		<dependency>
+		    <groupId>org.passay</groupId>
+		    <artifactId>passay</artifactId>
+		    <version>1.5.0</version>
+		</dependency>
+
 	</dependencies>
 	
 	<build>

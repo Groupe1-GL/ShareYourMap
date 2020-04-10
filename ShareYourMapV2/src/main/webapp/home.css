@@ -1,14 +1,33 @@
+.sign {
+    background-image: url("resources/home_background.png");
+}
+
 .user {
+    height: auto;
+    width: 50%;
+    margin: auto;
+    margin-top: 13%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "present form_inputs";
     gap: 10%;
-    height: auto;
-    width: 50%;
-    margin: auto;
     padding: 30px;
     background-color: white;
+    z-index: 3;
+}
+
+.prez {
+    width: 70%;
+    height: 30%;
+    margin: auto;
+    margin-top: 25px;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 12px 12px 10px 2px #0d0d1a86;
+    padding: 15px;
+    padding-top: 10%;
 }
 
 input[type="text"],

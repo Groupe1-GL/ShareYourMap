@@ -74,5 +74,5 @@ public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 		}
 		return res;
 	}
-	
+
 }

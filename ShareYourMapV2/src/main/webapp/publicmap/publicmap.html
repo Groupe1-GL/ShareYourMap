@@ -13,6 +13,10 @@
 			<h2><%=name%></h2>
 		</script>
 
+		<script id="listPublicMap" type="text/template">
+			<li><button class="publicMap" onclick="displayMap(<%= id %>)"><%= name %> </button></li>
+		</script>	
+
 		<script id="listFavs" type="text/template">
 			<li>
 				<button 
@@ -20,12 +24,8 @@
 				onclick="displayFav(<%= id %>)"><%= name %></button></li>
 		</script>
 
-		<script id="listPublicMap" type="text/template">
-			<li><button class="publicMap" onclick="displayMap(<%= id %>)"><%= name %> </button></li>
-		</script>		
-
 		<script id="favDetails" type="text/template">
-			<div id="detail" class="wrapper">
+			<div id="detail" class="top_div view wrapper">
 				<div class="header">
 					<h1 class="title"> 
 						<%= name %>

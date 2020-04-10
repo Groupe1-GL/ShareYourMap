@@ -6,7 +6,7 @@
 
 var map = L.map('map');
 var current_user_id = 1;
-var current_map_id = 1;
+var current_map_id = "dezf";
 var current_fav_id = 1;
 var markers = L.layerGroup();
 var heartLoc = L.icon({
@@ -59,7 +59,7 @@ function addFav(e) {
 
 /*
  * Send the request to have the map with a certain id
- * @param {long} id		The id of the wanted map
+ * @param {string} id		The id of the wanted map
  */
 function displayMap(id){
 	current_map_id = id;
