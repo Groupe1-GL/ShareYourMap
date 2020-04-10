@@ -63,18 +63,17 @@ html {
 }
 
 .wrapper {
-  height: 80%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto auto auto;
   gap: 1px 1px;
   grid-template-areas: "header ." "pictures description" "msgs msgs" "itinerary .";
 }
   
   .header {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
     gap: 1px 1px;
     grid-template-areas: "title" "address";
     grid-area: header;
@@ -88,8 +87,8 @@ html {
   
   .description {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
     gap: 1px 1px;
     grid-template-areas: "descrip" "duration" "tags";
     grid-area: description;

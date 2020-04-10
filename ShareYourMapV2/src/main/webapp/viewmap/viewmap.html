@@ -12,7 +12,7 @@
 		<script id="listMap" type="text/template">
 			<li><button class="map" onclick="displayMap(<%= id %>)"><%= name %> </button> 
 				<button onclick="editMap(<%= id %>)">Edit</button> 
-				<button onclick="shareMap(<%= id %>)">Share</button> 
+				<button onclick="shareMap(<%= id %>,'<%= sharingID%>')">Share</button> 
 				<button id="deleteMap"  onclick="deleteMap(<%= id %>)"> X </button> 
 			</li>
 		</script>

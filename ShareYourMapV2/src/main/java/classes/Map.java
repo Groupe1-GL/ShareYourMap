@@ -15,28 +15,46 @@ public class Map{
 	private int id;
 	private String name, creatorName;
 	private boolean access;
+	private String sharingID;
 	private List<Location> locations;
 	private List<Event> events;
+	private static int id_map = 1;
 	
-	public static int generateID() {
-		return (int) Math.random();
+	public static String generateSharingID() {
+	    PasswordGenerator gen = new PasswordGenerator();
+	    CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;
+	    CharacterRule lowerCaseRule = new CharacterRule(lowerCaseChars);
+	    lowerCaseRule.setNumberOfCharacters(2);
+	 
+	    CharacterData upperCaseChars = EnglishCharacterData.UpperCase;
+	    CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
+	    upperCaseRule.setNumberOfCharacters(2);
+	 
+	    CharacterData digitChars = EnglishCharacterData.Digit;
+	    CharacterRule digitRule = new CharacterRule(digitChars);
+	    digitRule.setNumberOfCharacters(2);
+	 
+	    return gen.generatePassword(6, lowerCaseRule, 
+	      upperCaseRule, digitRule);
 	}
 	
 	public Map(String name, String creator) {
 		this.locations = new ArrayList<Location>();
-		this.id = id++;
+		this.id = id_map++;
 		this.creatorName = creator;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
 		this.access = false;
+		this.sharingID = generateSharingID();
 	}
 	
 	public Map(String name, String creator, boolean b) {
-		this.id = id++;
+		this.id = id_map++;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
 		this.creatorName = creator;
 		this.access = b;
+		this.sharingID = generateSharingID();
 	}
 	
 	public Map(int ID, String name, String creator, boolean b) {
@@ -45,6 +63,7 @@ public class Map{
 		this.locations = new ArrayList<Location>();
 		this.creatorName = creator;
 		this.access = b;
+		this.sharingID = generateSharingID();
 	}
 	
 	public static ArrayList<Map> generateMaps(){
@@ -104,6 +123,10 @@ public class Map{
 		return "0";
 	}
 	
+	public String getSharingID() {
+		return sharingID;
+	}
+
 	public boolean setName(String name) {
 		if (!name.equals(null)) {
 			this.name= name;

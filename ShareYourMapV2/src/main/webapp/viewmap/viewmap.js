@@ -122,8 +122,8 @@ function showEditMap(result){
  * Display the element in which a user can share a map
  * @param {int} mid		the id of the current map
  */
-function shareMap(mid){
-	link = {"link": "localhost:8080/ws/maps/?id="+mid};
+function shareMap(mid,sid){
+	link = {"link": "localhost:8080/ws/maps/"+mid+"&pass="+sid};
 	document.getElementById("shareMap").style.display = "block";
 	var sharingLink = _.template($('#shareMapTemplate').html());
 	$("#shareMap").html(sharingLink(link));
