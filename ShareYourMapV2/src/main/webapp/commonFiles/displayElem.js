@@ -83,7 +83,8 @@ function mapDetails(result){
 	_.each(listFavs, function(location) {
 		fav_name_type = fav_template(location);
 		$("#favsList").append(fav_name_type);
-		var marker = L.marker([location['position']['x'],location['position']['y']],{icon:heartLoc}).on('click',displayFav(location['id']));
+		var marker = L.marker([location['position']['x'],location['position']['y']],{icon:heartLoc});
+		//marker.on('click',displayFav(parseInt(location['id'])));
 		markers.addLayer(marker);
 	});
 	map.addLayer(markers);
@@ -99,6 +100,14 @@ function displayFav(id){
 	getServerData(`/ws/maps/${current_map_id}`,favDetails);						
 }
 
+// Close all element before open an other
+function closeAll() {
+	var divClose = document.getElementsByClassName("closable");
+	for (const key in divClose) {
+		//document.getElementById(key.id).style.display = "none";
+	}
+}
+
 /*
  * Get the location for an certain id
  * And display information of this favs in the page with the 'favDetails' template
@@ -106,7 +115,7 @@ function displayFav(id){
  * @param {long} id		The id of the wanted favorite
  */
 function favDetails(result){
-
+	closeAll();
 	_.each(result['locations'], function(location) {
 		if(location['id']==current_fav_id){
 			document.getElementById("viewFav").style.display = "block";
@@ -116,7 +125,6 @@ function favDetails(result){
 			centerMap(parseFloat(location['position']['x']),parseFloat(location['position']['y']));
 		}
 	});
-	return null;
 }
 
 /*
@@ -128,7 +136,8 @@ function itinerary(x,y){
 	
 }
 	
-//Close element
+// Close element
 function closeElement(id){
 	document.getElementById(id).style.display = "none";
 }
+

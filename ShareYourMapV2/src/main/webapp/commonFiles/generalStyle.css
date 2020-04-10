@@ -1,6 +1,7 @@
 html {
-    background-color: #181847;
-    line-height: 170%;
+  background-color: #181847;
+  line-height: 170%;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .top_div {
@@ -24,16 +25,16 @@ html {
 }
 
 .map_leaflet {
-    position: absolute;
-    top:0;
-    height: 100%;
-    width: 76.7%;
-    z-index: 1;
+  position: absolute;
+  top:0;
+  height: 100%;
+  width: 76.7%;
+  z-index: 1;
 }
 
 .side_bar {
-    color: white;
-    text-align: center;
+  color: white;
+  text-align: center;
 }
 
 .search_input {
@@ -70,36 +71,36 @@ html {
   grid-template-areas: "header ." "pictures description" "msgs msgs" "itinerary .";
 }
   
-  .header {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
-    gap: 1px 1px;
-    grid-template-areas: "title" "address";
-    grid-area: header;
-  }
+.header {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  gap: 1px 1px;
+  grid-template-areas: "title" "address";
+  grid-area: header;
+}
   
-  .title { grid-area: title; }
+.title { grid-area: title; }
   
-  .address { grid-area: address; }
+.address { grid-area: address; }
   
-  .pictures { grid-area: pictures; }
+.pictures { grid-area: pictures; }
   
-  .description {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto auto;
-    gap: 1px 1px;
-    grid-template-areas: "descrip" "duration" "tags";
-    grid-area: description;
-  }
+.description {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto;
+  gap: 1px 1px;
+  grid-template-areas: "descrip" "duration" "tags";
+  grid-area: description;
+}
   
-  .descrip { grid-area: descrip; }
+.descrip { grid-area: descrip; }
   
-  .duration { grid-area: duration; }
+.duration { grid-area: duration; }
   
-  .tags { grid-area: tags; }
+.tags { grid-area: tags; }
   
-  .msgs { grid-area: msgs; }
+.msgs { grid-area: msgs; }
  
-  .itinerary { grid-area: itinerary; }
+.itinerary { grid-area: itinerary; }

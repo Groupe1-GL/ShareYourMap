@@ -73,7 +73,7 @@ function getUser(result){
 	_.each(maps, function(map) {
 		map_id = id_template(map);
 		$('#mapList').append(map_id);
-	 });
+	});
 }
 
 
