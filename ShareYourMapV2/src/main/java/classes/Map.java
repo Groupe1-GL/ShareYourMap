@@ -48,15 +48,6 @@ public class Map{
 		this.sharingID = generateSharingID();
 	}
 	
-	public Map(String name, String creator, boolean b) {
-		this.id = id_map++;
-		this.name = name;
-		this.locations = new ArrayList<Location>();
-		this.creatorName = creator;
-		this.access = b;
-		this.sharingID = generateSharingID();
-	}
-	
 	public Map(int ID, String name, String creator, boolean b) {
 		this.id = ID;
 		this.name = name;

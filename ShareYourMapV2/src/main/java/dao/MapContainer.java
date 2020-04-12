@@ -1,4 +1,4 @@
-package jetty_server.ws.bouchons;
+package dao;
 
 import java.util.ArrayList;
 import java.util.List;

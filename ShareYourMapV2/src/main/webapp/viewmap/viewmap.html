@@ -87,7 +87,7 @@
 					<h2>Pictures</h2>
 				</div>
 				<div class="itinerary">
-					<button onclick="itinerary(2,2)">Go</button>
+					<button onclick="itinerary()">Go</button>
 					<div id="goToLocation" hidden></div>
 				</div>
 			</div>
@@ -117,8 +117,8 @@
 					ShareYourMap <button onclick="document.location='../home.html'">X</button>
 				</h1>
 				<div id="userName"></div>
-				<form action="/ws/location" method="GET" enctype="application/x-www-form-urlencoded">
-					Favorites <input class="search_input" type="text" id="searchBar" name="search">
+				<form class="search" action="/ws/location" method="GET" enctype="application/x-www-form-urlencoded">
+					Favorites <input class="search_input" type="text" id="searchBar" name="search" placeholder="Search...">
 					<input type="submit" id="sign_in" value="Search"/>
 				</form>
 				
