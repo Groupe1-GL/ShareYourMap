@@ -21,26 +21,6 @@ public class Event extends Location{
 		this.start = start;
 		this.end = end;
 	}
-	
-/*
-	public String getStarting() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		return starting.format(formatter);
-	}
-	
-	public void setStarting(LocalDateTime starting) {
-		this.starting = starting;
-	}
-	
-	public String getEnding() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		return ending.format(formatter);
-	}
-	
-	public void setEnding(LocalDateTime ending) {
-		this.ending = ending;
-	}
-*/
 
 	public LocalDateTime getStart() {
 		return start;

@@ -15,7 +15,7 @@ public class Location{
 	private Position pos;
 	private String label;
 	private static int id = 1;
-	//private List<image> image;
+	private List<String> picture_url;
 	
 	public Location() {
 		this.LocID = id++;
@@ -68,6 +68,10 @@ public class Location{
 	public int getID() {
 		return this.LocID;
 	}
+
+	public String getName() {
+		return this.name;
+	}
 	
 	public Position getPosition() {
 		return this.pos;
@@ -81,69 +85,14 @@ public class Location{
 		return this.description;
 	}
 	
-	public void putDescription(String str){
-		description += str;
-	}
-	
-	public void deleteDescription(){
-		description = null;
-	}
-	
 	public List<String> getMessage(){
 		return this.message;
 	}
 	
-	public boolean putMessage(String str){
-		if (!str.equals(null)) {
-			this.message.add(str);//*
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	public void deleteMessage(){
-		message = null;
-	}
-
-
 	public String getCreatorName() {
 		return this.creatorName;
 	}
 
-
-	public boolean setName(String name) {
-		if (!name.equals(null)) {
-			this.name = name;
-			return true;
-		}
-		return false;
-	}
-
-
-	public boolean setDescription(String descr) {
-		if (!descr.equals(null)) {
-			this.description = descr;
-			return true;
-		}
-		return false;
-	}
-
-
-	public boolean setLabel(String label) {
-		if (!label.equals(null)) {
-			this.label = label;
-			return true;
-		}
-		return false;
-	}
-
-
-	public String getName() {
-		return this.name;
-	}
-	
 	public String getEvent() {
 		if(this instanceof Event) {
 			return "1";
@@ -151,6 +100,30 @@ public class Location{
 		return "0";
 	}
 
+	public List<String> getPicture_url() {
+		return picture_url;
+	}
+
+	public boolean setName(String name) {
+		this.name = name;
+		return true;
+	}
+
+	public boolean setDescription(String description) {
+		this.description = description;
+		return true;
+	}
+
+	public boolean setLabel(String label) {
+		this.label = label;
+		return true;
+	}
+
+	public boolean addMessage(String msg) {
+		this.getMessage().add(msg);
+		return true;
+	}
+	
 }
 
 

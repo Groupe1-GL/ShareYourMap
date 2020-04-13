@@ -1,4 +1,4 @@
-package dao;
+package classes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,22 +8,20 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import classes.Event;
-
 
 @PersistenceCapable
-public class EventContainer {
+public class MapContainer {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.NATIVE)//
 	protected Long id = null;
 	
 	@Persistent
-	protected List<Event> events = null;
+	protected List<Map> maps = null;
 
-	public EventContainer() {
+	public MapContainer() {
 		super();
-		this.events = new ArrayList<Event>();
+		this.maps = new ArrayList<Map>();
 	}
 
 	public Long getId() {
@@ -34,12 +32,12 @@ public class EventContainer {
 		this.id = id;
 	}
 
-	public List<Event> getEvents() {
-		return this.events;
+	public List<Map> getMaps() {
+		return this.maps;
 	}
 
-	public void setEvents(List<Event> Events) {
-		this.events = Events;
+	public void setMaps(List<Map> maps) {
+		this.maps = maps;
 	}
 	
 }

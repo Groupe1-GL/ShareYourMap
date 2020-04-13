@@ -9,10 +9,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import classes.Map;
 import classes.User;
 import dao.UserDAO;
 import dao.UserDAOImpl;
@@ -63,7 +63,17 @@ public class UserResource {
 			return createUser(name, password, cpassword);
 		}
 		else {
-			return userDAO.connectUser(name,password);
+			User us = userDAO.getUser(name);
+			if (us != null && us.getPassword().equals(password)) {
+				return Response.status(Response.Status.SEE_OTHER)
+				         .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
+				         .header("X-Foo", "bar")
+				         .build();
+			}
+			 return Response
+					 	.status(402)
+			            .entity("Username and password do not match")
+			            .build();
 		}
 	}
 	

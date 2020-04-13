@@ -3,7 +3,6 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
-import classes.Map;
 import classes.User;
 
 /**
@@ -42,6 +41,15 @@ public interface UserDAO {
 	 * @return	   the user object
 	 */
 	public User getUser(				int uid);
+	
+	/**
+     * Returns the user selected by its name.
+	 *
+	 * @param  name the user name 
+	 * @return	   	the user object
+	 */
+	public User getUser(String name);
+	
 	/**
      * Edits the user selected by his id.
 	 * The username can not be changed.
@@ -64,35 +72,6 @@ public interface UserDAO {
 	 * @return	   true if the operation was successful
 	 */
 	public boolean deleteUser(			int uid);
-	/**
-     * Returns a list of the user's maps selected by his id.
-	 * If the user doesn't exist a null object is returned.
-	 * This resource method is used in order to display the list of the user's maps 
-	 * on the web application.
-	 *
-	 * @param  uid the user identifier 
-	 * @return	   list of maps
-	 */
-	public List<Map> getMapsOfUser(		int uid); 
-	/**
-     * Adds a map on the user's map.
-	 * If the map doesn't exist nothing is added.
-	 * This resource method is used to add a map from the search bar.
-	 *
-	 * @param  uid the user identifier 
-	 * @param  mid the map identifier 
-	 * @return	   list of maps
-	 */
-	public boolean addMapOnUser(		int uid, int mid);
-	/**
-     * Deletes a map on the user's map.
-	 * If the map doesn't exist nothing is deleted.
-	 *
-	 * @param  uid the user identifier 
-	 * @param  mid the map identifier 
-	 * @return	   true if the operation was successful
-	 */
-	public boolean removeMapOnUser(		int uid, int mid);
 	
 	/**
      * Connect a user on the website and redirect it to his map page.

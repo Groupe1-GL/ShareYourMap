@@ -27,11 +27,14 @@ $(function(){
  * @param {List<Map>}	The list of public map stocked in the database
  */
 function displayMapsList(result){
+	current_map_id=1;
+	map_now = {"current_map":current_map_id};
 	document.getElementById('mapList').innerHTML = "";
 	var map_template = _.template($('#listPublicMap').html());
 	_.each(result, function(map) {
 		if(map['access']=="1"){
-			map_display = map_template(map);
+			sum = $.extend(map, map_now);
+			map_display = map_template(sum);
 			$('#mapList').append(map_display);
 		}
     });

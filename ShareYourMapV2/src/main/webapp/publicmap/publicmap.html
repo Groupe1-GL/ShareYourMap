@@ -4,7 +4,9 @@
 	<meta charset="ISO-8859-1">
 	<title>PublicMap</title>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-    <link rel="stylesheet" type="text/css" href="../commonFiles/generalStyle.css">
+	<link rel="stylesheet" type="text/css" href="../commonFiles/generalStyle.css">
+	<link rel="stylesheet" type="text/css" href="publicmap.css">
+	
 	</head>
 	<body>
 	
@@ -13,66 +15,67 @@
 		</script>
 
 		<script id="listPublicMap" type="text/template">
-			<li><button class="publicMap" onclick="displayMap(<%= id %>)"><%= name %> </button></li>
+			<li><div class="button" onclick="displayMap(<%= id %>)"><%= name %> </div>
+			</li>
 		</script>	
 
 		<script id="listFavs" type="text/template">
-			<li>
-				<button 
+			<li><div class="button"
 				<% if(event==1) {%> class="event" <%} else{ %> class="location" <%}%>			
-				onclick="displayFav(<%= id %>)"><%= name %></button></li>
+				onclick="displayFav(<%= id %>)"><%= name %></div>
+			</li>
 		</script>
 
 		<script id="favDetails" type="text/template">
-			<div id="detail" class="top_div view wrapper">
+			<div id="detail" class="top_div wrapper">
+				<div class="button close" onclick="closeElement('viewFav')" >X</div>
 				<div class="header">
-					<h1 class="title"> 
+					<h2 class="title"> 
 						<%= name %>
-						<button onclick="closeElement('viewFav')" >X</button>
-					</h1>
+					</h2>
 					<p class="address"> Address </p>
 				</div>
 				<div class="description">
 					<div class="descrip">
-						<h2>Description</h2>
+						<h3>Description</h3>
 						<%= description%>
 					</div>
 					<div class="duration">
 					<% if(event==1) {%> 
 						<p>
-							<h2>Duration</h2>
+							<h3>Duration</h3>
 						</p>
 					<%}%>	
 					</div>
 					<div classs="tags">
-						<h2>Tags</h2>
+						<h3>Tags</h3>
 						<%= label%> 
 					</div>
 				</div>
 				<div class="pictures">
-					<h2>Pictures</h2>
+					<h3>Pictures</h3>
 				</div>
 				<div class="itinerary">
-					<button onclick="itinerary(2,2)">Go</button>
+					<div  class="button" onclick="itinerary(2,2)">Go</div>
 					<div id="goToLocation" hidden></div>
 				</div>
 			</div>
 		</script>
 
 		<div class="grid-container">
+			
 			<div class="side_bar">
-				<h1><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-					ShareYourMap <button onclick="document.location='../home.html'">X</button>
+				<h1 class="brand"><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
+					ShareYourMap <a href="../home.html">X</a>
 				</h1>
 				<h2>Public maps</h2>
 				<form class="search" action="/ws/mapsearch" method="GET" enctype="application/x-www-form-urlencoded">
 					<input class="search_input" type="text" id="searchBar" name="search" placeholder="Search...">
-					<input type="submit" id="sign_in" value="OK"/>
 				</form>
-				
+		
 				<ul id="mapList"></ul>
 				
-				<div id="currentMap"></div>
+				<!--<div id="currentMap"></div> -->
 				<ul id="favsList"></ul>
 				<div id="viewFav"></div>
 				<div class="button_group">
@@ -85,6 +88,7 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>

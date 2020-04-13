@@ -111,6 +111,16 @@ public class UserDAOImpl implements UserDAO {
 		return null;		
 	}
 	
+
+
+	public User getUser(String name) {
+		for (User us: u) {
+			if (us.getName().equals(name))
+				return us;
+		}
+		return null;	
+	}
+	
 	/**
      * Edits the user selected by his id.
 	 * The username can not be changed.
@@ -229,6 +239,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
+
 	
 	
 }

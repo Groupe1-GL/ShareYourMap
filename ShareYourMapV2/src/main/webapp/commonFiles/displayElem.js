@@ -38,7 +38,7 @@ $(".sidebar-dropdown > a").click(function() {
 
 var map = L.map('map');
 var current_user_id = 1;
-var current_map_id = "dezf";
+var current_map_id = 1;
 var current_fav_id = 1;
 var markers = L.layerGroup();
 var heartLoc = L.icon({
@@ -90,8 +90,9 @@ function addFav(e) {
 }
 
 
-var infoDiv= document.getElementById("info") ;
-infoDiv.innerHTML= "<p> Extension Leaflet version "+Gp.leafletExtVersion+" ("+Gp.leafletExtDate+")</p>" ;
+$("#displayList").click(function() {
+	displayMap(1);
+});
 
 /*
  * Send the request to have the map with a certain id
@@ -158,7 +159,7 @@ function favDetails(result){
 			var location_template = _.template($('#favDetails').html());
 			detail = location_template(location);
 			$("#viewFav").html(detail);
-			centerMap(parseFloat(location['position']['x']),parseFloat(location['position']['y']));
+			centerMap(parseFloat(location['position']['x'])-0.0002,parseFloat(location['position']['y'])+0.0015);
 		}
 	});
 }

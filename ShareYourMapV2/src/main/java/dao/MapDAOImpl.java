@@ -40,6 +40,21 @@ public class MapDAOImpl implements MapDAO {
 	}
 	
 	/**
+	 * Returns a map selected by its name
+	 * If there is not map matching, it will return a null object.
+     *	 
+	 * @return	the map
+	 */
+	public Map getMap(String name) {
+		for (Map ma : MapDAOImpl.m) {
+			if (ma.getName().equals(name)) {
+				return ma;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Creates a map.
      *	 
 	 * @return	the map

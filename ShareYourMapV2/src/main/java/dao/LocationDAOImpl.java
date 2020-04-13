@@ -66,7 +66,7 @@ public class LocationDAOImpl implements LocationDAO {
 					if (ma.getID() == mid) {
 						for (Location lo: ma.getLocations()) {
 							if (lo.getID() == lid&&(lo.getCreatorName().equals(us.getName()))) {								
-								return lo.putMessage(message);
+								return lo.addMessage(message);
 							}
 						}
 					}

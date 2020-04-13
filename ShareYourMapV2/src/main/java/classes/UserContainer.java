@@ -1,4 +1,4 @@
-package dao;
+package classes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,6 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-
-
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
-import javax.jdo.Transaction;
-
-import classes.User;
-
 
 @PersistenceCapable
 public class UserContainer {
@@ -44,7 +35,7 @@ public class UserContainer {
 		return this.users;
 	}
 
-	public void setUsers(List<User> Users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 }

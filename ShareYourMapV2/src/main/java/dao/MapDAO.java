@@ -1,9 +1,7 @@
 package dao;
 
 import java.util.List;
-import javax.ws.rs.core.Response;
 
-import classes.Location;
 import classes.Map;
 
 /**
@@ -29,6 +27,15 @@ public interface MapDAO {
 	 * @return	the map
 	 */
 	public Map getMap(int mid);
+	
+	/**
+	 * Returns a map selected by its name;
+	 * If there is not map matching, it will return a null object.
+     *	 
+	 * @return	the map
+	 */
+	public Map getMap(String mapname);
+	
 	/**
 	 * Creates a map.
      *	 
@@ -57,14 +64,5 @@ public interface MapDAO {
 	 * @return	   		list of maps
 	 */
 	public List<Map> searchMap(String ref);
-	
-	// ************************ 
-	/**
-	 * Returns all the locations of a map selected by its id.
-	 * If there is not map matching, it will return a null object.
-     *	 
-	 * @return	the list of favorite locations
-	 */
-	public List<Location> getLocations(int mid);
 	
 }

@@ -3,11 +3,8 @@ package dao;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import classes.Event;
-import classes.Location;
 import classes.Map;
 import classes.User;
 
