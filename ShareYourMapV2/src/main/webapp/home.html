@@ -11,42 +11,40 @@
 	</head>
 	<body>
 
-		<div class="grid-container">
-			<div class="side_bar">
-				<h1>ShareYourMap</h1>
-				<img src="./resources/heart_localisation.png"/>
-				<div class="prez">
-					<p>Find your <b>favorites places</b> and <b>event</b> everywhere in the world in <b style="color:red"> than 5 clicks !</b></p>
-				</div>
+		<div class="nav_bar">
+			<h1>ShareYourMap</h1>
+			<img class="logo" src="./resources/heart_localisation.png"/>
+			<div class="prez">
+				<p>Find your <b>favorites places</b> and <b>event</b> everywhere in the world in <b style="color:red"> than 5 clicks !</b></p>
 			</div>
-			<div class="leaflet sign">
-				<div class="user">
-					<div class="present">
-						<p>Welcome back or join us on our plateform</p>
-					</div>
-					<div class="form_inputs">
-						<div id="connection">
-							<h2>Connection</h2>
-							<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
-								<input type="hidden" name="_METHOD" value="POST"/> 
-								<input type="text" placeholder="Username" name="username" required>
-								<input type="password"  placeholder="Password" name="passwd" required>
-								<input type="submit" id="sign_in" value="Sign In"/>
-							</form>
-							<button onClick="newUser()">New user</button>
+		</div>
+		<div class="leaflet sign">
+			<div class="user">
+				<div class="present">
+					<p>Welcome back or join us on our plateform</p>
+				</div>
+				<div class="form_inputs">
+					<div id="connection">
+						<h2>Connection</h2>
+						<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
+							<input type="hidden" name="_METHOD" value="POST"/> 
+							<input type="text" placeholder="Username" name="username" required>
+							<input type="password"  placeholder="Password" name="passwd" required>
+							<input type="submit" id="sign_in" value="Sign In"/>
+						</form>
+						<button onClick="newUser()">New user</button>
 								
-						</div>
-						<div id="newUser" hidden>
-							<h2>Sign up</h2>
-							<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
-								<input type="hidden" name="_METHOD" value="PUT"/> 
-								<input type="text" placeholder="Username" name="username" required>
-								<input type="password" placeholder="Password" name="passwd" required>
-								<input type="password" placeholder="Confirm password" name="cpasswd" required>
-								<input type="submit" id="sign_up" value="Sign Up">
-							</form>
-							<button onClick="connect()">Already registered</button> 
-						</div>
+					</div>
+					<div id="newUser" hidden>
+						<h2>Sign up</h2>
+						<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
+							<input type="hidden" name="_METHOD" value="PUT"/> 
+							<input type="text" placeholder="Username" name="username" required>
+							<input type="password" placeholder="Password" name="passwd" required>
+							<input type="password" placeholder="Confirm password" name="cpasswd" required>
+							<input type="submit" id="sign_up" value="Sign Up">
+						</form>
+						<button onClick="connect()">Already registered</button> 
 					</div>
 				</div>
 			</div>
