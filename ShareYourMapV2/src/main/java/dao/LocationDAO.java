@@ -55,7 +55,7 @@ public interface LocationDAO {
 	public boolean editLocation(		int uid,
 										int mid,
 										int lid,
-										String message,
+										String name,
 										String descr,
 										String label);
 	/**

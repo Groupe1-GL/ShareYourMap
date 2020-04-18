@@ -20,9 +20,7 @@
 		</script>	
 
 		<script id="listFavs" type="text/template">
-			<li><div class="button"
-				<% if(event==1) {%> class="event" <%} else{ %> class="location" <%}%>			
-				onclick="displayFav(<%= id %>)"><%= name %></div>
+				<li <% if(event==1) {%> class="event" <%}%>	><div class="button"	onclick="displayFav(<%= id %>)"><%= name %></div>
 			</li>
 		</script>
 
@@ -44,6 +42,7 @@
 					<% if(event==1) {%> 
 						<p>
 							<h3>Duration</h3>
+							<%=start%>
 						</p>
 					<%}%>	
 					</div>
@@ -53,49 +52,44 @@
 					</div>
 				</div>
 				<div class="pictures">
-					<h3>Pictures</h3>
+					<h3>Pictures <div class="button">+</di></h3>
+				</div>
+				<div classs="msg">
+					<h3>Messages <div class="button">+</di></h3>
 				</div>
 				<div class="itinerary">
-					<div  class="button" onclick="itinerary(2,2)">Go</div>
-					<div id="goToLocation" hidden></div>
+					<div  class="button" onclick="goTo(<%= position['x']%>,<%= position['y']%>)"><img src="../resources/Go.png" /></div>
 				</div>
 			</div>
 		</script>
 
-		<div class="grid-container">
-			
-			<div class="side_bar">
-				<h1 class="brand"><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-					ShareYourMap <a href="../home.html">X</a>
-				</h1>
-				<h2>Public maps</h2>
-				<form class="search" action="/ws/mapsearch" method="GET" enctype="application/x-www-form-urlencoded">
-					<input class="search_input" type="text" id="searchBar" name="search" placeholder="Search...">
-				</form>
+		<div id="toggle" class="button"></div>
+		<div id="nav_bar">
+			<h1 class="brand"><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
+				ShareYourMap <a href="../home.html">X</a>
+			</h1>
+			<h2>Public maps</h2>
+			<form class="search" action="/ws/mapsearch" method="GET" enctype="application/x-www-form-urlencoded">
+				<input class="search_input" type="text" id="searchBar" name="search" placeholder="Search...">
+			</form>
 		
-				<ul id="mapList"></ul>
-				
-				<!--<div id="currentMap"></div> -->
-				<ul id="favsList"></ul>
-				<div id="viewFav"></div>
-				<div class="button_group">
-					<a href="../viewmap/viewmap.html"><img src='../resources/buttonPerso.png'/></a>
-				</div>
+			<ul id="mapList"></ul>
+			<ul id="favsList"></ul>
+			<div class="button_group">
+				<div  class="button" onclick="goTo(null,null)"><img src="../resources/buttonTravel_j.png" /></div>
+				<a href="../viewmap/viewmap.html"><img src='../resources/buttonPerso.png'/></a>
 			</div>
-			<div>
-				<div class="leaflet">
-					<div id="map" class="map_leaflet">
-					</div>
-				</div>
-			</div>
-
 		</div>
+				
+		<div id="currentMap" hidden></div>
+		<div id="viewFav"></div>
+		<div id="map"></div>
 
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-		<script type="text/javascript" src="publicmap.js"></script>
 		<script type="text/javascript" src="../commonFiles/displayElem.js"></script>
+		<script type="text/javascript" src="publicmap.js"></script>
 		
 	</body>
 </html>

@@ -66,7 +66,7 @@ public class MapResource {
 		return mapDAO.editMap(uid, mid, name, access);
 	}
 	
-	
+
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps/{map-id}")

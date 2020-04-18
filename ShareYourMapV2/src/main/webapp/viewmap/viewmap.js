@@ -55,7 +55,7 @@ function postServerData(url,success){
 
 // Return current registered user
 $(function(){
-	getServerData(`/ws/users/${current_user_id}`,getUser);
+	getServerData(`/ws/user/${current_user_id}`,getUser);
 });
 
 

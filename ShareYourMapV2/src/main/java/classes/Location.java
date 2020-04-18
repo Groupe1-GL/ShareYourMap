@@ -15,7 +15,7 @@ public class Location{
 	private Position pos;
 	private String label;
 	private static int id = 1;
-	private List<String> picture_url;
+	private List<Picture> pictures;
 	
 	public Location() {
 		this.LocID = id++;
@@ -100,8 +100,8 @@ public class Location{
 		return "0";
 	}
 
-	public List<String> getPicture_url() {
-		return picture_url;
+	public List<Picture> getPicture() {
+		return pictures;
 	}
 
 	public boolean setName(String name) {

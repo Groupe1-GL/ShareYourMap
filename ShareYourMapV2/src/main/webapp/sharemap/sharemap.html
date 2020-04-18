@@ -1,11 +1,14 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
 	<meta charset="ISO-8859-1">
 	<title>ShareMap</title>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 	<link rel="stylesheet" href="sharemap.css">
+	<link rel="stylesheet" href="../commonFiles/generalStyle.css">
+
 	</head>
 	<body>
 	
@@ -45,55 +48,30 @@
 			</p>
 		</script>
 		
-			<button id="bt">Show</button>
-			<div id="toggle">
-				<div>
-					<h1><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-						ShareYourMap <button id="sign_out" onClick="document.location='../home.html'"><b>Home</b></button>
-					</h1>
-				</div>
-				<div id="currentMap"></div>
-				<ul id="favsList"></ul>
-				<div id="viewFav"></div>
+		<div id="toggle" class="button"></div>
+		<div id="nav_bar">
+			<h1 class="brand"><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
+				ShareYourMap <a href="../home.html">X</a>
+			</h1>
+			<h2>Shared maps</h2>
+	
+			<ul id="favsList"></ul>
+			<div class="button_group">
+				<a href="../viewmap/viewmap.html"><img src='../resources/buttonPerso.png'/></a>
 			</div>
-			<div id="map"></div>
-		
+		</div>
+				
+		<div id="currentMap" hidden></div>
+		<div id="viewFav"></div>
+		<div id="map"></div>
+
+		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-		<!-- <script type="text/javascript" src="../commonFiles/displayElem.js"></script> 
+		<!-- <script type="text/javascript" src="../commonFiles/displayElem.js"></script> -->
+		<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+		<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>	
 		<script type="text/javascript" src="sharemap.js"></script>
 		
-	</body>
-</html> -->
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-   		crossorigin=""/>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
-		<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-		<link rel="stylesheet" type="text/css" href="sharemap.css">
-	</head>
-	<body>
-	
-		<div id="mapleflet1">
-		</div>
-		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-		crossorigin=""></script>
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
-		<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-		<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>		
-		<script type="text/javascript" src="sharemap.js"></script>
-	
 	</body>
 </html>

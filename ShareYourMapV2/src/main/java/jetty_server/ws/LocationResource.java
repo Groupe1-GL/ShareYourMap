@@ -16,6 +16,7 @@ import classes.Location;
 import dao.LocationDAO;
 import dao.LocationDAOImpl;
 
+import java.io.FileInputStream;
 import java.util.List;
 
 /**
@@ -100,4 +101,31 @@ public class LocationResource {
 		return locationDAO.nearestLocations(uid, mid);
 	}
 	
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public boolean uploadPictures(@FormParam("picture") FileInputStream picture) {
+		return true;
+		/*
+		 * public static void AddEmployee(
+  string photoFilePath
+  
+{  
+  byte[] photo = GetPhoto(photoFilePath);  
+ 
+  
+public static byte[] GetPhoto(string filePath)  
+{  
+  FileStream stream = new FileStream(  
+      filePath, FileMode.Open, FileAccess.Read);  
+  BinaryReader reader = new BinaryReader(stream);  
+  
+  byte[] photo = reader.ReadBytes((int)stream.Length);  
+  
+  reader.Close();  
+  stream.Close();  
+  
+  return photo;  
+}  
+		 */
+	}
 }
