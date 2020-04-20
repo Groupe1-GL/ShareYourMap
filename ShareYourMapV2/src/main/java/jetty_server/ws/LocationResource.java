@@ -11,11 +11,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 import classes.Location;
 import dao.LocationDAO;
 import dao.LocationDAOImpl;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -90,6 +94,19 @@ public class LocationResource {
 	public List<Location> nearestLocations(@PathParam("user-id") int uid, 
 										   @PathParam("map-id") int mid){
 		return locationDAO.nearestLocations(uid, mid);
+	}
+	
+	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{user-id}/maps/location/{location-id}/feed-img")
+	public boolean contributeOnLocationImg(@PathParam("user-id") int uid,
+										@PathParam("map-id") int mid,
+										@PathParam("location-id") int lid,
+										@FormDataParam("picture")InputStream uploadedInputStream,
+										@FormDataParam("picture")FormDataContentDisposition fileDetail) {
+		return locationDAO.contributeOnLocationImg(uid, mid, lid, uploadedInputStream, fileDetail);
 	}
 	
 	@POST

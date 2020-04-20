@@ -1,9 +1,15 @@
 package dao;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import classes.Location;
 import classes.Map;
@@ -51,10 +57,11 @@ public class LocationDAOImpl implements LocationDAO {
      * Contributes on the feed of a location by a message.
 	 * If the map or the location doesn't exist nothing is added.
 	 *
-	 * @param  uid the user identifier 
-	 * @param  mid the map identifier 
-	 * @param  lid the location identifier 
-	 * @return	   true if the operation was successful
+	 * @param  		uid		the user identifier 
+	 * @param  		mid		the map identifier 
+	 * @param  		lid		the location identifier 
+	 * @param		message
+	 * @return		true	if the operation was successful
 	 */
 	public boolean contributeOnLocation(int uid,
 										int mid,
@@ -196,5 +203,51 @@ public class LocationDAOImpl implements LocationDAO {
 		return null;
 	}
 
+	/**
+     * Contributes on the feed of a location by a picture.
+	 * If the map or the location doesn't exist nothing is added.
+	 *
+	 * @param  		uid		the user identifier 
+	 * @param  		mid		the map identifier 
+	 * @param  		lid		the location identifier 
+	 * @param		path
+	 * @return		true	if the operation was successful
+	 */
+	public boolean contributeOnLocationImg(int uid,
+										int mid,
+										int lid,
+										InputStream uploadedInputStream,
+										FormDataContentDisposition fileDetail) {
+		//Save the picture on a specific folder
+		String fileLocation = System.getProperty("user.dir") + "upload/img" + fileDetail.getFileName(); 
+		try {  
+            FileOutputStream out = new FileOutputStream(new File(fileLocation));  
+            int read = 0;  
+            byte[] bytes = new byte[1024];  
+            out = new FileOutputStream(new File(fileLocation));  
+            while ((read = uploadedInputStream.read(bytes)) != -1) {  
+                out.write(bytes, 0, read);  
+            }  
+            out.flush();  
+            out.close();  
+        } catch (IOException e) {e.printStackTrace();} 
+		
+		
+		//Picture save on database process
+		for (User us: UserDAOImpl.u) {
+			if (us.getId() == uid) {
+				for (Map ma: us.getMaps()) {
+					if (ma.getID() == mid) {
+						for (Location lo: ma.getLocations()) {
+							if (lo.getID() == lid&&(lo.getCreatorName().equals(us.getName()))) {								
+								return lo.addPicture(fileLocation);
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 	
 }

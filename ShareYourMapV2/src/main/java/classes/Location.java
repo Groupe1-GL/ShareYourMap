@@ -11,11 +11,11 @@ import java.util.*;
 public class Location{
 	private int id;
 	private String name, creatorName, description;
-	private List<String> message;
+	private List<String> messages;
 	private Position pos;
 	private String label;
 	private static int loc_id = 1;
-	private List<Picture> pictures;
+	private List<String> pictures;
 	
 	public Location() {
 		this.id = loc_id++;
@@ -85,8 +85,8 @@ public class Location{
 		return this.description;
 	}
 	
-	public List<String> getMessage(){
-		return this.message;
+	public List<String> getMessages(){
+		return this.messages;
 	}
 	
 	public String getCreatorName() {
@@ -100,7 +100,7 @@ public class Location{
 		return "0";
 	}
 
-	public List<Picture> getPicture() {
+	public List<String> getPictures() {
 		return pictures;
 	}
 
@@ -120,7 +120,12 @@ public class Location{
 	}
 
 	public boolean addMessage(String msg) {
-		this.getMessage().add(msg);
+		this.getMessages().add(msg);
+		return true;
+	}
+	
+	public boolean addPicture(String msg) {
+		this.getPictures().add(msg);
 		return true;
 	}
 	

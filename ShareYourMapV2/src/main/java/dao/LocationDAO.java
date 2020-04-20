@@ -1,8 +1,10 @@
 package dao;
 
+import java.io.InputStream;
 import java.util.List;
 
 import classes.Location;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
 
 public interface LocationDAO {
 	
@@ -32,10 +34,11 @@ public interface LocationDAO {
      * Contributes on the feed of a location by a message.
 	 * If the map or the location doesn't exist nothing is added.
 	 *
-	 * @param  uid the user identifier 
-	 * @param  mid the map identifier 
-	 * @param  lid the location identifier 
-	 * @return	   true if the operation was successful
+	 * @param  		uid		the user identifier 
+	 * @param  		mid		the map identifier 
+	 * @param  		lid		the location identifier 
+	 * @param		message
+	 * @return		true	if the operation was successful
 	 */
 	public boolean contributeOnLocation(int uid,
 										int mid,
@@ -82,6 +85,22 @@ public interface LocationDAO {
 	 * @return	   		list of locations
 	 */
 	public List<Location> nearestLocations(int uid, int mid);
+	
+	/**
+     * Contributes on the feed of a location by a picture.
+	 * If the map or the location doesn't exist nothing is added.
+	 *
+	 * @param  		uid		the user identifier 
+	 * @param  		mid		the map identifier 
+	 * @param  		lid		the location identifier 
+	 * @param		path
+	 * @return		true	if the operation was successful
+	 */
+	public boolean contributeOnLocationImg(int uid,
+										int mid,
+										int lid,
+										InputStream uploadedInputStream,
+										FormDataContentDisposition fileDetail);
 	
 	/*
 	public List<Location> getLocation(String label);
