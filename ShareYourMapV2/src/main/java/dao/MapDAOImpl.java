@@ -40,28 +40,13 @@ public class MapDAOImpl implements MapDAO {
 	}
 	
 	/**
-	 * Returns a map selected by its name
-	 * If there is not map matching, it will return a null object.
-     *	 
-	 * @return	the map
-	 */
-	public Map getMap(String name) {
-		for (Map ma : MapDAOImpl.m) {
-			if (ma.getName().equals(name)) {
-				return ma;
-			}
-		}
-		return null;
-	}
-	
-	/**
 	 * Creates a map.
      *	 
 	 * @return	the map
 	 */
 	public boolean createMap(int uid, String name) {
 		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				Map newMap = new Map(name, us.getName());
 				MapDAOImpl.m.add(newMap);
 				return true;
@@ -80,9 +65,9 @@ public class MapDAOImpl implements MapDAO {
 	// mettre un privilège de modification
 	public boolean editMap(int uid, int mid, String name, int access) {
 		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma : m) {
-					if ((ma.getID() == mid)&&(uid == us.getUserID())) {
+					if ((ma.getID() == mid)&&(uid == us.getId())) {
 						return ma.setName(name)&&ma.setAccess(access==1);
 					}
 				}
@@ -99,7 +84,7 @@ public class MapDAOImpl implements MapDAO {
 	 */
 	public boolean deleteMap(int uid, int mid) {
 		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma : m) {
 					if ((ma.getID() == mid)&&(ma.getCreatorName() == us.getName())) {
 						return m.remove(ma);

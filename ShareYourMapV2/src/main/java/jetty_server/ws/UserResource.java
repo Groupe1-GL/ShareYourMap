@@ -26,7 +26,7 @@ import java.util.*;
  * @version %I%, %G%
  * @since 1.0
  */
-@Path("/user")
+@Path("/users")
 public class UserResource {
 	
 	UserDAO userDAO = new UserDAOImpl();

@@ -33,7 +33,7 @@ public class LocationDAOImpl implements LocationDAO {
 										double x, 
 										double y) {
 		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						Location newLocation = new Location(name, us.getName(), x, y, descr, label);
@@ -61,7 +61,7 @@ public class LocationDAOImpl implements LocationDAO {
 										int lid,
 										String message) {
 		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						for (Location lo: ma.getLocations()) {
@@ -94,7 +94,7 @@ public class LocationDAOImpl implements LocationDAO {
 										String descr,
 										String label) {
 		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						for (Location lo: ma.getLocations()) {
@@ -122,7 +122,7 @@ public class LocationDAOImpl implements LocationDAO {
 										int mid,
 										int lid) {
 		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						for (Location lo: ma.getLocations()) {
@@ -180,7 +180,7 @@ public class LocationDAOImpl implements LocationDAO {
 		for (User us: UserDAOImpl.u) {
 			double x = Math.abs(us.getCurrentPosition().getX()-threshold);
 			double y = Math.abs(us.getCurrentPosition().getY()-threshold);
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {
 					if ((ma.getID() == mid)) {
 						for (Location lo: ma.getLocations()) {

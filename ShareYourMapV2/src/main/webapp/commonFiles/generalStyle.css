@@ -199,11 +199,13 @@ li {
 
 ul {
   list-style: none;
+  overflow: auto;
 }
 
 .event {
   background-position-x: left;
   background-repeat: no-repeat;
+  background-color: #290b41;
   background-image: url("../resources/event.png");
   transition-duration: 0.5s;
 }

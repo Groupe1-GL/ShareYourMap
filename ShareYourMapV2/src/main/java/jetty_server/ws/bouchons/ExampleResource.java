@@ -131,7 +131,7 @@ public class ExampleResource {
 								          @PathParam("map.id") int mid,
 								        @PathParam("location.id") int lid) {
 		for (User us: users) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map map: us.getMaps()) {
 					if (map.getID() == mid) {
 						for (Location lo: map.getLocations()) {

@@ -38,7 +38,7 @@ public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 										LocalDateTime start,
 										LocalDateTime end) {
 		for (User us: UserDAOImpl.u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						Event newEvent = new Event(name, us.getName(), x, y, descr, label, start, end);

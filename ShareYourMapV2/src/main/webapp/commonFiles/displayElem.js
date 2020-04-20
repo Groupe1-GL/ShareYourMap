@@ -34,6 +34,11 @@ var heartLoc = L.icon({
 	iconSize:     [45, 45],
 	iconAnchor:   [21, 42],
 });
+var heartEvent = L.icon({
+    iconUrl: "../resources/heart_event.png",
+	iconSize:     [45, 45],
+	iconAnchor:   [21, 42],
+});
 var router_elem = null;
 
 //----------------------	Server function		-------------------------
@@ -78,27 +83,28 @@ function centerMapView(x,y,z){
 function findCenter(list_locations){
 	var x_mean = 0;
 	var y_mean = 0;
-	var x_min, y_min = 180;
-	var x_max, y_max = -180;
-	var z = 20;
+	var x_min = 180;
+	var y_min = 90;
+	var x_max = -180;
+	var y_max = -90;
 	const list_length = list_locations.length;
 	if(list_length == 1){
 		centerMapView(list_locations[0]['position']['x'],list_locations[0]['position']['x'],20);
 		return;
 	}
 	_.each(list_locations, function(location) {
-		x_mean = x_mean + location['position']['x'];
-		y_mean = y_mean + location['position']['y'];
 		x_max = Math.max(x_max, location['position']['x']);
 		x_min = Math.min(x_min, location['position']['x']);
 		y_max = Math.max(y_max, location['position']['y']);
 		y_min = Math.min(y_min, location['position']['y']);
 	});
-	x_mean /= list_length;
-	y_mean /= list_length;
-	var z_x = Math.abs(360/(x_max - x_min));
-	var z_y = Math.abs(360/(y_max - y_min));
-	//z = Math.min(z_x,z_y);
+	var dist_y = y_max - y_min;
+	var dist_x = x_max - x_min;
+	x_mean = (x_max + x_min)/2;
+	y_mean = (y_max + y_min)/2;
+	var z_x = Math.floor(Math.abs(360/(1000*dist_x)));
+	var z_y = Math.floor(Math.abs(180/(500*dist_y)));
+	var z = Math.min(z_x,z_y,20);
 	centerMapView(x_mean,y_mean,z);
 }
 
@@ -132,22 +138,35 @@ function mapDetails(result){
 	if(fav!=null){
 		fav.style.display = "block";
 	}
+
+	var listFavs = result['locations'];
+	findCenter(listFavs);
+	fillFavList(listFavs);
+}
+
+/*
+ * Add favorite to the list  of favorites
+ */
+function fillFavList(favs){
+	markers.clearLayers();
 	
 	document.getElementById('favsList').innerHTML = "";
 	var fav_template = _.template($('#listFavs').html());
 
-	var listFavs = result['locations'];
-	findCenter(listFavs);
-	_.each(listFavs, function(location) {
+	_.each(favs, function(location) {
 		fav_name_type = fav_template(location);
 		$("#favsList").append(fav_name_type);
-		var marker = L.marker([location['position']['x'],location['position']['y']],{icon:heartLoc});
+		if(location['event']==1){
+			var marker = L.marker([location['position']['x'],location['position']['y']],{icon:heartEvent});
+		}
+		else{
+			var marker = L.marker([location['position']['x'],location['position']['y']],{icon:heartLoc});
+		}
 		marker.on('click',displayFav.bind(null,parseInt(location['id'])));
 		markers.addLayer(marker);
 	});
 	map.addLayer(markers);
 }
-
 
 /*
  * Send the request to have the current map and search for the fav with a certain id
@@ -205,7 +224,6 @@ function goTo(x,y){
 			null,
 			L.latLng(x, y)
 		],
-		routeWhileDragging: true,
 			
 		router: new L.Routing.osrmv1({
 			language: 'eng',

@@ -9,21 +9,21 @@ import java.util.*;
 
 @PersistenceCapable
 public class Location{
-	private int LocID;
+	private int id;
 	private String name, creatorName, description;
 	private List<String> message;
 	private Position pos;
 	private String label;
-	private static int id = 1;
+	private static int loc_id = 1;
 	private List<Picture> pictures;
 	
 	public Location() {
-		this.LocID = id++;
-		this.name = "Location"+String.valueOf(this.LocID);
+		this.id = loc_id++;
+		this.name = "Location"+String.valueOf(this.id);
 	}
 	
 	public Location(String name, String creatorName, double x, double y, String descr, String label) {
-		this.LocID = id++;
+		this.id = loc_id++;
 		this.creatorName = creatorName;
 		this.name = name;
 		this.pos = new Position(x,y);
@@ -32,7 +32,7 @@ public class Location{
 	}
 	
 	public Location(int ID, String name, String creatorName, double x, double y, String descr, String label) {
-		this.LocID = ID;
+		this.id = ID;
 		this.creatorName = creatorName;
 		this.name = name;
 		this.pos = new Position(x,y);
@@ -66,7 +66,7 @@ public class Location{
 	}
 
 	public int getID() {
-		return this.LocID;
+		return this.id;
 	}
 
 	public String getName() {

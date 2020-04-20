@@ -13,11 +13,13 @@
 
 		<script id="listMap" type="text/template">
 			<li>
-				<div class="mapPerso ">
+				<div id="mapPerso ">
 					<div class="button perso" class="map" onclick="displayMap(<%= id %>)"><%= name %> </div> 
-					<div class="button perso" onclick="editMap(<%= id %>)"><img src="../resources/edit.png" /></div> 
-					<div class="button perso" onclick="shareMap(<%= id %>,'<%= sharingID%>')"><img src="../resources/share.png" /></div> 
-					<div class="button perso" id="deleteMap"  onclick="deleteMap(<%= id %>)"> X </div> 
+					<div class="option" hidden>
+						<div class="button perso" onclick="editMap(<%= id %>)"><img src="../resources/edit_b.png" /></div> 
+						<div class="button perso" onclick="shareMap(<%= id %>,'<%= sharingID%>')"><img src="../resources/share_b.png" /></div> 
+						<div class="button perso" id="deleteMap" onclick="deleteMap(<%= id %>)" style="color:black"> X </div> 
+					</div>
 				</div>
 			</li>
 		</script>
@@ -47,7 +49,7 @@
 				<form action="/ws/users/<%=uid%>/maps/<%=id%>" method="POST" enctype="application/x-www-form-urlencoded">
 					Map's name <input type="text" name="name" value="<%=name%>">
 					Public map <input type="checkbox" name="access" value="1" checked>
-					<input type="submit" value="Edit">
+					<input onclick='window.location.reload(false)' type="submit" value="Edit">
 				</form>
 			</div>
 		</script>	
@@ -108,8 +110,8 @@
 					Label <input type="text" name="label"></p>
 					<p>Start <input type="datetime-local" name="start">
 					End <input type="datetime-local" name="end"></p>
-					<input type="file" id="myfile" name="myfile">
-					<input type="submit" value="Create">
+					<input type="file" id="myfile" name="myfile" accept="image/png, image/jpeg">
+					<input onclick='window.location.reload(false)' type="submit" value="Create">
 				</form>
 			</div>
 		</script>
@@ -123,8 +125,8 @@
 				ShareYourMap <a href="../home.html">X</a>
 			</h1>
 			<div id="userName"></div>
-			<form class="search" action="/ws/location" method="GET" enctype="application/x-www-form-urlencoded">
-				Favs <input class="search_input" type="text" id="searchBar" name="search" placeholder="Search...">
+			<form class="search" enctype="application/x-www-form-urlencoded">
+				Favs <input class="search_input" type="text" id="searchBar" name="search" value="" placeholder="Search...">
 			</form>
 				
 			<ul id="mapList"></ul>

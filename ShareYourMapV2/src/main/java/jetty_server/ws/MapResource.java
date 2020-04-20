@@ -2,12 +2,10 @@ package jetty_server.ws;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
@@ -74,12 +72,5 @@ public class MapResource {
 							 @PathParam("map-id") int mid) {
 		return mapDAO.deleteMap(uid, mid);
 	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/mapsearch")
-	public List<Map> searchMap(
-			@DefaultValue("") @QueryParam("search") String ref) {
-		return mapDAO.searchMap(ref);
-	}
+
 }

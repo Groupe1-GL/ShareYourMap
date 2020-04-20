@@ -39,3 +39,15 @@ function displayMapsList(result){
 		}
     });
 }
+
+/*
+ * Filter the list of maps regarding a research
+ */
+$(document).ready(function(){
+	$("#searchBar").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+	  	$("#mapList li").filter(function() {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+});

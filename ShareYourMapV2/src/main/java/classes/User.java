@@ -8,15 +8,15 @@ import java.util.*;
 
 @PersistenceCapable
 public class User{
-	private int userID;
+	private int id;
 	private String name;
 	private String password;
 	private List<Map> listMap; 
 	private Position currentPosition;
-	private static int id = 1;
+	private static int user_id = 1;
 	
 	public User(String name, String password) {
-		this.userID=id++;
+		this.id=user_id++;
 		this.name = name;
 		this.password = password;
 		this.listMap = new ArrayList<Map>();		
@@ -39,8 +39,8 @@ public class User{
 		return users;
 	}
 	
-	public int getUserID() {
-		return this.userID;
+	public int getId() {
+		return this.id;
 	}
 	public String getName() {
 		return this.name;
@@ -55,7 +55,7 @@ public class User{
 	}
 	
 	public String getUserInfo() {
-		return "ID: "+String.valueOf(this.userID)+" Username: "+this.name;
+		return "ID: "+String.valueOf(this.id)+" Username: "+this.name;
 	}
 	
 	public void putMap(Map m) {

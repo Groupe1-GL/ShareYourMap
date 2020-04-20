@@ -43,12 +43,12 @@ public interface UserDAO {
 	public User getUser(				int uid);
 	
 	/**
-     * Returns the user selected by its name.
+     * Returns the user selected by his name.
 	 *
-	 * @param  name the user name 
-	 * @return	   	the user object
+	 * @param  username the user identifier 
+	 * @return	   the user object
 	 */
-	public User getUser(String name);
+	public User getUser(				String username);
 	
 	/**
      * Edits the user selected by his id.

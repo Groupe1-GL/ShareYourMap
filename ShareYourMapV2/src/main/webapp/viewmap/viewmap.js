@@ -5,8 +5,16 @@
 
 //---------------------		Global variables	---------------------
 var current_user_id = 1;
-var current_map_id = "dzed";
+var current_map_id = 1;
 var current_fav_id = 1;
+var user_favs = [];
+
+
+//----------------------	Visual effects	-------------------------
+$(".mapPerso").hover(function(){
+	$("#option").css("diplay", "inline");
+	});
+
 
 //----------------------	Server functions	---------------------
 
@@ -55,7 +63,7 @@ function postServerData(url,success){
 
 // Return current registered user
 $(function(){
-	getServerData(`/ws/user/${current_user_id}`,getUser);
+	getServerData(`/ws/users/${current_user_id}`,getUser);
 });
 
 
@@ -73,6 +81,10 @@ function getUser(result){
 	_.each(maps, function(map) {
 		map_id = id_template(map);
 		$('#mapList').append(map_id);
+
+		_.each(map['locations'], function(fav) {
+			user_favs.push(fav);
+		});
 	});
 }
 
@@ -94,7 +106,7 @@ function createNewMap(){
 // Send the request to create a map
 function createMap(){
 	name = document.getElementById("map_name").value;
-	//putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
+	putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
 }
 
 /* 
@@ -152,6 +164,19 @@ function createNewFav(x,y){
 		document.getElementById("address_input").style.display = "block";
 	}
 }
+
+/*
+ * Filter the list of favorites regarding a research
+ */
+$(document).ready(function(){
+	$("#searchBar").on("keyup", function() {
+		fillFavList(user_favs);
+	  	var value = $(this).val().toLowerCase();
+	 	$("#favsList li").filter(function() {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	  	});
+	});
+});
 
 
 /*

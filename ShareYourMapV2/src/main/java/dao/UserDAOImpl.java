@@ -105,20 +105,24 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	public User getUser(int uid) {
 		for (User us: u) {
-			if (us.getUserID() == uid)
+			if (us.getId() == uid)
 				return us;
 		}
 		return null;		
 	}
 	
-
-
-	public User getUser(String name) {
+	/**
+     * Returns the user selected by his name.
+	 *
+	 * @param  uid the user identifier 
+	 * @return	   the user object
+	 */
+	public User getUser(String username) {
 		for (User us: u) {
-			if (us.getName().equals(name))
+			if (us.getName().contentEquals(username))
 				return us;
 		}
-		return null;	
+		return null;		
 	}
 	
 	/**
@@ -136,7 +140,7 @@ public class UserDAOImpl implements UserDAO {
 										String password, 
 										String cpassword) { 
 		for (User us: u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				if (!opassword.equals(null)&&!password.equals(null)&&!cpassword.equals(null)){
 					if (opassword.equals(us.getPassword())&&password.equals(cpassword)){//ADD getPassword
 						us.setPassword(password);//ADD setPassword encryption
@@ -169,7 +173,7 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	public boolean deleteUser(			int uid) {
 		for (User us: u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				u.remove(us);
 				return true;
 			}
@@ -188,7 +192,7 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	public List<Map> getMapsOfUser(		int uid) {
 		for (User us: u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				return us.getMaps();
 			}
 		}
@@ -206,7 +210,7 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	public boolean addMapOnUser(		int uid, int mid) {
 		for (User us: u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma: MapDAOImpl.m) {
 					if (ma.getID() == mid) {
 						us.getMaps().add(ma);
@@ -228,7 +232,7 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	public boolean removeMapOnUser(		int uid, int mid) {
 		for (User us: u) {
-			if (us.getUserID() == uid) {
+			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
 						us.getMaps().remove(ma);

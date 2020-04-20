@@ -29,14 +29,6 @@ public interface MapDAO {
 	public Map getMap(int mid);
 	
 	/**
-	 * Returns a map selected by its name;
-	 * If there is not map matching, it will return a null object.
-     *	 
-	 * @return	the map
-	 */
-	public Map getMap(String mapname);
-	
-	/**
 	 * Creates a map.
      *	 
 	 * @return	the map
@@ -56,13 +48,5 @@ public interface MapDAO {
 	 * @return	true if the operation was successful
 	 */
 	public boolean deleteMap(int uid, int mid);
-	/**
-     * Returns the list of maps matching with the keywords.
-	 * If the map doesn't exist or no map matches  a null object is returned.
-	 * 
-	 * @param  value	keywords where map name can match
-	 * @return	   		list of maps
-	 */
-	public List<Map> searchMap(String ref);
 	
 }

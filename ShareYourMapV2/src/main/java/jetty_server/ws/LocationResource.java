@@ -2,7 +2,6 @@ package jetty_server.ws;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -31,7 +30,7 @@ public class LocationResource {
 	
 	LocationDAO locationDAO = new LocationDAOImpl();
 	
-	//voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
+	//voir si la rï¿½ponse est cohï¿½rente si l'user et/ou la map et/ou la location n'existent pas
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -47,7 +46,7 @@ public class LocationResource {
 	}
 	
 	
-	//voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
+	//voir si la rï¿½ponse est cohï¿½rente si l'user et/ou la map et/ou la location n'existent pas
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -60,7 +59,7 @@ public class LocationResource {
 	}
 	
 	
-	//voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
+	//voir si la rï¿½ponse est cohï¿½rente si l'user et/ou la map et/ou la location n'existent pas
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -75,7 +74,7 @@ public class LocationResource {
 	}
 	
 	
-	//voir si la réponse est cohérente si l'user et/ou la map et/ou la location n'existent pas
+	//voir si la rï¿½ponse est cohï¿½rente si l'user et/ou la map et/ou la location n'existent pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}")
@@ -83,14 +82,6 @@ public class LocationResource {
 								  @PathParam("map-id") int mid,
 								  @PathParam("location-id") int lid) {
 		return locationDAO.deleteLocation(uid, mid, lid);
-	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/location")
-	public List<Location> searchLocation(
-						@DefaultValue("") @QueryParam("search") String ref) {
-			return locationDAO.searchLocation(ref);
 	}
 	
 	@GET
