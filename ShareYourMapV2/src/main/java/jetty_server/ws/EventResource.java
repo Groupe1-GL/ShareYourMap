@@ -46,8 +46,8 @@ public class EventResource {
 									@QueryParam("y") double y,
 									@FormParam("startDate") String start,
 									@FormParam("endDate") String end){		
-		return eventDAO.createEventOnMap(uid, mid, name, descr, label, x, y, LocalDateTime.parse(start.replace("T"," "), DateTimeFormatter.ISO_DATE_TIME)
-																		   , LocalDateTime.parse(end.replace("T"," "), DateTimeFormatter.ISO_DATE_TIME) );
+		return eventDAO.createEventOnMap(uid, mid, name, descr, label, x, y, LocalDateTime.parse(start, DateTimeFormatter.ISO_DATE_TIME)
+																		   , LocalDateTime.parse(end, DateTimeFormatter.ISO_DATE_TIME) );
 	}
 	
 	@GET
