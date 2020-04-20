@@ -41,4 +41,14 @@ public interface EventDAO  extends LocationDAO{
 	 */
 	public List<Event> nextEvents(int mid);
 	
+	/**
+     * Removes an event on a map.
+	 *
+	 * @param	uid		the user identifier 
+	 * @param	mid		the map identifier
+	 * @param	eid		the event identifier
+	 * @return			true if the operation was successful
+	 */
+	public boolean deleteEvent(int uid, int mid, int eid);
+	
 }

@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -23,7 +24,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * LocationRessource is the class of the locations resource used in the ShareYourMap website.
+ * LocationResource is the class of the locations resource used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
  * @version %I%, %G%
@@ -35,7 +36,7 @@ public class LocationResource {
 	LocationDAO locationDAO = new LocationDAOImpl();
 	
 	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps/{map-id}/location")
