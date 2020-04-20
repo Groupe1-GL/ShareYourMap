@@ -96,7 +96,7 @@ public class LocationResource {
 		return locationDAO.nearestLocations(uid, mid);
 	}
 	
-	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
+	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
