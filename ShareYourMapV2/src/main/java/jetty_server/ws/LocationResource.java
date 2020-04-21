@@ -32,7 +32,7 @@ import java.util.List;
 @Path("/")
 public class LocationResource {
 	
-	LocationDAO locationDAO = new LocationDAOImpl();
+	static LocationDAO locationDAO = new LocationDAOImpl(); //static because used on EventResource
 	
 	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@PUT
