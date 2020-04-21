@@ -51,9 +51,9 @@ public class EventResource {
 	}
 	
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("maps/{map-id}/next-events")
-	public List<Event> nextEvents(int mid) {
+	public List<Event> nextEvents(@PathParam("map-id") int mid) {
 		return eventDAO.nextEvents(mid);
 	}
 	

@@ -232,7 +232,7 @@ public class LocationDAOImpl implements LocationDAO {
         } catch (IOException e) {e.printStackTrace();} 
 		
 		
-		//Picture save on database process
+		//Picture save on database process, the path will be use to display it via JavaScript
 		for (User us: UserDAOImpl.u) {
 			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {

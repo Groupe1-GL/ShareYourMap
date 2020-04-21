@@ -19,7 +19,6 @@ import classes.Location;
 import dao.LocationDAO;
 import dao.LocationDAOImpl;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class LocationResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps/location/{location-id}/feed")
+	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}/feed")
 	public boolean contributeOnLocation(@PathParam("user-id") int uid,
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
@@ -101,21 +100,21 @@ public class LocationResource {
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{user-id}/maps/location/{location-id}/feed-img")
+	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}/feed-img")
 	public boolean contributeOnLocationImg(@PathParam("user-id") int uid,
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
-										@FormDataParam("picture")InputStream uploadedInputStream,
-										@FormDataParam("picture")FormDataContentDisposition fileDetail) {
+										@FormDataParam("file") InputStream uploadedInputStream,
+										@FormDataParam("file") FormDataContentDisposition fileDetail) {
 		return locationDAO.contributeOnLocationImg(uid, mid, lid, uploadedInputStream, fileDetail);
 	}
-	
+	/*
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public boolean uploadPictures(@FormParam("picture") FileInputStream picture) {
 		return true;
-		/*
-		 * public static void AddEmployee(
+		
+		  public static void AddEmployee(
   string photoFilePath
   
 {  
@@ -136,5 +135,5 @@ public static byte[] GetPhoto(string filePath)
   return photo;  
 }  
 		 */
-	}
+	
 }

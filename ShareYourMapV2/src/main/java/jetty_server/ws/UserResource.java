@@ -63,7 +63,9 @@ public class UserResource {
 			return createUser(name, password, cpassword);
 		}
 		else {
-			User us = userDAO.getUser(name);
+			return userDAO.connectUser(name,password);
+		}
+			/*User us = userDAO.getUser(name);
 			if (us != null && us.getPassword().equals(password)) {
 				return Response.status(Response.Status.SEE_OTHER)
 				         .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
@@ -74,7 +76,7 @@ public class UserResource {
 					 	.status(402)
 			            .entity("Username and password do not match")
 			            .build();
-		}
+		}*/
 	}
 	
 	@GET
