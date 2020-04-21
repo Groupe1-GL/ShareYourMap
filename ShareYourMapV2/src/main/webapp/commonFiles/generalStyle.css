@@ -13,6 +13,7 @@ html {
   height: 100%;
   width: 25%;
   background-color: #181847;
+  overflow: auto;
   transform : translateX(0px);
   transition-duration: 1s;
   color: white;
@@ -144,6 +145,19 @@ h3 {
   border-bottom: 1px solid #9a9ab9;
 }
 
+.feed {
+  position: fixed;
+  top:10%;
+  left: 43%;
+  z-index: 3;
+  width: 35%;
+  height: 50%;
+  background-color: #181847;
+  padding: 15px;
+  padding-right: 35px;
+  padding-left: 35px;
+  color: white;
+}
 
 /* ------------------------------  Elements design ------------------------------ */
 
@@ -199,7 +213,6 @@ li {
 
 ul {
   list-style: none;
-  overflow: auto;
 }
 
 .event {
@@ -223,4 +236,11 @@ h2 {
   position: absolute;
   top: 5%;
   right:5%;
+}
+
+#geoLoc {
+  position: fixed;
+  bottom:52px;
+  right:5px;
+  z-index: 2;
 }

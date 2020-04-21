@@ -24,13 +24,9 @@
 			</li>
 		</script>
 		
-		<script id="mapHeader" type="text/template">
-			<%=name%>
-		</script>
-		
 		<script id="listFavs" type="text/template">
 			<li <% if(event==1) {%> class="event" <%}%> ><div class="button perso"
-				onclick="displayFav(<%= id %>)"><%= name %> </div> 
+				onclick="displayFav(<%= id %>)"><%= name %> </div>
 				<div class="button perso" onclick="deleteFav(<%= id %>)">X</div>
 			</li>
 		</script>
@@ -67,7 +63,7 @@
 				<div class="button close" onclick="closeElement('viewFav')" >X</div>
 				<div class="header">
 					<h2 class="title"> 
-						<%= name %>
+						<%= name %><div class="button perso" onclick="editFav(<%= mid %>,<%= id %>)"><img src="../resources/edit_b.png" /></div> 
 					</h2>
 					<p class="address"> Address </p>
 				</div>
@@ -89,13 +85,34 @@
 					</div>
 				</div>
 				<div class="pictures">
-					<h3>Pictures <div class="button">+</di></h3>
+					<h3>Pictures <div class="button" onclick="addPix()">+</div></h3>
+					<ul id="pics"></ul>
+					<div id="addPix" class="feed" hidden>
+						<div class="button close" onclick="closeElement('addPix')" >X</div>
+						<form action="/<%=uid%>/maps/location/<%=id%>/feed-img" method="POST" enctype="application/x-www-form-urlencoded">
+							<p>Add a picture <input type="file" name="picture" accept="image/png, image/jpeg"> </p>
+							<input onclick='closeElement('addPix') type="submit" value="Add">
+						</form>
+					</div>
 				</div>
 				<div classs="msg">
-					<h3>Messages <div class="button">+</di></h3>
+					<h3>Messages <div class="button" onclick="addMsg()">+</div></h3>
+					<ul id="msgs"></ul>
+					<div id="addMsg" class="feed" hidden>
+						<div class="button close" onclick="closeElement('addMsg')" >X</div>
+						<form action="/<%=uid%>/maps/location/<%=id%>/feed" method="POST" enctype="application/x-www-form-urlencoded">
+							<p>Add a message <input type="text" name="message">
+							<input onclick="closeElement('addMsg')" type="submit" value="Add">
+						</form>
+					</div>
 				</div>
 				<div class="itinerary">
-					<div  class="button" onclick="goTo(<%= position['x']%>,<%= position['y']%>)"><img src="../resources/Go.png" /></div>
+					<div class="button perso" onclick="howToGo()"><img src="../resources/go_r.png" /></div>
+					<div id="meanTransp" class="perso" hidden>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'car')"><img src="../resources/car_r" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'train')"><img src="../resources/train_r" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'foot')"><img src="../resources/foot_r" /></div>
+					</div>
 				</div>
 			</div>
 		</script>
@@ -110,13 +127,25 @@
 					Label <input type="text" name="label"></p>
 					<p>Start <input type="datetime-local" name="start">
 					End <input type="datetime-local" name="end"></p>
-					<input type="file" id="myfile" name="myfile" accept="image/png, image/jpeg">
 					<input onclick='window.location.reload(false)' type="submit" value="Create">
 				</form>
 			</div>
 		</script>
 
-		<script id="itineraryTemplate" type="text/template">
+		<script id="editFavTemplate" type="text/template">
+			<div class="top_div">
+				<h2>Edit fav <div class="close button" onclick="closeElement('viewFav')" >X</div></h2>
+				<form action="/ws/users/<%= uid %>/maps/<%= mid %>/location/<%= id %>" method="POST" enctype="application/x-www-form-urlencoded">
+					<p>Fav's name <input type="text" name="name" value="<%= name %>"></p>
+					<p>Description <input type="text" name="description" value="<%= description%>">
+					Label <input type="text" name="label" value="<%= label%>"></p>
+					<% if(event==1){ %>
+						<p>Start <input type="datetime-local" name="start" value="<%= start%>">
+						End <input type="datetime-local" name="end" value="<%= end%>"></p>
+					<% } %>
+					<input onclick='window.location.reload(false)' type="submit" value="Edit">
+				</form>
+			</div>
 		</script>
 
 		<div id="toggle" class="button"></div>
@@ -135,7 +164,12 @@
 		
 			<div class="button_group">
 				<div class="button icon" onclick="createNewMap()"><img src="../resources/buttonAddMap.png" /></div>
-				<div  class="button" onclick="goTo(null,null)"><img src="../resources/buttonTravel_r.png" /></div>
+				<div class="button" onclick="howToGoFull()"><img src="../resources/buttonTravel_r.png" /></div>
+				<div id="meanTranspFull" hidden>
+					<div  class="button perso" onclick="goTo(null,null,'car')"><img src="../resources/car_r" /></div>
+					<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_r" /></div>
+					<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_r" /></div>
+				</div>
 				<a href="../publicmap/publicmap.html"><img src='../resources/buttonPublic.png'/></a>
 			</div>
 		</div>
@@ -145,6 +179,7 @@
 		<div id="shareMap" hidden></div>
 		<div id="viewMap" class="closable"></div>
 		<div id="newFav" onclick="createNewFav(0,0)" class="button" hidden><img src='../resources/fav.png'/></div>
+		<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
 
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
