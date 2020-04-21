@@ -15,7 +15,7 @@
 		</script>
 
 		<script id="listPublicMap" type="text/template">
-			<li><div class="button" onclick="displayMap(<%= id %>)"><%= name %> </div>
+			<li><div class="button" onclick="displayMap(<%= id %>)"><%= name %> <i>by <%= creatorName%></i></div>
 			</li>
 		</script>	
 
@@ -52,10 +52,26 @@
 					</div>
 				</div>
 				<div class="pictures">
-					<h3>Pictures <div class="button">+</di></h3>
+					<h3>Pictures <div class="button" onclick="addPix()">+</div></h3>
+					<ul id="pics"></ul>
+					<div id="addPix" class="feed" hidden>
+						<div class="button close" onclick="closeElement('addPix')" >X</div>
+						<form action="/<%=uid%>/maps/location/<%=id%>/feed-img" method="POST" enctype="application/x-www-form-urlencoded">
+							<p>Add a picture <input type="file" name="picture" accept="image/png, image/jpeg"> </p>
+							<input onclick='closeElement('addPix') type="submit" value="Add">
+						</form>
+					</div>
 				</div>
 				<div classs="msg">
-					<h3>Messages <div class="button">+</di></h3>
+					<h3>Messages <div class="button" onclick="addMsg()">+</div></h3>
+					<ul id="msgs"></ul>
+					<div id="addMsg" class="feed" hidden>
+						<div class="button close" onclick="closeElement('addMsg')" >X</div>
+						<form action="/<%=uid%>/maps/location/<%=id%>/feed" method="POST" enctype="application/x-www-form-urlencoded">
+							<p>Add a message <input type="text" name="message">
+							<input onclick="closeElement('addMsg')" type="submit" value="Add">
+						</form>
+					</div>
 				</div>
 				<div class="itinerary">
 					<div  class="button" onclick="goTo(<%= position['x']%>,<%= position['y']%>)"><img src="../resources/Go.png" /></div>

@@ -7,7 +7,7 @@ $("#toggle").click(showNav);
 
 function showNav() {
     if( document.getElementById("nav_bar").style.transform == "translateX(0px)"){
-        document.getElementById("nav_bar").style.transform = "translateX(-340px)";
+        document.getElementById("nav_bar").style.transform = "translateX(-348px)";
 		document.getElementById("toggle").style.left = "0";
 		document.getElementById("toggle").style.backgroundImage = "url(\"../resources/burger.png\")";
 		document.getElementById("currentMap").style.display = "block";
@@ -25,9 +25,8 @@ function showNav() {
 //----------------------	Global variables	-------------------------
 
 var map = L.map('map');
-var current_user_id = 1;
-var current_map_id = 1;
-var current_fav_id = 1;
+var current_map = null;
+var current_fav = null;
 var markers = L.layerGroup();
 var heartLoc = L.icon({
     iconUrl: "../resources/heart_localisation.png",
@@ -112,7 +111,9 @@ function findCenter(list_locations){
  * On double click on the map, open the element to create a new fav at this address
  */
 function addFav(e) {
-	createNewFav(e.latlng.lat,e.latlng.lng);
+	if(current_map != null){
+		createNewFav(e.latlng.lat,e.latlng.lng);
+	}
 }
 
 /*
@@ -120,7 +121,6 @@ function addFav(e) {
  * @param {string} id		The id of the wanted map
  */
 function displayMap(id){
-	current_map_id = id;
 	getServerData(`/ws/maps/${id}`,mapDetails);
 }
 
@@ -129,6 +129,7 @@ function displayMap(id){
  * @param {Map} result		The current map
  */
 function mapDetails(result){
+	current_map = result;
 	markers.clearLayers();
 	
 	var map_name = _.template($('#mapHeader').html());
@@ -169,12 +170,56 @@ function fillFavList(favs){
 }
 
 /*
- * Send the request to have the current map and search for the fav with a certain id
+ * Get the location for an certain id
+ * And display information of this favs in the page with the 'favDetails' template
  * @param {long} id		The id of the wanted favorite
  */
 function displayFav(id){
-	current_fav_id = id;
-	getServerData(`/ws/maps/${current_map_id}`,favDetails);						
+	closeAll();
+	if (router_elem != null){
+		router_elem.remove();
+	}
+
+	var uid = {"uid":current_user_id};
+	var mid = {"mid":current_map['id']};
+	_.each(current_map['locations'], function(location) {
+		if(location['id']==id){
+			current_fav = location;
+			document.getElementById("viewFav").style.display = "block";
+			var location_template = _.template($('#favDetails').html());
+			var loc_info = $.extend(uid,mid,location);
+			detail = location_template(loc_info);
+			$("#viewFav").html(detail);
+
+			$("#msgs").html("");
+			var msgs_template = _.template("<li><%=txt></li>");
+			_.each(location['message'], function(msg) {
+				$("#msgs").append(msgs_template({"txt":msg}));
+			});
+
+			$("#pics").html("");
+			var pics_template = _.template("<li><%=pix></li>");
+			_.each(location['pictures'], function(pix) {
+				$("#pics").append(pics_template({"pix":pix}));
+			});
+			
+			centerMapView(parseFloat(location['position']['x'])-0.0002,parseFloat(location['position']['y'])+0.0008,20);
+		}
+	});				
+}
+
+/*
+ * Display the div in which the user can add a picture 
+ */
+function addPix(){
+	document.getElementById("addPix").style.display = "block";
+}
+
+/*
+ * Display the div in which the user can add a msg
+ */
+function addMsg(){
+	document.getElementById("addMsg").style.display = "block";
 }
 
 // Close all element before open an other
@@ -183,28 +228,6 @@ function closeAll() {
 	for (const key in divClose) {
 		//document.getElementById(key.id).style.display = "none";
 	}
-}
-
-/*
- * Get the location for an certain id
- * And display information of this favs in the page with the 'favDetails' template
- * @param {Map} result	The current map
- * @param {long} id		The id of the wanted favorite
- */
-function favDetails(result){
-	closeAll();
-	if (router_elem != null){
-		router_elem.remove();
-	}
-	_.each(result['locations'], function(location) {
-		if(location['id']==current_fav_id){
-			document.getElementById("viewFav").style.display = "block";
-			var location_template = _.template($('#favDetails').html());
-			detail = location_template(location);
-			$("#viewFav").html(detail);
-			centerMapView(parseFloat(location['position']['x'])-0.0002,parseFloat(location['position']['y'])+0.0008,20);
-		}
-	});
 }
 
 /*

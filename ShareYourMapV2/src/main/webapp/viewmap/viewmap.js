@@ -5,8 +5,8 @@
 
 //---------------------		Global variables	---------------------
 var current_user_id = 1;
-var current_map_id = 1;
-var current_fav_id = 1;
+var current_map_id = 0;
+var current_fav_id = 0;
 var user_favs = [];
 
 
@@ -164,6 +164,33 @@ function createNewFav(x,y){
 		document.getElementById("address_input").style.display = "block";
 	}
 }
+
+/* 
+ * Send the request to get the map in which the fav is
+ * @param {int} mid		the id of the current map
+ */
+function editFav(mid,lid){
+	current_fav_id = lid;
+	getServerData(`/ws/maps/${mid}`,showEditFav);
+}
+
+/*
+ * Display the element in which a user can edit a fav
+ * @param {Map} result		The map to edit
+ */
+function showEditFav(result){
+	var uid = {"uid":current_user_id};
+	var mid = {"mid":result['id']};
+
+	_.each(result['locations'], function(location) {
+		if(location['id']==current_fav_id){
+			var editDetails = $.extend(uid,mid,location);
+			var editFav = _.template($('#editFavTemplate').html());
+			$("#viewFav").html(editFav(editDetails));
+		}
+	});	
+}
+
 
 /*
  * Filter the list of favorites regarding a research
