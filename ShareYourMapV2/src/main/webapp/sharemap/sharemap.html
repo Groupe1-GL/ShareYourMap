@@ -11,10 +11,6 @@
 
 	</head>
 	<body>
-	
-		<script id="mapHeader" type="text/template">
-			<h2><%=name%></h2>
-		</script>
 
 		<script id="listFavs" type="text/template">
 			<li>
@@ -24,45 +20,60 @@
 		</script>
 
 		<script id="favDetails" type="text/template">
-			<h1>
-				<%= name %><div class="button perso" onclick="editFav(<%= mid %>,<%= id %>)"><img src="../resources/edit_b.png" /></div>
-				<button onclick="closeElement('viewFav')">X</button>
-			</h1>
-			<p>Adresse</p>
-			<p> 
-				<h2>Description</h2>
-				<%= description%>
-			</p>
-			<% if(event==1) {%> 
-			<p>
-				<h2>Duration</h2>
-				From <%= start%> To <%= end%>
-			</p>
-			<%}%>	
-			<p> 
-				<h2>Tags</h2>
-				<%= label%>
-			</p>
-			<div class="pictures">
-				<h3>Pictures <div class="button" onclick="addPix()">+</div></h3>
-				<ul id="pics"></ul>
-				<div id="addPix" class="feed" hidden>
-					<div class="button close" onclick="closeElement('addPix')" >X</div>
-					<form action="/<%=uid%>/maps/location/<%=id%>/feed-img" method="POST" enctype="application/x-www-form-urlencoded">
-						<p>Add a picture <input type="file" name="picture" accept="image/png, image/jpeg"> </p>
-						<input onclick='closeElement('addPix') type="submit" value="Add">
-					</form>
+			<div id="detail" class="top_div wrapper">
+				<div class="button close" onclick="closeElement('viewFav')" >X</div>
+				<div class="header">
+					<h2 class="title"> 
+						<%= name %><div class="button perso" onclick="editFav(<%= mid %>,<%= id %>)"><img src="../resources/edit_b.png" /></div> 
+					</h2>
+					<p class="address"> Address </p>
 				</div>
-			</div>
-			<div classs="msg">
-				<h3>Messages <div class="button" onclick="addMsg()">+</div></h3>
-				<ul id="msgs"></ul>
-				<div id="addMsg" class="feed" hidden>
-					<div class="button close" onclick="closeElement('addMsg')" >X</div>
-					<form action="/<%=uid%>/maps/location/<%=id%>/feed" method="POST" enctype="application/x-www-form-urlencoded">
-						<p>Add a message <input type="text" name="message">
-						<input onclick="closeElement('addMsg')" type="submit" value="Add">
-					</form>
+				<div class="description">
+					<div class="descrip">
+						<h3>Description</h3>
+						<%= description%>
+					</div>
+					<div class="duration">
+					<% if(event==1) {%> 
+						<p>
+							<h3>Duration</h3>
+						</p>
+					<%}%>	
+					</div>
+					<div classs="tags">
+						<h3>Tags</h3>
+						<%= label%> 
+					</div>
+				</div>
+				<div class="pictures">
+					<h3>Pictures <div class="button" onclick="addPix()">+</div></h3>
+					<ul id="pics"></ul>
+					<div id="addPix" class="feed" hidden>
+						<div class="button close" onclick="closeElement('addPix')" >X</div>
+						<form action="/<%=uid%>/maps/location/<%=id%>/feed-img" method="POST" enctype="application/x-www-form-urlencoded">
+							<p>Add a picture <input type="file" name="picture" accept="image/png, image/jpeg"> </p>
+							<input onclick='closeElement('addPix') type="submit" value="Add">
+						</form>
+					</div>
+				</div>
+				<div classs="msg">
+					<h3>Messages <div class="button" onclick="addMsg()">+</div></h3>
+					<ul id="msgs"></ul>
+					<div id="addMsg" class="feed" hidden>
+						<div class="button close" onclick="closeElement('addMsg')" >X</div>
+						<form action="/<%=uid%>/maps/location/<%=id%>/feed" method="POST" enctype="application/x-www-form-urlencoded">
+							<p>Add a message <input type="text" name="message">
+							<input onclick="closeElement('addMsg')" type="submit" value="Add">
+						</form>
+					</div>
+				</div>
+				<div class="itinerary">
+					<div class="button perso" onclick="howToGo()"><img src="../resources/go_j.png" /></div>
+					<div id="meanTransp" class="perso" hidden>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'car')"><img src="../resources/car_j" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'train')"><img src="../resources/train_j" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'foot')"><img src="../resources/foot_j" /></div>
+					</div>
 				</div>
 			</div>
 		</script>
@@ -110,8 +121,15 @@
 				
 		<div id="currentMap" hidden></div>
 		<div id="viewFav"></div>
+		<div class="button" onclick="howToGoFull()"><img src="../resources/buttonTravel_j.png" /></div>
+		<div id="meanTranspFull" hidden>
+			<div  class="button perso" onclick="goTo(null,null,'car')"><img src="../resources/car_j" /></div>
+			<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_j" /></div>
+			<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_j" /></div>
+		</div>
 		<div id="map"></div>
 		<div id="newFav" onclick="createNewFav(0,0)" class="button"><img src='../resources/fav.png'/></div>
+		<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_j.png'/></div>
 
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>

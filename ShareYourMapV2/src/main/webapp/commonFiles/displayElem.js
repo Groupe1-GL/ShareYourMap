@@ -39,6 +39,11 @@ var heartEvent = L.icon({
 	iconAnchor:   [21, 42],
 });
 var router_elem = null;
+var options = {
+	enableHighAccuracy: true,
+	timeout: 5000,
+	maximumAge: 0
+  };
 
 //----------------------	Server function		-------------------------
 
@@ -117,6 +122,25 @@ function addFav(e) {
 }
 
 /*
+ * Center the map on the user's position
+ * @param pos
+ */
+function centerMe(){
+	navigator.geolocation.getCurrentPosition(success, error, options);
+}
+
+function success(pos){
+	var crd = pos.coords;
+	var x = crd.latitude;
+	var y = crd.longitude;
+	centerMapView(x,y,20);
+}
+
+function error(err) {
+	console.warn(`ERREUR (${err.code}): ${err.message}`);
+  }
+
+/*
  * Send the request to have the map with a certain id
  * @param {string} id		The id of the wanted map
  */
@@ -132,7 +156,7 @@ function mapDetails(result){
 	current_map = result;
 	markers.clearLayers();
 	
-	var map_name = _.template($('#mapHeader').html());
+	var map_name = _.template("<%= name %>");
 	$("#currentMap").html(map_name(result));
 
 	var fav = document.getElementById("newFav");
@@ -231,11 +255,35 @@ function closeAll() {
 }
 
 /*
+ * Display different means of transport available for the user
+ */
+function howToGo(){
+	if (document.getElementById("meanTransp").style.display == "block"){
+		document.getElementById("meanTransp").style.display = "none";
+	}
+	else{
+		document.getElementById("meanTransp").style.display = "block";
+	}
+}
+
+/*
+ * Display different means of transport available for the user
+ */
+function howToGoFull(){
+	if (document.getElementById("meanTranspFull").style.display == "block"){
+		document.getElementById("meanTranspFull").style.display = "none";
+	}
+	else{
+		document.getElementById("meanTranspFull").style.display = "block";
+	}
+}
+
+/*
  * Display the element in which a find an itinerary to the location
  * @param {float} x		The longitude value to the location
  * @param {float} y		The latitude value to the location
  */
-function goTo(x,y){
+function goTo(x,y,mean){
 	if (router_elem != null && router_elem.remove() == this){
 		return;
 	}
@@ -250,7 +298,7 @@ function goTo(x,y){
 			
 		router: new L.Routing.osrmv1({
 			language: 'eng',
-			profile: 'car', // car, bike, foot
+			profile: mean, // car, bike, foot
 		}),
 		geocoder: L.Control.Geocoder.nominatim()
 	});

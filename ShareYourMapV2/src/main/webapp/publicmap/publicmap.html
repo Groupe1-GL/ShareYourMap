@@ -9,10 +9,6 @@
 	
 	</head>
 	<body>
-	
-		<script id="mapHeader" type="text/template">
-			<%=name%>
-		</script>
 
 		<script id="listPublicMap" type="text/template">
 			<li><div class="button" onclick="displayMap(<%= id %>)"><%= name %> <i>by <%= creatorName%></i></div>
@@ -74,7 +70,12 @@
 					</div>
 				</div>
 				<div class="itinerary">
-					<div  class="button" onclick="goTo(<%= position['x']%>,<%= position['y']%>)"><img src="../resources/Go.png" /></div>
+					<div class="button perso" onclick="howToGo()"><img src="../resources/go_j.png" /></div>
+					<div id="meanTransp" class="perso" hidden>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'car')"><img src="../resources/car_j" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'train')"><img src="../resources/train_j" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'foot')"><img src="../resources/foot_j" /></div>
+					</div>
 				</div>
 			</div>
 		</script>
@@ -92,9 +93,15 @@
 			<ul id="mapList"></ul>
 			<ul id="favsList"></ul>
 			<div class="button_group">
-				<div  class="button" onclick="goTo(null,null)"><img src="../resources/buttonTravel_j.png" /></div>
+				<div class="button" onclick="howToGoFull()"><img src="../resources/buttonTravel_j.png" /></div>
+				<div id="meanTranspFull" hidden>
+					<div  class="button perso" onclick="goTo(null,null,'car')"><img src="../resources/car_j" /></div>
+					<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_j" /></div>
+					<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_j" /></div>
+				</div>
 				<a href="../viewmap/viewmap.html"><img src='../resources/buttonPerso.png'/></a>
 			</div>
+			<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_j.png'/></div>
 		</div>
 				
 		<div id="currentMap" hidden></div>

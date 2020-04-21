@@ -24,10 +24,6 @@
 			</li>
 		</script>
 		
-		<script id="mapHeader" type="text/template">
-			<%=name%>
-		</script>
-		
 		<script id="listFavs" type="text/template">
 			<li <% if(event==1) {%> class="event" <%}%> ><div class="button perso"
 				onclick="displayFav(<%= id %>)"><%= name %> </div>
@@ -111,7 +107,12 @@
 					</div>
 				</div>
 				<div class="itinerary">
-					<div  class="button" onclick="goTo(<%= position['x']%>,<%= position['y']%>)"><img src="../resources/Go.png" /></div>
+					<div class="button perso" onclick="howToGo()"><img src="../resources/go_r.png" /></div>
+					<div id="meanTransp" class="perso" hidden>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'car')"><img src="../resources/car_r" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'train')"><img src="../resources/train_r" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'foot')"><img src="../resources/foot_r" /></div>
+					</div>
 				</div>
 			</div>
 		</script>
@@ -163,7 +164,12 @@
 		
 			<div class="button_group">
 				<div class="button icon" onclick="createNewMap()"><img src="../resources/buttonAddMap.png" /></div>
-				<div  class="button" onclick="goTo(null,null)"><img src="../resources/buttonTravel_r.png" /></div>
+				<div class="button" onclick="howToGoFull()"><img src="../resources/buttonTravel_r.png" /></div>
+				<div id="meanTranspFull" hidden>
+					<div  class="button perso" onclick="goTo(null,null,'car')"><img src="../resources/car_r" /></div>
+					<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_r" /></div>
+					<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_r" /></div>
+				</div>
 				<a href="../publicmap/publicmap.html"><img src='../resources/buttonPublic.png'/></a>
 			</div>
 		</div>
@@ -173,6 +179,7 @@
 		<div id="shareMap" hidden></div>
 		<div id="viewMap" class="closable"></div>
 		<div id="newFav" onclick="createNewFav(0,0)" class="button" hidden><img src='../resources/fav.png'/></div>
+		<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
 
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
