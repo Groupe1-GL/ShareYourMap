@@ -36,7 +36,7 @@ public class EventResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/event")
+	@Path("/users/{user-id}/maps/{map-id}/location-v2")
 	public boolean createLocationOnMap(@PathParam("user-id") int uid,
 									@PathParam("map-id") int mid,
 									@FormParam("name") String name,
