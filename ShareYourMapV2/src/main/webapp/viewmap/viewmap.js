@@ -3,10 +3,7 @@
  * @link src/main/webapp/viewmap
  */
 
-//---------------------		Global variables	---------------------
-var current_user_id = 1;
-var current_map_id = 0;
-var current_fav_id = 0;
+//---------------------		Global variable	---------------------
 var user_favs = [];
 
 
@@ -71,9 +68,10 @@ $(function(){
  * Display user information in the current page with different templates
  * @param {JSON: User}		the current user
  */
-function getUser(result){
-	var user_name = _.template("<h2><%=name%> maps</h2>");	
+function getUser(result){	
+	var user_name = _.template("<%=name%> maps");	
 	$("#userName").html(user_name(result));
+	$("#pageName").html(user_name(result));
 
 	document.getElementById('mapList').innerHTML = "";
 	var id_template = _.template($('#listMap').html());
@@ -87,7 +85,6 @@ function getUser(result){
 		});
 	});
 }
-
 
 //---------------------		Actions on click		---------------------	
 
@@ -156,7 +153,7 @@ function deleteMap(mid){
  * @param {float} y		The latitude value of the new favorite
  */
 function createNewFav(x,y){
-	var details = {"uid":current_user_id, "mid":current_map_id, "x":x, "y":y};
+	var details = {"uid":current_user_id, "mid":current_map['id'], "x":x, "y":y};
 	document.getElementById("viewFav").style.display = "block";
 	var newFav = _.template($('#newFavTemplate').html());
 	$("#viewFav").html(newFav(details));
@@ -169,8 +166,7 @@ function createNewFav(x,y){
  * Send the request to get the map in which the fav is
  * @param {int} mid		the id of the current map
  */
-function editFav(mid,lid){
-	current_fav_id = lid;
+function editFav(mid){
 	getServerData(`/ws/maps/${mid}`,showEditFav);
 }
 
@@ -183,7 +179,7 @@ function showEditFav(result){
 	var mid = {"mid":result['id']};
 
 	_.each(result['locations'], function(location) {
-		if(location['id']==current_fav_id){
+		if(location['id']==current_fav['id']){
 			var editDetails = $.extend(uid,mid,location);
 			var editFav = _.template($('#editFavTemplate').html());
 			$("#viewFav").html(editFav(editDetails));
@@ -223,7 +219,7 @@ function eventDiv(){
 
 // Delete a location
 function deleteFav(lid){
-	deleteServerData(`/ws/users/${current_user_id}/maps/${current_map_id}/location/${lid}`,refresh);
+	deleteServerData(`/ws/users/${current_user_id}/maps/${current_map['id']}/location/${lid}`,refresh);
 }
 
 // Refresh 

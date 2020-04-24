@@ -1,7 +1,10 @@
 package dao;
 
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import classes.Event;
 
@@ -50,5 +53,8 @@ public interface EventDAO  extends LocationDAO{
 	 * @return			true if the operation was successful
 	 */
 	public boolean deleteEvent(int uid, int mid, int eid);
+
+	boolean contributeOnLocationImg(int uid, int mid, int lid, InputStream uploadedInputStream,
+			FormDataContentDisposition fileDetail);
 	
 }

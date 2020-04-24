@@ -11,7 +11,7 @@ public class User{
 	private int id;
 	private String name;
 	private String password;
-	private List<Map> listMap; 
+	private List<Map> listMap;
 	private Position currentPosition;
 	private static int user_id = 1;
 	
