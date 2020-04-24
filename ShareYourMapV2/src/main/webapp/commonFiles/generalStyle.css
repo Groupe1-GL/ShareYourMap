@@ -231,6 +231,10 @@ h2 {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
+.perso {
+  display: inline;
+  margin-left: 15px;
+}
 
 .close {
   position: absolute;
@@ -240,7 +244,11 @@ h2 {
 
 #geoLoc {
   position: fixed;
-  bottom:52px;
+  bottom:60px;
   right:5px;
   z-index: 2;
+}
+
+#meanTransp, #meanTranspFull {
+  display: none;
 }

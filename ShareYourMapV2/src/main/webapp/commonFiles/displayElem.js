@@ -21,8 +21,10 @@ function showNav() {
 }
 
   
-
-//----------------------	Global variables	-------------------------
+// ---------------------		Global variables	---------------------
+var current_user_id = 1;
+var current_loc_x = 0;
+var current_loc_y = 0;
 
 var map = L.map('map');
 var current_map = null;
@@ -68,6 +70,19 @@ map.setView([48.8266496,2.3826648], 20);
 var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 map.addLayer(osmLayer);
 map.on('dblclick', addFav);
+
+// Find the current location of the user
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+function success(pos){
+	var crd = pos.coords;
+	current_loc_x = crd.latitude;
+	current_loc_y = crd.longitude;
+}
+
+function error(err) {
+	console.warn(`ERREUR (${err.code}): ${err.message}`);
+  }
 
 //---------------------		Actions on click		---------------------	
 
@@ -126,19 +141,9 @@ function addFav(e) {
  * @param pos
  */
 function centerMe(){
-	navigator.geolocation.getCurrentPosition(success, error, options);
+	centerMapView(current_loc_x,current_loc_y,20);
 }
 
-function success(pos){
-	var crd = pos.coords;
-	var x = crd.latitude;
-	var y = crd.longitude;
-	centerMapView(x,y,20);
-}
-
-function error(err) {
-	console.warn(`ERREUR (${err.code}): ${err.message}`);
-  }
 
 /*
  * Send the request to have the map with a certain id
@@ -199,13 +204,14 @@ function fillFavList(favs){
  * @param {long} id		The id of the wanted favorite
  */
 function displayFav(id){
-	closeAll();
+	
 	if (router_elem != null){
 		router_elem.remove();
 	}
 
 	var uid = {"uid":current_user_id};
 	var mid = {"mid":current_map['id']};
+	
 	_.each(current_map['locations'], function(location) {
 		if(location['id']==id){
 			current_fav = location;
@@ -284,6 +290,7 @@ function howToGoFull(){
  * @param {float} y		The latitude value to the location
  */
 function goTo(x,y,mean){
+	
 	if (router_elem != null && router_elem.remove() == this){
 		return;
 	}
@@ -292,7 +299,7 @@ function goTo(x,y,mean){
 			styles: [{color: '#e74c4d', opacity: 1, weight: 2}]
 		},
 		waypoints: [
-			null,
+			L.latLng(current_loc_x, current_loc_y),
 			L.latLng(x, y)
 		],
 			
@@ -302,6 +309,7 @@ function goTo(x,y,mean){
 		}),
 		geocoder: L.Control.Geocoder.nominatim()
 	});
+	
 	router_elem.addTo(map);
 }
 

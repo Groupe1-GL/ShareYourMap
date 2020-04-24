@@ -15,7 +15,7 @@
 			<h1>ShareYourMap</h1>
 			<img class="logo" src="./resources/heart_localisation.png"/>
 			<div class="prez">
-				<p>Find your <b>favorites places</b> and <b>event</b> everywhere in the world in <b style="color:red"> than 5 clicks !</b></p>
+				<p>Find your <b>favorites places</b> and <b>event</b> everywhere in the world in less<b style="color:red"> than 5 clicks !</b></p>
 			</div>
 		</div>
 		<div class="leaflet sign">
@@ -30,7 +30,7 @@
 							<input type="hidden" name="_METHOD" value="POST"/> 
 							<input type="text" placeholder="Username" name="username" required>
 							<input type="password"  placeholder="Password" name="passwd" required>
-							<input type="submit" id="sign_in" value="Sign In"/>
+							<input onclick="user()" type="submit" id="sign_in" value="Sign In"/>
 						</form>
 						<button onClick="newUser()">Sign up</button>
 								
@@ -53,7 +53,6 @@
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 		<script type="text/javascript" src="home.js"></script>
-		<script type="text/javascript" src="commonFiles/displayElem.js"></script>
 
 	</body>
 </html>
