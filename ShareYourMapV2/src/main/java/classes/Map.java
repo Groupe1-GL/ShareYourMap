@@ -10,7 +10,7 @@ import org.passay.EnglishCharacterData;
 import org.passay.CharacterData;
 import org.passay.PasswordGenerator;
 
-@PersistenceCapable
+@PersistenceCapable(detachable="true")
 public class Map{
 	private int id;
 	private String name, creatorName;

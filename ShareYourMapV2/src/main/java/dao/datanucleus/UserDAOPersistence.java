@@ -122,15 +122,15 @@ public class UserDAOPersistence implements UserDAO {
 	public boolean editUser2(int uid, String opassword, String password, String cpassword) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		User u = this.getUser(uid);
+		//User u = this.getUser(uid);
 		boolean res = false;
 		
 		try {
 			tx.begin();
+			User u = pm.getObjectById(User.class,1);
 			if (opassword != null && password != null && cpassword != null){
 				if (opassword.equals(u.getPassword()) && password.equals(cpassword)){
-					Query q = pm.newQuery("UPDATE User SET this.psw="+password+" WHERE this.id="+uid);
-					q.execute();
+					u.setPassword(password);
 					tx.commit();
 					res = true;
 				}
@@ -192,12 +192,11 @@ public class UserDAOPersistence implements UserDAO {
 		try {
 			tx.begin();
 			//User u = this.getUser(uid);
-			User u = pm.getObjectById(User.class,Integer.toString(uid));
-			if(u!=null) {
-				//pm.makePersistent(u);
-				pm.deletePersistent(u);
-				tx.commit();
-			}
+			//User t = pm.detachCopy(u);
+			User u = pm.getObjectById(User.class,"1");
+			pm.makePersistent(u);
+			pm.deletePersistent(u);
+			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();

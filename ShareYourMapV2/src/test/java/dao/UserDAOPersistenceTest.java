@@ -32,13 +32,14 @@ public class UserDAOPersistenceTest {
 		Assert.assertSame("user2",userDAO.getUser(2).getName());
 		
 		/* -------------------- Edit elements ------------------------------- */
-		//Assert.assertFalse(userDAO.editUser2(9,"","new",""));
-		//Assert.assertTrue(userDAO.editUser2(1,"psw","new_psw","new_psw")); 									// Update no-valid
-		//Assert.assertSame("new_psw", userDAO.getUser(1).getPassword());
+		/*Assert.assertFalse(userDAO.editUser2(9,"","new",""));
+		Assert.assertTrue(userDAO.editUser2(1,"psw","new_psw","new_psw")); 									
+		Assert.assertSame("new_psw", userDAO.getUser(1).getPassword());*/
 		
 		/* -------------------- Delete elements ------------------------------- */
 		Assert.assertFalse(userDAO.deleteUser(0));
-		Assert.assertTrue(userDAO.deleteUser(1));																
+		Assert.assertTrue(userDAO.deleteUser(1));
+		Assert.assertEquals(2, userDAO.getUsers().size());
 	}
 
 }
