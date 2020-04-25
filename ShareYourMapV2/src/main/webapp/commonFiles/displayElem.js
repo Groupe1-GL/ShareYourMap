@@ -47,6 +47,9 @@ var options = {
 	maximumAge: 0
   };
 
+
+var zoom20=0.003096990;
+
 //----------------------	Server function		-------------------------
 
 /*
@@ -121,10 +124,14 @@ function findCenter(list_locations){
 	var dist_x = x_max - x_min;
 	x_mean = (x_max + x_min)/2;
 	y_mean = (y_max + y_min)/2;
-	var z_x = Math.floor(Math.abs(360/(1000*dist_x)));
-	var z_y = Math.floor(Math.abs(180/(500*dist_y)));
+	var z_x = Math.floor(Math.abs(180/(557*dist_x)));
+	var z_y = Math.floor(Math.abs(90/(703*dist_y)));
 	var z = Math.min(z_x,z_y,20);
 	centerMapView(x_mean,y_mean,z);
+
+/*document.getElementById("currentMap").style.display = "block";
+	var map_name = _.template("<%= name %>");
+	$("#currentMap").html(map_name({'name':'dist_x='+dist_x+' & dist_y='+dist_y+' & z_x='+z_x+' & z_y='+z_y+' & z='+z}));*/
 }
 
 /*
