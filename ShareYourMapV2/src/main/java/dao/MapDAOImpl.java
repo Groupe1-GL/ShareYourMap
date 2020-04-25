@@ -94,44 +94,4 @@ public class MapDAOImpl implements MapDAO {
 		}
 		return false;
 	}
-	
-	/**
-     * Returns the list of maps matching with the keywords.
-	 * If the map doesn't exist or no map matches  a null object is returned.
-	 * 
-	 * @param  value	keywords where map name can match
-	 * @return	   		list of maps
-	 */
-	public List<Map> searchMap(String ref) {
-		List<Map> res = new ArrayList<Map>();
-		Pattern pattern = Pattern.compile(ref);
-		Matcher matcherName;
-		for (Map ma: m) {
-			matcherName = pattern.matcher(ma.getName());
-			while (matcherName.find()&&(!res.contains(ma))) {
-				res.add(ma);
-			}
-		}
-		return res;
-	}
-	
-	
-	
-	// **********
-	
-	/**
-	 * Returns all the locations of a map selected by its id.
-	 * If there is not map matching, it will return a null object.
-     *	 
-	 * @return	the list of favorite locations
-	 */
-	public List<Location> getLocations(int mid) {
-		for (Map ma : m) {
-			if (ma.getID() == mid) {
-				return ma.getLocations();
-			}
-		}
-		return null;
-	}
-	
 }

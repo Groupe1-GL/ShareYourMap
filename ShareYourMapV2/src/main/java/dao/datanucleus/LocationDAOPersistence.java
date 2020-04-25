@@ -101,9 +101,6 @@ public class LocationDAOPersistence implements LocationDAO{
 		}
 	}
 
-	public List<Location> nearestLocations(int uid, int mid) {
-		return null;
-	}
 
 	public boolean contributeOnLocationImg(int uid, int mid, int lid, InputStream uploadedInputStream,
 			FormDataContentDisposition fileDetail) {

@@ -145,62 +145,6 @@ public class LocationDAOImpl implements LocationDAO {
 		return false;
 	}
 	
-	/**
-     * Returns the list of locations matching with the keywords.
-	 * If the map or the location doesn't exist or no location matches
-	 * a null object is returned.
-	 *
-	 * @param  value	keywords where location name can match
-	 * @return	   		list of locations
-	 */
-	public List<Location> searchLocation(String ref){
-		List<Location> res = new ArrayList<Location>();
-		Pattern pattern = Pattern.compile(ref);
-		Matcher matcherName;
-		Matcher matcherLabel;
-		for (Location lo: l) {
-			matcherName = pattern.matcher(lo.getName());
-			matcherLabel = pattern.matcher(lo.getLabel());
-			while ((matcherName.find()||matcherLabel.find())&&(!res.contains(lo))) {
-				res.add(lo);
-			}
-		}
-		return res;
-	}
-	
-	/**
-     * Returns the nearest locations defined by an area according
-     * to the current position of the user on the selected map.
-     * If there's no locations that match this operation a null
-     * object is returned.
-     * 
-	 * @param	uid		the user identifier
-	 * @param 	mid 	the map identifier	
-	 * @return	   		list of locations
-	 */
-	public List<Location> nearestLocations(int uid, int mid){
-		List<Location> res = new ArrayList<Location>();
-		//Threshold variable for the area definition (circle radius)
-		//For example a circle area between Paris and Meaux I find via Google Maps sqrt( (48.957426-48.846995)^2 + (2.890384-2.349373)^2 ) = 0.55216655809
-		double threshold = 0.55216655809;
-		for (User us: UserDAOImpl.u) {
-			double x = Math.abs(us.getCurrentPosition().getX()-threshold);
-			double y = Math.abs(us.getCurrentPosition().getY()-threshold);
-			if (us.getId() == uid) {
-				for (Map ma: us.getMaps()) {
-					if ((ma.getID() == mid)) {
-						for (Location lo: ma.getLocations()) {
-							if ( (lo.getPosition().getX() < Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)))
-									&&(lo.getPosition().getY() < Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))) ){
-								res.add(lo);
-							}
-						}
-					}
-				}
-			}
-		}
-		return null;
-	}
 
 	/**
      * Contributes on the feed of a location by a picture.

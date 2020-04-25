@@ -87,16 +87,7 @@ public class LocationResource {
 								  @PathParam("location-id") int lid) {
 		return locationDAO.deleteLocation(uid, mid, lid);
 	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/location")
-	public List<Location> nearestLocations(@PathParam("user-id") int uid, 
-										   @PathParam("map-id") int mid){
-		return locationDAO.nearestLocations(uid, mid);
-	}
-	
-	
+
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)

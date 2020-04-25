@@ -41,7 +41,6 @@ public class MapResource {
 	public boolean createMap(@PathParam("user-id") int uid,
 						     @PathParam("name") String name){
 		return mapDAO.createMap(uid, name);		
-		
 	}
 	
 	

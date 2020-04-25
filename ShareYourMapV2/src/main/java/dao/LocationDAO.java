@@ -75,18 +75,6 @@ public interface LocationDAO {
 										int lid);
 										
 	/**
-     * Returns the nearest locations defined by an area according
-     * to the current position of the user on the selected map.
-     * If there's no locations that match this operation a null
-     * object is returned.
-	 * 
-	 * @param	uid		the user identifier
-	 * @param 	mid 	the map identifier	
-	 * @return	   		list of locations
-	 */
-	public List<Location> nearestLocations(int uid, int mid);
-	
-	/**
      * Contributes on the feed of a location by a picture.
 	 * If the map or the location doesn't exist nothing is added.
 	 *

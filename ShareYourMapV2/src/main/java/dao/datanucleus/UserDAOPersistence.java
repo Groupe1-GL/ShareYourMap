@@ -191,12 +191,14 @@ public class UserDAOPersistence implements UserDAO {
 		boolean res = true;
 		try {
 			tx.begin();
-			//User u = this.getUser(uid);
+			User u = this.getUser(uid);
 			//User t = pm.detachCopy(u);
-			User u = pm.getObjectById(User.class,"1");
-			pm.makePersistent(u);
-			pm.deletePersistent(u);
-			tx.commit();
+			User t = pm.getObjectById(User.class,Integer.toString(uid));
+			if(t!=null) {
+				pm.makePersistent(u);
+				pm.deletePersistent(u);
+				tx.commit();
+			}
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();

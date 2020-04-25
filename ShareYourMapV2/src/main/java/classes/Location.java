@@ -20,6 +20,8 @@ public class Location{
 	public Location() {
 		this.id = loc_id++;
 		this.name = "Location"+String.valueOf(this.id);
+		this.messages = new ArrayList<String>();
+		this.pictures = new ArrayList<String>();
 	}
 	
 	public Location(String name, String creatorName, double x, double y, String descr, String label) {
@@ -29,6 +31,8 @@ public class Location{
 		this.pos = new Position(x,y);
 		this.description = descr;
 		this.label = label;
+		this.messages = new ArrayList<String>();
+		this.pictures = new ArrayList<String>();
 	}
 	
 	public Location(int ID, String name, String creatorName, double x, double y, String descr, String label) {
@@ -38,6 +42,8 @@ public class Location{
 		this.pos = new Position(x,y);
 		this.description = descr;
 		this.label = label;
+		this.messages = new ArrayList<String>();
+		this.pictures = new ArrayList<String>();
 	}
 	
 	
