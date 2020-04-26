@@ -13,6 +13,8 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
+import provider.AuthenticationFilter;
+
 public class JettyMain {
 
 	public static void main(String[] args) throws Exception {
@@ -33,6 +35,7 @@ public class JettyMain {
 		rc.register(JacksonFeature.class);
 		rc.register(LoggingFilter.class);
 		rc.register(MultiPartFeature.class); //add MultiPart compatibility
+        rc.register(AuthenticationFilter.class);
 
 		// Add a servlet handler for web services (/ws/*)
 		ServletHolder servletHolder = new ServletHolder(new ServletContainer(rc));
