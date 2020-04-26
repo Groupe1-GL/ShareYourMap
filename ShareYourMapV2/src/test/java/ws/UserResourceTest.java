@@ -11,31 +11,32 @@ public class UserResourceTest {
 	public void test() {
 		UserResource ur = new UserResource();
 		
+// UserDAOPersistence		
 		//	---------------- 1st get ---------------- //
-		Assert.assertEquals(2, ur.getUsers().size());
-		Assert.assertEquals("David",ur.getUser(1).getName());
+		Assert.assertEquals(0, ur.getUsers().size());
 		
 		//	---------------- Create elements ---------------- //
-		Assert.assertNotNull(ur.createUser("user3", "password", "password"));
-		Assert.assertEquals(3, ur.getUsers().size());
-		Assert.assertEquals("user3",ur.getUser(3).getName());
-		Assert.assertNotNull(ur.createUser("user4", "password", "password"));
+		Assert.assertNotNull(ur.createUser("user1", "password", "password"));
+		Assert.assertEquals(1, ur.getUsers().size());
+		Assert.assertEquals("user1",ur.getUser(1).getName());
+		Assert.assertNotNull(ur.createUser("user2", "password", "password"));
 		
-		ur.createUser("user5", "pass", "password");
-		ur.createUser("David", "password", "password");
-		Assert.assertEquals(4, ur.getUsers().size());
+		ur.createUser("user3", "pass", "password");
+		ur.createUser("user1", "password", "password");
+		Assert.assertEquals(2, ur.getUsers().size());
 		
 		//	---------------- Edit elements ---------------- //
-		ur.editUser(1, "ddd", "ts", "cpassword");
+		ur.editUser(1, "password", "ts", "cpassword");
 		ur.editUser(1, "aa", "ts", "ts");
-		Assert.assertEquals("ddd",ur.getUser(1).getPassword());
-		ur.editUser(1, "ddd", "dav", "dav");
-		Assert.assertEquals("dav",ur.getUser(1).getPassword());
+		Assert.assertEquals("password",ur.getUser(1).getPassword());
+		ur.editUser(1, "password", "new_psw", "new_psw");
+		Assert.assertEquals("new_psw",ur.getUser(3).getPassword());							// Problème de ré-indexion
 
 		//	---------------- Delete elements ---------------- //
 		Assert.assertFalse(ur.deleteUser(8));
-		Assert.assertTrue(ur.deleteUser(3));
-		Assert.assertEquals(3, ur.getUsers().size());
+		Assert.assertTrue(ur.deleteUser(2));
+		Assert.assertEquals(1, ur.getUsers().size());
+		
 	}
 
 }

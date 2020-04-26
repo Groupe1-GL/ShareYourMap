@@ -73,14 +73,5 @@ public interface UserDAO {
 	 */
 	public boolean deleteUser(			int uid);
 	
-	/**
-     * Connect a user on the website and redirect it to his map page.
-	 *
-	 * @param	username 			the user identifier 
-	 * @param	password	the user's password 
-	 * @return	   			a text that describe the response
-	 */
-	public Response connectUser(		String username, String password);
-	
 	
 }

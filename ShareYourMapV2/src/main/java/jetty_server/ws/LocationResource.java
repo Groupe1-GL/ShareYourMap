@@ -2,7 +2,6 @@ package jetty_server.ws;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -15,12 +14,10 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
-import classes.Location;
 import dao.LocationDAO;
 import dao.LocationDAOImpl;
 
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * LocationResource is the class of the locations resource used in the ShareYourMap website.

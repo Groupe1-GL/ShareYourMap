@@ -22,6 +22,13 @@ public class User{
 		this.listMap = new ArrayList<Map>();		
 	}
 	
+	public User(int id, String name, String password) {
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.listMap = new ArrayList<Map>();		
+	}
+	
 	public static User getUser() {
 		User u1 = new User("Paul","ddd");
 		u1.setMaps(Map.generateMaps2());

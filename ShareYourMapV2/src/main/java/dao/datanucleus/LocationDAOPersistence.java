@@ -1,7 +1,6 @@
 package dao.datanucleus;
 
 import java.io.InputStream;
-import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -11,7 +10,6 @@ import javax.jdo.Transaction;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import classes.Location;
-import classes.Map;
 import dao.LocationDAO;
 
 public class LocationDAOPersistence implements LocationDAO{
@@ -87,8 +85,10 @@ public class LocationDAOPersistence implements LocationDAO{
 			tx.begin();
 			Location l = this.getLocation(lid);																							// Need delay between the 2 queries
 			if(l != null) {
-				pm.makePersistent(l);
-				pm.deletePersistent(l);
+				Query q = pm.newQuery(Location.class);
+				q.declareParameters("Integer lid");
+				q.setFilter("id == lid");
+				q.deletePersistentAll(lid);
 				tx.commit();
 			}
 		} finally {

@@ -2,7 +2,6 @@ package dao;
 
 import java.util.List;
 
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import classes.Map;
@@ -36,28 +35,6 @@ public class UserDAOImpl implements UserDAO {
 		return u;
 	}
 	
-	
-	/**
-     * Connect a user on the website and redirect it to his map page.
-	 *
-	 * @param	username 			the username 
-	 * @param	password	the user's password 
-	 * @return	   			a text that describe the response
-	 */
-	public Response connectUser(		String username, String password) {
-		for (User us: u) {
-			if (us.getName().equals(username)&&us.getPassword().equals(password)) {
-				return Response.status(Response.Status.SEE_OTHER)
-			            .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
-			            .header("X-Foo", "bar")
-			            .build();
-			}
-		}
-		 return Response
-				 	.status(402)
-		            .entity("Username and password do not match")
-		            .build();
-	}
 	
 	/**
 	 * Creates a new user on the database according to the user's information matching the fields' names.
