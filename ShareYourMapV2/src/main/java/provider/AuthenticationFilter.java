@@ -76,7 +76,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
               
             //Verifying Username and password
             
-            u.connectUser(username,password);
+           u.connectUser(username,password);
               
             //Verify user access
             if(method.isAnnotationPresent(RolesAllowed.class))

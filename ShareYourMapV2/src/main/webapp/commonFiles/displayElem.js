@@ -120,18 +120,14 @@ function findCenter(list_locations){
 		y_max = Math.max(y_max, location['position']['y']);
 		y_min = Math.min(y_min, location['position']['y']);
 	});
-	var dist_y = y_max - y_min;
-	var dist_x = x_max - x_min;
+	var dist_y = Math.abs(y_max - y_min);
+	var dist_x = Math.abs(x_max - x_min);
 	x_mean = (x_max + x_min)/2;
 	y_mean = (y_max + y_min)/2;
-	var z_x = Math.floor(Math.abs(180/(557*dist_x)));
-	var z_y = Math.floor(Math.abs(90/(703*dist_y)));
+	var z_x = Math.floor((Math.log(360/dist_x))/Math.log(2));
+	var z_y = Math.floor((Math.log(180/dist_y))/Math.log(2));
 	var z = Math.min(z_x,z_y,20);
-	centerMapView(x_mean,y_mean,z);
-
-/*document.getElementById("currentMap").style.display = "block";
-	var map_name = _.template("<%= name %>");
-	$("#currentMap").html(map_name({'name':'dist_x='+dist_x+' & dist_y='+dist_y+' & z_x='+z_x+' & z_y='+z_y+' & z='+z}));*/
+	centerMapView(x_mean,y_mean,z+2);
 }
 
 /*
