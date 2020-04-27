@@ -23,8 +23,8 @@ function showNav() {
   
 // ---------------------		Global variables	---------------------
 var current_user_id = 1;
-var current_loc_x = 0;
-var current_loc_y = 0;
+var current_loc_x = null;
+var current_loc_y = null;
 
 var map = L.map('map');
 var current_map = null;
@@ -47,8 +47,6 @@ var options = {
 	maximumAge: 0
   };
 
-
-var zoom20=0.003096990;
 
 //----------------------	Server function		-------------------------
 

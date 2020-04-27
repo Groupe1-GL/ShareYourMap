@@ -6,7 +6,7 @@ import javax.jdo.annotations.PersistenceCapable;
 
 import java.util.*;
 
-@PersistenceCapable(detachable="true")
+@PersistenceCapable
 public class User{
 	private int id;
 	private String name;
