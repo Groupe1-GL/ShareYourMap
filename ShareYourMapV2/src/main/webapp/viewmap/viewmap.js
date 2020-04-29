@@ -103,7 +103,7 @@ function createNewMap(){
 // Send the request to create a map
 function createMap(){
 	name = document.getElementById("map_name").value;
-	putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
+	postServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
 }
 
 /* 

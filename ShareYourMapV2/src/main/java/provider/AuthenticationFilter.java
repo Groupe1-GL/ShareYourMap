@@ -21,10 +21,13 @@ import javax.ws.rs.ext.Provider;
 import org.glassfish.jersey.internal.util.Base64;
  
 /**
+ * 
  * This filter verify the access permissions for a user
  * based on username and passowrd provided in request of resources
- * */
+ * 
+ **/
 @Provider
+
 public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter
 {
      
@@ -44,8 +47,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             //Access denied for all
             if(method.isAnnotationPresent(DenyAll.class))
             {
-                requestContext.abortWith(Response.status(Response.Status.FORBIDDEN)
-                         .entity("Access blocked for all users !").build());
+                //requestContext.abortWith(Response.status(Response.Status.FORBIDDEN)
+                       //  .entity("Access blocked for all users !").build());
                 return;
             }
               
@@ -58,8 +61,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             //If no authorization information present; block access
             if(authorization == null || authorization.isEmpty())
             {
-                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("You cannot access this resource.").build());
+                //requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                  //  .entity("You cannot access this resource.").build());
                 return;
             }
               
@@ -76,8 +79,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
               
             //Verifying Username and password
             if (!(u.connectUser(username,password).getStatus()==303)) {
-            	requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("You cannot access this resource.").build());
+            	//requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                       // .entity("You cannot access this resource.").build());
                 return;
             }
             //Verify user access
@@ -89,8 +92,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 //Is user valid?
                 if( ! isUserAllowed(username, password, rolesSet))
                 {
-                    requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("You cannot access this resource.").build());
+                    //requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                      //  .entity("You cannot access this resource.").build());
                     return;
                 }
             }
