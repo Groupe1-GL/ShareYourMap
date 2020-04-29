@@ -37,6 +37,7 @@ public class MapResource {
 	}
 	
 	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/users/{user-id}/maps/{name}")
 	public boolean createMap(@PathParam("user-id") int uid,

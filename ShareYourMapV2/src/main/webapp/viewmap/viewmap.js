@@ -5,7 +5,7 @@
 
 //---------------------		Global variable	---------------------
 var user_favs = [];
-
+ 
 
 //----------------------	Visual effects	-------------------------
 $(".mapPerso").hover(function(){

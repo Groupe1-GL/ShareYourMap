@@ -7,7 +7,7 @@ import classes.Map;
 /**
  * MapDAO is the interface of the Data Access Object of maps.
  *
- * @author Eric Gao
+ * @author Mohamed Ahmed
  * @version %I%, %G%
  * @since 1.0
  */
