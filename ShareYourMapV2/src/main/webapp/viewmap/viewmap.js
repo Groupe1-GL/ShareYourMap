@@ -144,7 +144,7 @@ function showEditMap(result){
  * @param {int} mid		the id of the current map
  */
 function shareMap(mid,sid){
-	link = {"link": "localhost:8080/ws/map/?id"+mid+"&shared-id="+sid};
+	link = {"link": "localhost:8080/ws/map?id="+mid+"&shared-id="+sid};
 	document.getElementById("shareMap").style.display = "block";
 	var sharingLink = _.template($('#shareMapTemplate').html());
 	$("#shareMap").html(sharingLink(link));
