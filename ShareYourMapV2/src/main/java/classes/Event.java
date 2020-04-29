@@ -22,6 +22,7 @@ public class Event extends Location{
 		this.end = end;
 	}
 
+	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	public LocalDateTime getStart() {
 		return start;
 	}
@@ -35,7 +36,6 @@ public class Event extends Location{
 		return end;
 	}
 	
-	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
 	}

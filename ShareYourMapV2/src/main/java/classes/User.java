@@ -12,7 +12,6 @@ public class User{
 	private String name;
 	private String password;
 	private List<Map> listMap;
-	private Position currentPosition;
 	private static int user_id = 1;
 	
 	public User(String name, String password) {
@@ -71,10 +70,6 @@ public class User{
 
 	public void deleteMap(Map m) {
 		listMap.remove(m);
-	}
-
-	public Position getCurrentPosition() {
-		return this.currentPosition;
 	}
 	
 	public List<Map> getMaps() {

@@ -9,6 +9,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.ws.rs.core.Response;
 
+import classes.Map;
 import classes.User;
 import dao.UserDAO;
 
@@ -149,7 +150,7 @@ public class UserDAOPersistence implements UserDAO {
 
 
 	@SuppressWarnings("finally")
-	public boolean createUser(int id,String name, String password) {
+	public boolean createUser(int id, String name, String password) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		boolean res = true;
@@ -186,7 +187,8 @@ public class UserDAOPersistence implements UserDAO {
 					q.declareParameters("Integer uid");
 					q.setFilter("id == uid");
 					q.deletePersistentAll(uid);
-					this.createUser(u.getId(),u.getName(), password);
+					u.setPassword(password);
+					pm.makePersistent(u);
 					res = Response
 							.status(200)
 							.entity("Password successfully updated!")
@@ -239,6 +241,35 @@ public class UserDAOPersistence implements UserDAO {
 			}
 			pm.close();
 			return res;		
+		}
+	}
+	
+	
+	@SuppressWarnings("finally")
+	public boolean editUsersMaps(int uid, List<Map> maps) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean res = true;
+		
+		try {
+			tx.begin();
+			User u = this.getUser(uid);
+			if (u!=null){
+				Query q = pm.newQuery(User.class);
+				q.declareParameters("Integer uid");
+				q.setFilter("id == uid");
+				q.deletePersistentAll(uid);
+				u.setMaps(maps);
+				pm.makePersistent(u);
+			}
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+				return res= false;
+			}
+			pm.close();
+			return res; 	
 		}
 	}
 

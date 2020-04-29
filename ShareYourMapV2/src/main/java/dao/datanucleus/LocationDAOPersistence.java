@@ -15,9 +15,11 @@ import dao.LocationDAO;
 public class LocationDAOPersistence implements LocationDAO{
 	
 	private PersistenceManagerFactory pmf;
+	private UserDAOPersistence userDAO;
 	
 	public LocationDAOPersistence(PersistenceManagerFactory pmf) {
 		this.pmf = pmf;
+		this.userDAO = new UserDAOPersistence(pmf);
 	}
 	
 	@SuppressWarnings("finally")
@@ -54,7 +56,7 @@ public class LocationDAOPersistence implements LocationDAO{
 		
 		try {
 			tx.begin();
-			Location newFav = new Location(1,name,"",x,y,descr,label);
+			Location newFav = new Location(name,"",x,y,descr,label);
 			pm.makePersistent(newFav);
 			tx.commit();
 		} finally {
