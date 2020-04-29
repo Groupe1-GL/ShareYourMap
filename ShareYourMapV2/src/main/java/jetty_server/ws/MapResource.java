@@ -49,16 +49,13 @@ public class MapResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/maps/{map-id}")
-	public Map getMap(@PathParam("map-id") int mid) {		
-		return mapDAO.getMap(mid);
+	public Map getMap(@PathParam("map-id") int mid,
+			          @QueryParam("shared-id") String sharedID) {	
+		if (sharedID.equals(null))
+			return mapDAO.getMap(mid);
+		else 
+			return mapDAO.getSharedMap(mid, sharedID);
 	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/map/{map-id}")
-	public Map getSharedMap(@PathParam("map-id") int mid, @QueryParam("shared-id") String sharedID) {		
-		return mapDAO.getSharedMap(mid, sharedID);
-	}	
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
