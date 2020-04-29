@@ -105,7 +105,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         //Access the database and do this part yourself
         //String userRole = userMgr.getUserRole(username);
          
-        if(u.connectUser(username,password).getStatus()==200)
+        if(u.connectUser(username,password).getStatus()==303)
         {
             String userRole = "ADMIN";
              
