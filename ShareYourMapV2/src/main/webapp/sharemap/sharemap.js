@@ -1,5 +1,7 @@
-var current_user_id = 1;
-var current_map_id = 1;
+
+if(urlParams.has('id')){
+	var current_map_id = urlParams.get('id');
+}
 
 displayMap(1);
 /*

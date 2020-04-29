@@ -144,11 +144,21 @@ function showEditMap(result){
  * @param {int} mid		the id of the current map
  */
 function shareMap(mid,sid){
-	link = {"link": "localhost:8080/ws/maps/"+mid+"&pass="+sid};
+	link = {"link": "localhost:8080/ws/map/?id"+mid+"&shared-id="+sid};
 	document.getElementById("shareMap").style.display = "block";
 	var sharingLink = _.template($('#shareMapTemplate').html());
 	$("#shareMap").html(sharingLink(link));
 }
+
+/*
+ * Copy sharing link 
+ */
+function copyLink() {
+	var copyText = document.getElementById("shareLink");
+	copyText.select();
+	alert("Sharing link copied !");
+	document.execCommand("copy");
+  }
 
 /*
  * Delete a map from user's list of map
