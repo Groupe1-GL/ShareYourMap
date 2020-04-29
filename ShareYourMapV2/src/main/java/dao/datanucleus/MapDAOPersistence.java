@@ -210,6 +210,11 @@ public class MapDAOPersistence implements MapDAO{
 			return true;
 		}
 	}
+
+	public Map getSharedMap(int mid, String sharedID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
 	
