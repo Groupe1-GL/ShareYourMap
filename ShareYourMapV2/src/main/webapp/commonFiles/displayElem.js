@@ -65,9 +65,10 @@ function getServerData(url, success){
 //---------------------		Automatic actions		---------------------		
 
 // Init user id
-var url =  window.location.href;
 var urlParams = new URLSearchParams(window.location.search);
-var current_user_id = urlParams.get('uid');
+if(urlParams.has('uid')){
+	var current_user_id = urlParams.get('uid');
+}
 
 // Initialize the initial map display in the page (center on the EIDD)
 

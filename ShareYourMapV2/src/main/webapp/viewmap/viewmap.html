@@ -54,7 +54,7 @@
 			<div class="top_div">
 				<div class="button" onclick="closeElement('shareMap')" >X</div>			
 				<p>You can share this map with the following link :</p>
-				<p><%= link %></p>
+				<input type="text" value="<%= link %>" id="shareLink"/> <button onclick="copyLink()">Copy</button>
 			</div>
 		</script>
 
