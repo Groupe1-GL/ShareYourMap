@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
 	public Response connectUser(		String username, String password) {
 		for (User us: u) {
 			if (us.getName().equals(username)&&us.getPassword().equals(password)) {
-				return Response.status(Response.Status.SEE_OTHER)
+				return Response.status(Response.Status.SEE_OTHER)//303
 			            .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
 			            .header("X-Foo", "bar")
 			            .build();

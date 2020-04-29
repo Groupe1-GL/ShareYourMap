@@ -75,9 +75,12 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             final String password = tokenizer.nextToken();
               
             //Verifying Username and password
+            if (!(u.connectUser(username,password).getStatus()==303)) {
+            	requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("You cannot access this resource.").build());
+                return;
+            }
             
-            u.connectUser(username,password);
-              
             //Verify user access
             if(method.isAnnotationPresent(RolesAllowed.class))
             {
