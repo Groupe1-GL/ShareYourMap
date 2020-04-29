@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+  
+      <persistence-unit name="gl">
+    	 <class>classes.Map</class>
+    	<class>classes.Location</class>
+    	<class>classes.Event</class>
+    	<class>classes.Position</class>
+    	<class>classes.User</class>
+        
+        <properties>
+			<property name="javax.jdo.PersistenceManagerFactoryClass"
+            value="org.datanucleus.api.jdo.JDOPersistenceManagerFactory" />
+            <property name="javax.jdo.option.ConnectionURL" value="jdbc:hsqldb:mem:example"/>
+            <property name="javax.jdo.option.ConnectionDriverName" value="org.hsqldb.jdbcDriver"/>
+            <property name="javax.jdo.option.ConnectionUserName" value="SA"/>
+            <property name="javax.jdo.option.ConnectionPassword" value=""/>
+            <property name="javax.jdo.option.Mapping" value="hsql"/>
+
+            <property name="datanucleus.schema.autoCreateAll" value="true"/>
+            <property name="datanucleus.schema.validateAll" value="false"/>
+            <property name="datanucleus.metadata.defaultInheritanceStrategy" value="TABLE_PER_CLASS"/> 
+            <property name="datanucleus.maxFetchDepth" value="4"/>
+        </properties>
+        
+    </persistence-unit>
+  
+</persistence>

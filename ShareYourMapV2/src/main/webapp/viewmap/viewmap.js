@@ -54,6 +54,18 @@ function postServerData(url,success){
     }).done(success);
 }
 
+/*
+ * Send the PUT request ot the server
+ * @param {string} 	 url			The url of the request
+ * @param {void} success 		The callback function
+ */
+function putServerData(url,success){
+    $.ajax({
+    	type: 'PUT',
+        dataType: "json",
+        url: url
+    }).done(success);
+}
 
 //-------------------		Automatic actions		-----------------		
 
