@@ -8,7 +8,7 @@ import classes.User;
 /**
  * UserDAO is the interface of the Data Access Object of users.
  *
- * @author Eric Gao
+ * @author Mohamed Ahmed
  * @version %I%, %G%
  * @since 1.0
  */
