@@ -74,7 +74,7 @@ public class UserResource {
 				         .build();
 			}
 			 return Response
-					 	.status(402)
+					 	.status(401)
 			            .entity("Username and password do not match")
 			            .build();
 		}
