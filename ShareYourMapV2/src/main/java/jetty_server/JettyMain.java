@@ -1,4 +1,7 @@
 package jetty_server;
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManagerFactory;
+
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -13,6 +16,8 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
+import dao.datanucleus.MapDAOPersistence;
+import dao.datanucleus.UserDAOPersistence;
 import provider.AuthenticationFilter;
 
 public class JettyMain {
@@ -35,7 +40,7 @@ public class JettyMain {
 		rc.register(JacksonFeature.class);
 		rc.register(LoggingFilter.class);
 		rc.register(MultiPartFeature.class); //add MultiPart compatibility
-        rc.register(AuthenticationFilter.class);
+       // rc.register(AuthenticationFilter.class);
 
 		// Add a servlet handler for web services (/ws/*)
 		ServletHolder servletHolder = new ServletHolder(new ServletContainer(rc));
@@ -57,6 +62,13 @@ public class JettyMain {
 		contexts.setHandlers(new Handler[] { handlerWebServices, handlerPortalCtx });
 		server.setHandler(contexts);
 
+		// Créé user test
+		/*PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
+		UserDAOPersistence u = new UserDAOPersistence(pmf);
+		MapDAOPersistence m = new MapDAOPersistence(pmf);
+		u.createUser("Thomas", "psw", "psw");
+		m.createMap(1, "Shop");
+		*/
 		// Start server
 		server.start();
 

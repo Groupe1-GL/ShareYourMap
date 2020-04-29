@@ -194,9 +194,21 @@ function fillFavList(favs){
 			var marker = L.marker([location['position']['x'],location['position']['y']],{icon:heartLoc});
 		}
 		marker.on('click',displayFav.bind(null,parseInt(location['id'])));
+		marker.on('mouseover',popUpFav.bind(null,location['name'],location['posistion']));
 		markers.addLayer(marker);
 	});
 	map.addLayer(markers);
+}
+
+
+/*
+ * Display the name of a favorite when on mouseover
+ */
+function popUpFav(name,pos) {
+    popup
+        .setLatLng([pos['x'],pos['y']])
+        .setContent(name)
+        .openOn(map);
 }
 
 /*

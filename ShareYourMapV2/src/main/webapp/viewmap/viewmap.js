@@ -5,7 +5,7 @@
 
 //---------------------		Global variable	---------------------
 var user_favs = [];
-
+ 
 
 //----------------------	Visual effects	-------------------------
 $(".mapPerso").hover(function(){
@@ -54,6 +54,18 @@ function postServerData(url,success){
     }).done(success);
 }
 
+/*
+ * Send the PUT request ot the server
+ * @param {string} 	 url			The url of the request
+ * @param {void} success 		The callback function
+ */
+function putServerData(url,success){
+    $.ajax({
+    	type: 'PUT',
+        dataType: "json",
+        url: url
+    }).done(success);
+}
 
 //-------------------		Automatic actions		-----------------		
 
@@ -103,7 +115,7 @@ function createNewMap(){
 // Send the request to create a map
 function createMap(){
 	name = document.getElementById("map_name").value;
-	postServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
+	putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
 }
 
 /* 

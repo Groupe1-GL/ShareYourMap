@@ -148,29 +148,6 @@ public class UserDAOPersistence implements UserDAO {
 		}
 	}
 
-
-	@SuppressWarnings("finally")
-	public boolean createUser(int id, String name, String password) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		boolean res = true;
-		
-		try {
-			User newUser = new User(id,name,password);
-			pm.makePersistent(newUser);
-			res = true;
-			tx.commit();
-		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-				pm.close();
-				return false;
-			}
-			pm.close();
-			return res; 
-		}
-	}
-	
 	
 	@SuppressWarnings("finally")
 	public Response editUser(int uid, String opassword, String password, String cpassword) {
