@@ -49,13 +49,13 @@ public class MapDAOImpl implements MapDAO {
 		for (Map ma : MapDAOImpl.m) {
 			if ((ma.getID() == mid)&&ma.getAccess()&&ma.getSharingID().equals(sharedID)) {
 				return Response.status(Response.Status.SEE_OTHER)
-				         .header(HttpHeaders.LOCATION, "/sharemap.html?id=" + mid + "&shared-id=" + sharedID)
+				         .header(HttpHeaders.LOCATION, "/sharemap/sharemap.html?id=" + mid + "&shared-id=" + sharedID)
 				         .header("X-Foo", "bar")
 				         .build();
 			}
 		}
 		 return Response
-				 	.status(404)
+				 	.status(401)
 		            .entity("Map id and Shared id do not match")
 		            .build();
 	}
