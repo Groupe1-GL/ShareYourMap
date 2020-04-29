@@ -36,6 +36,22 @@ public class MapDAOImpl implements MapDAO {
 	}
 	
 	/**
+	 * Returns a map selected by its id and his token.
+	 * If there is not map matching or the access map is on private mode, 
+	 * it will return a null object.
+     *	 
+	 * @return	the map
+	 */
+	public Map getSharedMap(int mid, String sharedID) {
+		for (Map ma : MapDAOImpl.m) {
+			if ((ma.getID() == mid)&&ma.getAccess()&&ma.getSharingID().equals(sharedID)) {
+				return ma;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Creates a map.
      *	 
 	 * @return	the map

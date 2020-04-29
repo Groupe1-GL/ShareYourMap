@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
@@ -44,7 +45,6 @@ public class MapResource {
 		return mapDAO.createMap(uid, name);		
 	}
 	
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/maps/{map-id}")
@@ -52,6 +52,12 @@ public class MapResource {
 		return mapDAO.getMap(mid);
 	}
 	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/map/{map-id}")
+	public Map getSharedMap(@PathParam("map-id") int mid, @QueryParam("shared-id") String sharedID) {		
+		return mapDAO.getSharedMap(mid, sharedID);
+	}	
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)

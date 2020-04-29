@@ -29,6 +29,15 @@ public interface MapDAO {
 	public Map getMap(int mid);
 	
 	/**
+	 * Returns a map selected by its id and his token.
+	 * If there is not map matching or the access map is on private mode, 
+	 * it will return a null object.
+     *	 
+	 * @return	the map
+	 */
+	public Map getSharedMap(int mid, String sharedID);
+	
+	/**
 	 * Creates a map.
      *	 
 	 * @return	the map

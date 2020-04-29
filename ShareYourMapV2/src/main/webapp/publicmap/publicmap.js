@@ -32,7 +32,7 @@ function displayMapsList(result){
 	document.getElementById('mapList').innerHTML = "";
 	var map_template = _.template($('#listPublicMap').html());
 	_.each(result, function(map) {
-		if(map['access']=="1"){
+		if(map['access']){
 			sum = $.extend(map, map_now);
 			map_display = map_template(sum);
 			$('#mapList').append(map_display);

@@ -16,7 +16,7 @@ public class LocationDAOPersistence implements LocationDAO{
 	
 	private PersistenceManagerFactory pmf;
 	private UserDAOPersistence userDAO;
-	
+	//manque liaisons des maps et users
 	public LocationDAOPersistence(PersistenceManagerFactory pmf) {
 		this.pmf = pmf;
 		this.userDAO = new UserDAOPersistence(pmf);

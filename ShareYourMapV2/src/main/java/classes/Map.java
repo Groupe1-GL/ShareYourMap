@@ -107,11 +107,8 @@ public class Map{
 		return this.locations.add(l);		
 	}
 	
-	public String getAccess() {
-		if(this.access) {
-			return "1";
-		}
-		return "0";
+	public boolean getAccess() {
+			return this.access;
 	}
 	
 	public String getSharingID() {
