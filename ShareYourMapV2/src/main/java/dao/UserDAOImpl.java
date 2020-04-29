@@ -48,13 +48,13 @@ public class UserDAOImpl implements UserDAO {
 		for (User us: u) {
 			if (us.getName().equals(username)&&us.getPassword().equals(password)) {
 				return Response.status(Response.Status.SEE_OTHER)//303
-			            .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
+						.header(HttpHeaders.LOCATION, "/viewmap/viewmap.html?uid="+us.getId())
 			            .header("X-Foo", "bar")
 			            .build();
 			}
 		}
 		 return Response
-				 	.status(402)
+				 	.status(401)
 		            .entity("Username and password do not match")
 		            .build();
 	}
