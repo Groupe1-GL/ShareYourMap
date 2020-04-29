@@ -7,9 +7,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
+import classes.Map;
 import classes.User;
 import dao.UserDAO;
 
@@ -72,38 +72,71 @@ public class UserDAOPersistence implements UserDAO {
 		return detached;
 	}
 	
+
+	public User getUser(String username) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		User us = null;
+		User detached = null;
+		try {
+			tx.begin();
+
+			Query q = pm.newQuery(User.class);
+			q.declareParameters("String username");
+			q.setFilter("username == name");
+			q.setUnique(true);
+
+			us = (User) q.execute(username);
+			detached = (User) pm.detachCopy(us);
+
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+		return detached;
+	}
+	
+	
 	@SuppressWarnings("finally")
 	public Response createUser(String name, String password, String cpassword) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
+		Response res = null;
 		
 		boolean alreadyExist = false;
-		for(User us: this.getUsers()) {
-			if(us.getName().equals(name)) {
-				alreadyExist = true;
-			}
+		if(getUser(name) != null) {
+			alreadyExist = true;
 		}
 		
 		try {
 			tx.begin();
 			if (alreadyExist){
-				return Response
+				res = Response
 						.status(400)
 						.entity("This username is already used.")
 						.build();
 			}
-			//Check if the passwords are equals
-			if (password.equals(cpassword)){
-				User newUser = new User(name,password);
-				pm.makePersistent(newUser);
-				tx.commit();
-			}
 			else {
-				return Response
-						.status(400)
-						.entity("The passwords do not match.")
-						.build();
-			}		
+				//Check if the passwords are equals
+				if (password.equals(cpassword)){
+					User newUser = new User(name,password);
+					pm.makePersistent(newUser);
+					res = Response
+							.status(201)
+							.entity("You've been successfully signed up.")
+							.build();
+				}
+				else {
+					res = Response
+							.status(400)
+							.entity("The passwords do not match.")
+							.build();
+				}
+			}
+			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
@@ -111,78 +144,80 @@ public class UserDAOPersistence implements UserDAO {
 				return null;
 			}
 			pm.close();
-			return Response
-			.status(201)
-			.entity("You've been successfully signed up.")
-			.build();
+			return res; 
 		}
 	}
-	
+
+
 	@SuppressWarnings("finally")
-	public boolean editUser2(int uid, String opassword, String password, String cpassword) {
+	public boolean createUser(int id, String name, String password) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		//User u = this.getUser(uid);
-		boolean res = false;
+		boolean res = true;
 		
 		try {
-			tx.begin();
-			User u = pm.getObjectById(User.class,1);
-			if (opassword != null && password != null && cpassword != null){
-				if (opassword.equals(u.getPassword()) && password.equals(cpassword)){
-					u.setPassword(password);
-					tx.commit();
-					res = true;
-				}
-			}
+			User newUser = new User(id,name,password);
+			pm.makePersistent(newUser);
+			res = true;
+			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
+				pm.close();
+				return false;
 			}
 			pm.close();
-			return res;		
+			return res; 
 		}
-		
 	}
 	
-
+	
 	@SuppressWarnings("finally")
 	public Response editUser(int uid, String opassword, String password, String cpassword) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		User u = this.getUser(uid);
+		Response res = null;
 		
 		try {
 			tx.begin();
-			if (!opassword.equals(null)&&!password.equals(null)&&!cpassword.equals(null)){
-				if (opassword.equals(u.getPassword())&&password.equals(cpassword)){
-					Query q = pm.newQuery("UPDATE User SET this.psw="+password+" WHERE this.id="+uid);
-					q.execute();
+			if (u!=null && !opassword.equals(null) && !password.equals(null) && !cpassword.equals(null)){
+				if (opassword.equals(u.getPassword()) && password.equals(cpassword)){
+					Query q = pm.newQuery(User.class);
+					q.declareParameters("Integer uid");
+					q.setFilter("id == uid");
+					q.deletePersistentAll(uid);
+					u.setPassword(password);
+					pm.makePersistent(u);
+					res = Response
+							.status(200)
+							.entity("Password successfully updated!")
+							.build();	
 				}
 				else {
-					return Response
+					res = Response
 							.status(400)
 							.entity("The passwords do not match.")
 							.build();
 				}			
 			}
-			return Response
-						.status(404)
-						.entity("User not found!")
-						.build();	
+			else {
+				res = Response
+							.status(404)
+							.entity("User not found!")
+							.build();	
+			}
+			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
 				return null;
 			}
 			pm.close();
-			return Response
-					.status(200)
-					.entity("Password successfully updated!")
-					.build();		
+			return res; 	
 		}
-		
 	}
+	
 
 	@SuppressWarnings("finally")
 	public boolean deleteUser(int uid) {
@@ -192,11 +227,11 @@ public class UserDAOPersistence implements UserDAO {
 		try {
 			tx.begin();
 			User u = this.getUser(uid);
-			//User t = pm.detachCopy(u);
-			User t = pm.getObjectById(User.class,Integer.toString(uid));
-			if(t!=null) {
-				pm.makePersistent(u);
-				pm.deletePersistent(u);
+			if(u!=null) {
+				Query q = pm.newQuery(User.class);
+				q.declareParameters("Integer uid");
+				q.setFilter("id == uid");
+				q.deletePersistentAll(uid);
 				tx.commit();
 			}
 		} finally {
@@ -208,29 +243,34 @@ public class UserDAOPersistence implements UserDAO {
 			return res;		
 		}
 	}
-
-	public Response connectUser(String username, String password) {
-		User us = null;
-		for(User u: this.getUsers()) {
-			if(u.getName().equals(username)) {
-				us = u;
+	
+	
+	@SuppressWarnings("finally")
+	public boolean editUsersMaps(int uid, List<Map> maps) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean res = true;
+		
+		try {
+			tx.begin();
+			User u = this.getUser(uid);
+			if (u!=null){
+				Query q = pm.newQuery(User.class);
+				q.declareParameters("Integer uid");
+				q.setFilter("id == uid");
+				q.deletePersistentAll(uid);
+				u.setMaps(maps);
+				pm.makePersistent(u);
 			}
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+				return res= false;
+			}
+			pm.close();
+			return res; 	
 		}
-		if (us != null && us.getPassword().equals(password)) {
-			return Response.status(Response.Status.SEE_OTHER)
-			         .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
-			         .header("X-Foo", "bar")
-			         .build();
-		}
-		 return Response
-				 	.status(402)
-		            .entity("Username and password do not match")
-		            .build();
-	}
-
-
-	public User getUser(String username) {
-		return null;
 	}
 
 }

@@ -80,7 +80,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                         .entity("You cannot access this resource.").build());
                 return;
             }
-            
             //Verify user access
             if(method.isAnnotationPresent(RolesAllowed.class))
             {

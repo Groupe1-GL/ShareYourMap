@@ -5,7 +5,7 @@ import javax.jdo.annotations.PersistenceCapable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@PersistenceCapable(detachable="true")
+@PersistenceCapable
 public class Event extends Location{
 	private LocalDateTime start;
 	private LocalDateTime end;
@@ -22,6 +22,7 @@ public class Event extends Location{
 		this.end = end;
 	}
 
+	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	public LocalDateTime getStart() {
 		return start;
 	}
@@ -35,7 +36,6 @@ public class Event extends Location{
 		return end;
 	}
 	
-	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
 	}

@@ -242,8 +242,6 @@ public class UserDAOImpl implements UserDAO {
 			}
 		}
 		return false;
-	}
-
-	
+	}	
 	
 }

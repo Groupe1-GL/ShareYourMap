@@ -6,17 +6,23 @@ import javax.jdo.annotations.PersistenceCapable;
 
 import java.util.*;
 
-@PersistenceCapable(detachable="true")
+@PersistenceCapable
 public class User{
 	private int id;
 	private String name;
 	private String password;
 	private List<Map> listMap;
-	private Position currentPosition;
 	private static int user_id = 1;
 	
 	public User(String name, String password) {
 		this.id=user_id++;
+		this.name = name;
+		this.password = password;
+		this.listMap = new ArrayList<Map>();		
+	}
+	
+	public User(int id, String name, String password) {
+		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.listMap = new ArrayList<Map>();		
@@ -64,10 +70,6 @@ public class User{
 
 	public void deleteMap(Map m) {
 		listMap.remove(m);
-	}
-
-	public Position getCurrentPosition() {
-		return this.currentPosition;
 	}
 	
 	public List<Map> getMaps() {

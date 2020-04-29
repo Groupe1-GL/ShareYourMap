@@ -1,5 +1,6 @@
 package jetty_server.ws;
 
+//import javax.jdo.JDOHelper;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Response;
 import classes.User;
 import dao.UserDAO;
 import dao.UserDAOImpl;
+//import dao.datanucleus.UserDAOPersistence;
 
 import java.util.*;
 
@@ -29,6 +31,7 @@ import java.util.*;
 @Path("/users")
 public class UserResource {
 	
+	//UserDAO userDAO = new UserDAOPersistence(JDOHelper.getPersistenceManagerFactory("gl"));
 	UserDAO userDAO = new UserDAOImpl();
 	
 	@GET
@@ -63,9 +66,7 @@ public class UserResource {
 			return createUser(name, password, cpassword);
 		}
 		else {
-			return userDAO.connectUser(name,password);
-		}
-			/*User us = userDAO.getUser(name);
+			User us = userDAO.getUser(name);
 			if (us != null && us.getPassword().equals(password)) {
 				return Response.status(Response.Status.SEE_OTHER)
 				         .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
@@ -76,8 +77,9 @@ public class UserResource {
 					 	.status(402)
 			            .entity("Username and password do not match")
 			            .build();
-		}*/
+		}
 	}
+
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

@@ -1,9 +1,7 @@
 package dao;
 
 import java.io.InputStream;
-import java.util.List;
 
-import classes.Location;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
 
 public interface LocationDAO {

@@ -214,9 +214,6 @@ function eventDiv(){
 	}
 }
 
-// Edit a location
-
-
 // Delete a location
 function deleteFav(lid){
 	deleteServerData(`/ws/users/${current_user_id}/maps/${current_map['id']}/location/${lid}`,refresh);

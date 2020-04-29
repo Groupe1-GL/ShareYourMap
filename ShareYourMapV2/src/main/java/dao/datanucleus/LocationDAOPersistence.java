@@ -1,7 +1,6 @@
 package dao.datanucleus;
 
 import java.io.InputStream;
-import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -11,15 +10,16 @@ import javax.jdo.Transaction;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import classes.Location;
-import classes.Map;
 import dao.LocationDAO;
 
 public class LocationDAOPersistence implements LocationDAO{
 	
 	private PersistenceManagerFactory pmf;
+	private UserDAOPersistence userDAO;
 	
 	public LocationDAOPersistence(PersistenceManagerFactory pmf) {
 		this.pmf = pmf;
+		this.userDAO = new UserDAOPersistence(pmf);
 	}
 	
 	@SuppressWarnings("finally")
@@ -56,7 +56,7 @@ public class LocationDAOPersistence implements LocationDAO{
 		
 		try {
 			tx.begin();
-			Location newFav = new Location(1,name,"",x,y,descr,label);
+			Location newFav = new Location(name,"",x,y,descr,label);
 			pm.makePersistent(newFav);
 			tx.commit();
 		} finally {
@@ -87,8 +87,10 @@ public class LocationDAOPersistence implements LocationDAO{
 			tx.begin();
 			Location l = this.getLocation(lid);																							// Need delay between the 2 queries
 			if(l != null) {
-				pm.makePersistent(l);
-				pm.deletePersistent(l);
+				Query q = pm.newQuery(Location.class);
+				q.declareParameters("Integer lid");
+				q.setFilter("id == lid");
+				q.deletePersistentAll(lid);
 				tx.commit();
 			}
 		} finally {

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.Event;
-import classes.Location;
 import classes.Map;
 import classes.User;
 

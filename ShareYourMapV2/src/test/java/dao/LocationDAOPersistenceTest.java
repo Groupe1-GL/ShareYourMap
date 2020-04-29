@@ -26,7 +26,8 @@ public class LocationDAOPersistenceTest {
 		
 		/* -------------------- Delete elements ------------------------------- */
 		Assert.assertFalse(locationDAO.deleteLocation(0, 0, 0));								
-		Assert.assertTrue(locationDAO.deleteLocation(0, 0, 1)); 
+		Assert.assertTrue(locationDAO.deleteLocation(0, 0, 1));
+		Assert.assertNull(locationDAO.getLocation(1));								
 	}
 
 }

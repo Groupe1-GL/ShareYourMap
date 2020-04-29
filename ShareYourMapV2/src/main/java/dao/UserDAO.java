@@ -50,6 +50,9 @@ public interface UserDAO {
 	 */
 	public User getUser(				String username);
 	
+
+	
+	
 	/**
      * Edits the user selected by his id.
 	 * The username can not be changed.
@@ -72,15 +75,6 @@ public interface UserDAO {
 	 * @return	   true if the operation was successful
 	 */
 	public boolean deleteUser(			int uid);
-	
-	/**
-     * Connect a user on the website and redirect it to his map page.
-	 *
-	 * @param	username 			the user identifier 
-	 * @param	password	the user's password 
-	 * @return	   			a text that describe the response
-	 */
-	public Response connectUser(		String username, String password);
 	
 	
 }

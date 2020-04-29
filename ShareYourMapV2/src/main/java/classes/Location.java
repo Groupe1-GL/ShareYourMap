@@ -7,7 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@PersistenceCapable(detachable="true")
+@PersistenceCapable
 public class Location{
 	private int id;
 	private String name, creatorName, description;
