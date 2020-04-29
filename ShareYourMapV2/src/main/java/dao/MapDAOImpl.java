@@ -2,6 +2,9 @@ package dao;
 
 import java.util.List;
 
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
+
 import classes.Map;
 import classes.User;
 
@@ -42,13 +45,19 @@ public class MapDAOImpl implements MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public Map getSharedMap(int mid, String sharedID) {
+	public Response getSharedMap(int mid, String sharedID) {
 		for (Map ma : MapDAOImpl.m) {
 			if ((ma.getID() == mid)&&ma.getAccess()&&ma.getSharingID().equals(sharedID)) {
-				return ma;
+				return Response.status(Response.Status.SEE_OTHER)
+				         .header(HttpHeaders.LOCATION, "/sharemap.html?id=" + mid + "&shared-id=" + sharedID)
+				         .header("X-Foo", "bar")
+				         .build();
 			}
 		}
-		return null;
+		 return Response
+				 	.status(404)
+		            .entity("Map id and Shared id do not match")
+		            .build();
 	}
 	
 	/**

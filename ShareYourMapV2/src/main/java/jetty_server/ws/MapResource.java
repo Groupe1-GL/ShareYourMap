@@ -10,7 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import classes.Map;
 import dao.MapDAO;
@@ -49,11 +51,15 @@ public class MapResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/maps/{map-id}")
-	public Map getMap(@PathParam("map-id") int mid,
-			          @QueryParam("shared-id") String sharedID) {	
-		if (sharedID.equals(null))
+	public Map getMap(@PathParam("map-id") int mid) {	
 			return mapDAO.getMap(mid);
-		else 
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/map")
+	public Response getSharedMap(@QueryParam("id") int mid,
+					@QueryParam("shared-id") String sharedID) {	
 			return mapDAO.getSharedMap(mid, sharedID);
 	}
 	

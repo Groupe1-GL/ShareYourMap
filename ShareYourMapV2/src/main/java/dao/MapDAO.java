@@ -2,6 +2,8 @@ package dao;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import classes.Map;
 
 /**
@@ -35,7 +37,7 @@ public interface MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public Map getSharedMap(int mid, String sharedID);
+	public Response getSharedMap(int mid, String sharedID);
 	
 	/**
 	 * Creates a map.
