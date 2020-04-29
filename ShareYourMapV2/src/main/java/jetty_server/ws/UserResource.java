@@ -69,7 +69,7 @@ public class UserResource {
 			User us = userDAO.getUser(name);
 			if (us != null && us.getPassword().equals(password)) {
 				return Response.status(Response.Status.SEE_OTHER)
-				         .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html")
+				         .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html?uid="+us.getId())
 				         .header("X-Foo", "bar")
 				         .build();
 			}

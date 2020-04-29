@@ -22,7 +22,6 @@ function showNav() {
 
   
 // ---------------------		Global variables	---------------------
-var current_user_id = 1;
 var current_loc_x = null;
 var current_loc_y = null;
 
@@ -64,6 +63,11 @@ function getServerData(url, success){
 }
 
 //---------------------		Automatic actions		---------------------		
+
+// Init user id
+var url =  window.location.href;
+var urlParams = new URLSearchParams(window.location.search);
+var current_user_id = urlParams.get('uid');
 
 // Initialize the initial map display in the page (center on the EIDD)
 

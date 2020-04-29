@@ -7,6 +7,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+import javax.ws.rs.core.Response;
 
 import classes.Location;
 import classes.Map;
@@ -211,7 +212,7 @@ public class MapDAOPersistence implements MapDAO{
 		}
 	}
 
-	public Map getSharedMap(int mid, String sharedID) {
+	public Response getSharedMap(int mid, String sharedID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
