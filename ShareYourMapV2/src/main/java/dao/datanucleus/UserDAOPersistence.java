@@ -194,7 +194,6 @@ public class UserDAOPersistence implements UserDAO {
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				return null;
 			}
 			pm.close();
 		}
@@ -232,7 +231,7 @@ public class UserDAOPersistence implements UserDAO {
 	public boolean editUsersMaps(int uid, List<Map> maps) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		boolean res = true;
+		boolean res = false;
 		
 		try {
 			tx.begin();
@@ -244,12 +243,12 @@ public class UserDAOPersistence implements UserDAO {
 				q.deletePersistentAll(uid);
 				u.setMaps(maps);
 				pm.makePersistent(u);
+				res = true;
 			}
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				return res= false;
 			}
 			pm.close();	
 		}
