@@ -43,8 +43,8 @@ public class MapDAOPersistence implements MapDAO{
 				tx.rollback();
 			}
 			pm.close();
-			return detached;
 		}
+		return detached;
 	}
 	
 	public Map getMap(int map_id){

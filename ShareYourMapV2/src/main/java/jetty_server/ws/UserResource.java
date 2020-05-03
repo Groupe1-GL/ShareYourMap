@@ -66,6 +66,7 @@ public class UserResource {
 			return createUser(name, password, cpassword);
 		}
 		else {
+			//connexion = redirection
 			User us = userDAO.getUser(name);
 			if (us != null && us.getPassword().equals(password)) {
 				return Response.status(Response.Status.SEE_OTHER)

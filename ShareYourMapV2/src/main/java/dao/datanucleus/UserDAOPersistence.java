@@ -41,8 +41,8 @@ public class UserDAOPersistence implements UserDAO {
 				tx.rollback();
 			}
 			pm.close();
-			return detached;
 		}
+		return detached;
 	}
 	
 	
@@ -72,7 +72,7 @@ public class UserDAOPersistence implements UserDAO {
 		return detached;
 	}
 	
-
+	//non présent sur les webservices
 	public User getUser(String username) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -104,10 +104,13 @@ public class UserDAOPersistence implements UserDAO {
 	public Response createUser(String name, String password, String cpassword) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		Response res = null;
+		Response res = Response
+				.status(424)
+				.entity("Transaction method failed.")
+				.build();	
 		
 		boolean alreadyExist = false;
-		if(getUser(name) != null) {
+		if(!getUser(name).equals(null)) {
 			alreadyExist = true;
 		}
 		
@@ -115,7 +118,7 @@ public class UserDAOPersistence implements UserDAO {
 			tx.begin();
 			if (alreadyExist){
 				res = Response
-						.status(400)
+						.status(422)//voir quel est le meilleur code erreur
 						.entity("This username is already used.")
 						.build();
 			}
@@ -131,7 +134,7 @@ public class UserDAOPersistence implements UserDAO {
 				}
 				else {
 					res = Response
-							.status(400)
+							.status(422)
 							.entity("The passwords do not match.")
 							.build();
 				}
@@ -141,11 +144,11 @@ public class UserDAOPersistence implements UserDAO {
 			if (tx.isActive()) {
 				tx.rollback();
 				pm.close();
-				return null;
+				return res;
 			}
 			pm.close();
-			return res; 
 		}
+		return res; 
 	}
 
 	
@@ -154,11 +157,14 @@ public class UserDAOPersistence implements UserDAO {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		User u = this.getUser(uid);
-		Response res = null;
-		
+		Response res = Response
+								.status(424)
+								.entity("Transaction method failed.")
+								.build();	
+						
 		try {
 			tx.begin();
-			if (u!=null && !opassword.equals(null) && !password.equals(null) && !cpassword.equals(null)){
+			if (!u.equals(null) && !opassword.equals(null) && !password.equals(null) && !cpassword.equals(null)){
 				if (opassword.equals(u.getPassword()) && password.equals(cpassword)){
 					Query q = pm.newQuery(User.class);
 					q.declareParameters("Integer uid");
@@ -173,7 +179,7 @@ public class UserDAOPersistence implements UserDAO {
 				}
 				else {
 					res = Response
-							.status(400)
+							.status(422)
 							.entity("The passwords do not match.")
 							.build();
 				}			
@@ -191,8 +197,8 @@ public class UserDAOPersistence implements UserDAO {
 				return null;
 			}
 			pm.close();
-			return res; 	
 		}
+		return res; 
 	}
 	
 
@@ -200,25 +206,25 @@ public class UserDAOPersistence implements UserDAO {
 	public boolean deleteUser(int uid) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		boolean res = true;
+		boolean res = false;
 		try {
 			tx.begin();
 			User u = this.getUser(uid);
-			if(u!=null) {
+			if(!u.equals(null)) {
 				Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
 				q.setFilter("id == uid");
 				q.deletePersistentAll(uid);
+				res = true;
 				tx.commit();
 			}
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				res = false;
 			}
-			pm.close();
-			return res;		
+			pm.close();	
 		}
+		return res;	
 	}
 	
 	
@@ -231,7 +237,7 @@ public class UserDAOPersistence implements UserDAO {
 		try {
 			tx.begin();
 			User u = this.getUser(uid);
-			if (u!=null){
+			if (!u.equals(null)){
 				Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
 				q.setFilter("id == uid");
@@ -245,9 +251,9 @@ public class UserDAOPersistence implements UserDAO {
 				tx.rollback();
 				return res= false;
 			}
-			pm.close();
-			return res; 	
+			pm.close();	
 		}
+		return res; 
 	}
 
 }

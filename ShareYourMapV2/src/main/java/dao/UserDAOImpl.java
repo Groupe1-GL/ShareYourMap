@@ -73,7 +73,7 @@ public class UserDAOImpl implements UserDAO {
 										String password, 
 										String cpassword) {
 		for (User us : u){
-			if (us.getName().equals(name)){
+			if (us.getName().equalsIgnoreCase(name)){
 				return Response
 						.status(400)
 						.entity("This username is already used.")
@@ -119,7 +119,7 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	public User getUser(String username) {
 		for (User us: u) {
-			if (us.getName().contentEquals(username))
+			if (us.getName().equalsIgnoreCase(username))
 				return us;
 		}
 		return null;		
