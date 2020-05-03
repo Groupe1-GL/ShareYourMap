@@ -10,9 +10,13 @@
 		<link rel="stylesheet" type="text/css" href="viewmap.css">
 	</head>
 	<body>
+		
+		<script id="navigate" type="text/template">
+			<a href="../publicmap/publicmap.html?uid=<%=uid%>"><img src='../resources/buttonPublic.png'/></a>
+		</script>
 
 		<script id="listMap" type="text/template">
-			<li>
+			<li id="<%= id %>" class="my_maps">
 				<div id="mapPerso ">
 					<div class="button perso" class="map" onclick="displayMap(<%= id %>)"><%= name %> </div> 
 					<div class="option" hidden>
@@ -170,17 +174,20 @@
 					<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_r.png" /></div>
 					<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_r.png" /></div>
 				</div>
-				<a href="../publicmap/publicmap.html"><img src='../resources/buttonPublic.png'/></a>
+				<div id="publicmap"></div>
 			</div>
 		</div>
-		<div id="map"></div>
-		<div id="currentMap" hidden></div>
-		<div id="viewFav"></div>
-		<div id="shareMap" hidden></div>
-		<div id="viewMap" class="closable"></div>
-		<div id="newFav" onclick="createNewFav(0,0)" class="button" hidden><img src='../resources/fav.png'/></div>
-		<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
-
+		
+		<div id="leaflet">
+			<div id="map"></div>
+			<div id="currentMap" hidden></div>
+			<div id="viewFav"></div>
+			<div id="shareMap" hidden></div>
+			<div id="viewMap" class="closable"></div>
+			<div id="newFav" onclick="createNewFav(0,0)" class="button" hidden><img src='../resources/fav.png'/></div>
+			<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
+		</div>
+		
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>

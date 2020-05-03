@@ -11,8 +11,12 @@
 	</head>
 	<body>
 
+		<script id="navigate" type="text/template">
+			<a href="../viewmap/viewmap.html?uid=<%=uid%>"><img src='../resources/buttonPerso.png'/></a>
+		</script>
+
 		<script id="listPublicMap" type="text/template">
-			<li><div class="button" onclick="displayMap(<%= id %>)"><%= name %> <i>by <%= creatorName%></i></div>
+			<li id="<%= id %>" class="public_maps"><div class="button" onclick="displayMap(<%= id %>)"><%= name %> <i>by <%= creatorName%></i></div>
 			</li>
 		</script>	
 
@@ -100,10 +104,10 @@
 					<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_j.png" /></div>
 					<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_j.png" /></div>
 				</div>
-				<a href="../viewmap/viewmap.html"><img src='../resources/buttonPerso.png'/></a>
+				<div id="viewmap"></div>
 			</div>
 		</div>
-				
+		
 		<div id="currentMap" hidden></div>
 		<div id="viewFav"></div>
 		<div id="map"></div>

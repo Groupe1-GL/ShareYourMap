@@ -1,4 +1,4 @@
-/* VIEWMAP
+/** VIEWMAP
  * Functions to navigate in the page collecting all the public maps
  * @link src/main/webapp/viewmap
  */
@@ -15,7 +15,7 @@ $(".mapPerso").hover(function(){
 
 //----------------------	Server functions	---------------------
 
-/*
+/**
  * Send the GET request ot the server
  * @param {string} 	 url			The url of the request
  * @param {void} success 		The callback function
@@ -28,7 +28,7 @@ function getServerData(url, success){
     }).done(success);
 }
 
-/*
+/**
  * Send the DELETE request ot the server
  * @param {string} 	 url			The url of the request
  * @param {void} success 		The callback function
@@ -41,7 +41,7 @@ function deleteServerData(url,success){
     }).done(success);
 }
 
-/*
+/**
  * Send the PUT request ot the server
  * @param {string} 	 url			The url of the request
  * @param {void} success 		The callback function
@@ -54,7 +54,7 @@ function postServerData(url,success){
     }).done(success);
 }
 
-/*
+/**
  * Send the PUT request ot the server
  * @param {string} 	 url			The url of the request
  * @param {void} success 		The callback function
@@ -69,18 +69,17 @@ function putServerData(url,success){
 
 //-------------------		Automatic actions		-----------------		
 
-
 // Return current registered user
 $(function(){
 	getServerData(`/ws/users/${current_user_id}`,getUser);
 });
 
-
-/*
+/**
  * Display user information in the current page with different templates
  * @param {JSON: User}		the current user
  */
 function getUser(result){	
+
 	var user_name = _.template("<%=name%> maps");	
 	$("#userName").html(user_name(result));
 	$("#pageName").html(user_name(result));
@@ -96,11 +95,42 @@ function getUser(result){
 			user_favs.push(fav);
 		});
 	});
+	
+	var user_temp = _.template($('#navigate').html());
+	$("#publicmap").html(user_temp({"uid":result['id']}));
 }
 
 //---------------------		Actions on click		---------------------	
 
-/*
+/**
+ * Change backgroung color of the current map
+ * @param {*} id	id of the currentMap
+ */
+function editMapColor(id){
+	var c_map = document.getElementById(id);
+	var maps = document.getElementById('mapList').getElementsByClassName('my_maps');
+
+	_.each(maps, function(map) {
+		map.style.backgroundColor = "#090935";
+		map.style.color = "white";
+		map.onmouseover = function(){
+			if (this != c_map) {
+				this.style.backgroundColor ="#e74c4d";  this.style.color = "black";
+			}
+		};
+        map.onmouseout = function(){
+			if (this != c_map) {
+				this.style.backgroundColor ="#090935";  this.style.color = "white";
+			}
+		};;
+	});
+
+	c_map.style.backgroundColor = "#e74c4d";
+	c_map.style.color = "black";
+}
+
+
+/**
  * Display the element in which a user can create a map
  * @param {int} uid		the id of the current user
  */
@@ -118,7 +148,7 @@ function createMap(){
 	putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
 }
 
-/* 
+/** 
  * Send the request to get the map to edit
  * @param {int} mid		the id of the current map
  */
@@ -126,7 +156,7 @@ function editMap(mid){
 	getServerData(`/ws/maps/${mid}`,showEditMap);
 }
 
-/*
+/**
  * Display the element in which a user can edit a map
  * @param {Map} result		The map to edit
  */
@@ -139,7 +169,7 @@ function showEditMap(result){
 	$("#viewMap").html(editMap(editDetails));
 }
 
-/*
+/**
  * Display the element in which a user can share a map
  * @param {int} mid		the id of the current map
  */
@@ -150,7 +180,7 @@ function shareMap(mid,sid){
 	$("#shareMap").html(sharingLink(link));
 }
 
-/*
+/**
  * Copy sharing link 
  */
 function copyLink() {
@@ -160,7 +190,7 @@ function copyLink() {
 	document.execCommand("copy");
   }
 
-/*
+/**
  * Delete a map from user's list of map
  * @param {int} mid		the id of the map
  */
@@ -168,7 +198,7 @@ function deleteMap(mid){
 	deleteServerData(`/ws/users/${current_user_id}/maps/${mid}`,refresh);
 }
 
-/*
+/**
  * Display the element in which a user can create a fav
  * @param {int} uid		the id of the current user
  * @param {float} x		The longitude value of the new favorite
@@ -184,7 +214,7 @@ function createNewFav(x,y){
 	}
 }
 
-/* 
+/** 
  * Send the request to get the map in which the fav is
  * @param {int} mid		the id of the current map
  */
@@ -192,7 +222,7 @@ function editFav(mid){
 	getServerData(`/ws/maps/${mid}`,showEditFav);
 }
 
-/*
+/**
  * Display the element in which a user can edit a fav
  * @param {Map} result		The map to edit
  */
@@ -210,7 +240,7 @@ function showEditFav(result){
 }
 
 
-/*
+/**
  * Filter the list of favorites regarding a research
  */
 $(document).ready(function(){
@@ -224,7 +254,7 @@ $(document).ready(function(){
 });
 
 
-/*
+/**
  * Display the element to create/edit an Event
  */
 function eventDiv(){

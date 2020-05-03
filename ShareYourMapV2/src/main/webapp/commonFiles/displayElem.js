@@ -1,6 +1,7 @@
-/* DISPLAY ELEMENTS
+/** DISPLAY ELEMENTS
  * Functions to display maps and locations details
  */
+
 
 //----------------------	Visual effects	-------------------------
 $("#toggle").click(showNav);
@@ -49,7 +50,7 @@ var options = {
 
 //----------------------	Server function		-------------------------
 
-/*
+/**
  * Send the GET request ot the server
  * @param {string} 	 url			The url of the request
  * @param {void} success 		The callback function
@@ -92,7 +93,7 @@ function error(err) {
 
 //---------------------		Actions on click		---------------------	
 
-/*
+/**
  * Center a map 
  * @param {float} x		The longitude value to center the map
  * @param {float} y		The latitude value to center the map
@@ -101,7 +102,7 @@ function centerMapView(x,y,z){
 	map.setView([x,y], z);
 }
 
-/*
+/**
  * Find the center of the cluser of locations
  * @param {List<Location>} list_locations		The list of locations 
  */
@@ -133,7 +134,7 @@ function findCenter(list_locations){
 	centerMapView(x_mean,y_mean,z+2);
 }
 
-/*
+/**
  * On double click on the map, open the element to create a new fav at this address
  */
 function addFav(e) {
@@ -142,16 +143,15 @@ function addFav(e) {
 	}
 }
 
-/*
+/**
  * Center the map on the user's position
- * @param pos
  */
 function centerMe(){
 	centerMapView(current_loc_x,current_loc_y,20);
 }
 
 
-/*
+/**
  * Send the request to have the map with a certain id
  * @param {string} id		The id of the wanted map
  */
@@ -159,14 +159,17 @@ function displayMap(id){
 	getServerData(`/ws/maps/${id}`,mapDetails);
 }
 
-/*
+
+/**
  * Display information of the current map in the page with different templates
  * @param {Map} result		The current map
  */
 function mapDetails(result){
 	current_map = result;
 	markers.clearLayers();
-	
+
+	editMapColor(result['id']);
+
 	var map_name = _.template("<%= name %>");
 	$("#currentMap").html(map_name(result));
 
@@ -180,7 +183,7 @@ function mapDetails(result){
 	fillFavList(listFavs);
 }
 
-/*
+/**
  * Add favorite to the list  of favorites
  */
 function fillFavList(favs){
@@ -206,7 +209,7 @@ function fillFavList(favs){
 }
 
 
-/*
+/**
  * Display the name of a favorite when on mouseover
  */
 function popUpFav(name,pos) {
@@ -216,7 +219,7 @@ function popUpFav(name,pos) {
         .openOn(map);
 }
 
-/*
+/**
  * Get the location for an certain id
  * And display information of this favs in the page with the 'favDetails' template
  * @param {long} id		The id of the wanted favorite
@@ -256,29 +259,21 @@ function displayFav(id){
 	});				
 }
 
-/*
+/**
  * Display the div in which the user can add a picture 
  */
 function addPix(){
 	document.getElementById("addPix").style.display = "block";
 }
 
-/*
+/**
  * Display the div in which the user can add a msg
  */
 function addMsg(){
 	document.getElementById("addMsg").style.display = "block";
 }
 
-// Close all element before open an other
-function closeAll() {
-	var divClose = document.getElementsByClassName("closable");
-	for (const key in divClose) {
-		//document.getElementById(key.id).style.display = "none";
-	}
-}
-
-/*
+/**
  * Display different means of transport available for the user
  */
 function howToGo(){
@@ -290,7 +285,7 @@ function howToGo(){
 	}
 }
 
-/*
+/**
  * Display different means of transport available for the user
  */
 function howToGoFull(){
@@ -302,7 +297,7 @@ function howToGoFull(){
 	}
 }
 
-/*
+/**
  * Display the element in which a find an itinerary to the location
  * @param {float} x		The longitude value to the location
  * @param {float} y		The latitude value to the location
@@ -332,7 +327,11 @@ function goTo(x,y,mean){
 }
 
 
-// Close element
+/**
+ * Close element
+ * @param {int} id		The id of the element
+ */ 
 function closeElement(id){
 	document.getElementById(id).style.display = "none";
 }
+
