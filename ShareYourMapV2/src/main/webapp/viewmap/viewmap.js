@@ -161,7 +161,7 @@ $("#newMap").click(function (){
 // Send the request to create a map
 function createMap(){
 	var name = document.getElementById("map_name").value;
-	putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
+	putServerData(`/ws/maps/${name}/users/${current_user_id}`,refresh);
 }
 
 /** 

@@ -100,7 +100,6 @@ public class UserDAOPersistence implements UserDAO {
 	}
 	
 	
-	@SuppressWarnings("finally")
 	public Response createUser(String name, String password, String cpassword) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
