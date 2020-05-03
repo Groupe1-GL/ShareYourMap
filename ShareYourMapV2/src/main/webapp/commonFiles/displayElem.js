@@ -2,25 +2,6 @@
  * Functions to display maps and locations details
  */
 
-
-//----------------------	Visual effects	-------------------------
-$("#toggle").click(showNav);
-
-function showNav() {
-    if( document.getElementById("nav_bar").style.transform == "translateX(0px)"){
-        document.getElementById("nav_bar").style.transform = "translateX(-348px)";
-		document.getElementById("toggle").style.left = "0";
-		document.getElementById("toggle").style.backgroundImage = "url(\"../resources/burger.png\")";
-		document.getElementById("currentMap").style.display = "block";
-    }
-    else {
-        document.getElementById("nav_bar").style.transform = "translateX(0px)";
-        document.getElementById("toggle").style.left = "22%";
-		document.getElementById("currentMap").style.display = "none";
-		document.getElementById("toggle").style.backgroundImage = "url(\"../resources/croix.png\")";
-    }
-}
-
   
 // ---------------------		Global variables	---------------------
 var current_loc_x = null;
@@ -202,22 +183,11 @@ function fillFavList(favs){
 			var marker = L.marker([location['position']['x'],location['position']['y']],{icon:heartLoc});
 		}
 		marker.on('click',displayFav.bind(null,parseInt(location['id'])));
-		marker.on('mouseover',popUpFav.bind(null,location['name'],location['posistion']));
 		markers.addLayer(marker);
 	});
 	map.addLayer(markers);
 }
 
-
-/**
- * Display the name of a favorite when on mouseover
- */
-function popUpFav(name,pos) {
-    popup
-        .setLatLng([pos['x'],pos['y']])
-        .setContent(name)
-        .openOn(map);
-}
 
 /**
  * Get the location for an certain id
@@ -335,3 +305,21 @@ function closeElement(id){
 	document.getElementById(id).style.display = "none";
 }
 
+
+//----------------------	Visual effects	-------------------------
+$("#toggle").click(showNav);
+
+function showNav() {
+    if( document.getElementById("nav_bar").style.transform == "translateX(0px)"){
+        document.getElementById("nav_bar").style.transform = "translateX(-348px)";
+		document.getElementById("toggle").style.left = "0";
+		document.getElementById("toggle").style.backgroundImage = "url(\"../resources/burger.png\")";
+		document.getElementById("currentMap").style.display = "block";
+    }
+    else {
+        document.getElementById("nav_bar").style.transform = "translateX(0px)";
+        document.getElementById("toggle").style.left = "22%";
+		document.getElementById("currentMap").style.display = "none";
+		document.getElementById("toggle").style.backgroundImage = "url(\"../resources/croix.png\")";
+    }
+}

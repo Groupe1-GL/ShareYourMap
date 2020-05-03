@@ -86,8 +86,10 @@
 					<div id="address_input" hidden>Address <input type="text" name="address"></div>
 					<p>Description <input type="text" name="description">
 					Label <input type="text" name="label"></p>
-					<p>Start <input type="datetime-local" name="start">
-					End <input type="datetime-local" name="end"></p>
+					<p id="eventElem" hidden>
+						Start <input id="start" type="datetime-local" name="start">
+						End <input id="end" type="datetime-local" name="end">
+					</p>
 					<input onclick='window.location.reload(false)' type="submit" value="Create">
 				</form>
 			</div>

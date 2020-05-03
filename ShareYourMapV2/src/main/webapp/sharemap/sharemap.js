@@ -19,3 +19,19 @@ function createNewFav(x,y){
 		document.getElementById("address_input").style.display = "block";
 	}
 }
+
+
+/**
+ * Display the element to create an event
+ */
+function displayEvent(){
+	var checkBox = document.getElementById("event");
+	if(checkBox.checked){
+		document.getElementById("eventElem").style.display = "block";
+	}
+	else{
+		document.getElementById("eventElem").style.display = "none";
+		document.getElementById("start").value = null;
+		document.getElementById("end").value = null;
+	}
+}

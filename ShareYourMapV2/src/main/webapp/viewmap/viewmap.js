@@ -46,10 +46,11 @@ function deleteServerData(url,success){
  * @param {string} 	 url			The url of the request
  * @param {void} success 		The callback function
  */
-function postServerData(url,success){
+function postServerData(url,data,success){
     $.ajax({
     	type: 'POST',
-        dataType: "json",
+		dataType: "json",
+		data: data,
         url: url
     }).done(success);
 }
@@ -63,6 +64,21 @@ function putServerData(url,success){
     $.ajax({
     	type: 'PUT',
         dataType: "json",
+        url: url
+    }).done(success);
+}
+
+/**
+ * Send the PUT request ot the server with a data
+ * @param {string} 	 url			The url of the request
+ * @param {JSON} data 			The data to send
+ * @param {void} success 		The callback function
+ */
+function putServerData2(url,data,success){
+    $.ajax({
+    	type: 'PUT',
+		dataType: "json",
+		data: data,
         url: url
     }).done(success);
 }
@@ -134,17 +150,17 @@ function editMapColor(id){
  * Display the element in which a user can create a map
  * @param {int} uid		the id of the current user
  */
-function createNewMap(){
-	user_id = {"uid":current_user_id};
+$("#newMap").click(function (){
+	var user_id = {"uid":current_user_id};
 	document.getElementById("viewMap").style.display = "block";
 	var createMap = _.template($('#newMapTemplate').html());
 	$("#viewMap").html(createMap(user_id));
-}
+});
 
 
 // Send the request to create a map
 function createMap(){
-	name = document.getElementById("map_name").value;
+	var name = document.getElementById("map_name").value;
 	putServerData(`/ws/users/${current_user_id}/maps/${name}`,refresh);
 }
 
@@ -152,7 +168,7 @@ function createMap(){
  * Send the request to get the map to edit
  * @param {int} mid		the id of the current map
  */
-function editMap(mid){
+function divEditMap(mid){
 	getServerData(`/ws/maps/${mid}`,showEditMap);
 }
 
@@ -161,20 +177,33 @@ function editMap(mid){
  * @param {Map} result		The map to edit
  */
 function showEditMap(result){
-	uid = {"uid":current_user_id};
-	editDetails = $.extend(uid,result);
+	var uid = {"uid":current_user_id};
+	var editDetails = $.extend(uid,result);
 	
 	document.getElementById("viewMap").style.display = "block";
 	var editMap = _.template($('#editMapTemplate').html());
 	$("#viewMap").html(editMap(editDetails));
 }
 
+
+/**
+ * Send the request to update map's information
+ * @param {int} mid 
+ */
+function editMap(mid){
+	var name = document.getElementById("name").value;
+	var access = document.getElementById("access").checked;
+	var map = {"name":name, "access":access};
+	postServerData(`/ws/users/${current_user_id}/maps/${mid}`,map,refresh);
+}
+
+
 /**
  * Display the element in which a user can share a map
  * @param {int} mid		the id of the current map
  */
 function shareMap(mid,sid){
-	link = {"link": "localhost:8080/ws/map?id="+mid+"&shared-id="+sid};
+	var link = {"link": "localhost:8080/ws/map?id="+mid+"&shared-id="+sid};
 	document.getElementById("shareMap").style.display = "block";
 	var sharingLink = _.template($('#shareMapTemplate').html());
 	$("#shareMap").html(sharingLink(link));
@@ -199,6 +228,22 @@ function deleteMap(mid){
 }
 
 /**
+ * Display the element to create an event
+ */
+function displayEvent(){
+	var checkBox = document.getElementById("event");
+	if(checkBox.checked){
+		document.getElementById("eventElem").style.display = "block";
+	}
+	else{
+		document.getElementById("eventElem").style.display = "none";
+		document.getElementById("start").value = null;
+		document.getElementById("end").value = null;
+	}
+}
+
+
+/**
  * Display the element in which a user can create a fav
  * @param {int} uid		the id of the current user
  * @param {float} x		The longitude value of the new favorite
@@ -213,6 +258,21 @@ function createNewFav(x,y){
 		document.getElementById("address_input").style.display = "block";
 	}
 }
+
+
+/**
+ * Send the request to create a new favorite
+ */
+function newFav(){
+	var name = document.getElementById("new_name").value;
+	var description = document.getElementById("new_description").value;
+	var label = document.getElementById("new_label").value;
+	var start = document.getElementById("new_start").value;
+	var end = document.getElementById("new_end").value;
+	var fav = {"name":name, "description":description, "label":label, "start":start, "end":end};
+	putServerData2(`/ws/users/${current_user_id}/maps/${current_map['id']/location}`,fav,refresh);
+}
+
 
 /** 
  * Send the request to get the map in which the fav is
@@ -245,26 +305,14 @@ function showEditFav(result){
  */
 $(document).ready(function(){
 	$("#searchBar").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
 		fillFavList(user_favs);
-	  	var value = $(this).val().toLowerCase();
 	 	$("#favsList li").filter(function() {
 			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 	  	});
 	});
 });
 
-
-/**
- * Display the element to create/edit an Event
- */
-function eventDiv(){
-	if (document.getElementById("editEvent").style.display == "block") {
-		document.getElementById("editEvent").style.display = "none";
-	}
-	else {
-		document.getElementById("editEvent").style.display = "block";
-	}
-}
 
 // Delete a location
 function deleteFav(lid){
