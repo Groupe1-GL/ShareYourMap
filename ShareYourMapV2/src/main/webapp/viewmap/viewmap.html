@@ -10,13 +10,17 @@
 		<link rel="stylesheet" type="text/css" href="viewmap.css">
 	</head>
 	<body>
+		
+		<script id="navigate" type="text/template">
+			<a href="../publicmap/publicmap.html?uid=<%=uid%>"><img src='../resources/buttonPublic.png'/></a>
+		</script>
 
 		<script id="listMap" type="text/template">
-			<li>
+			<li id="<%= id %>" class="my_maps">
 				<div id="mapPerso ">
 					<div class="button perso" class="map" onclick="displayMap(<%= id %>)"><%= name %> </div> 
 					<div class="option" hidden>
-						<div class="button perso" onclick="editMap(<%= id %>)"><img src="../resources/edit_b.png" /></div> 
+						<div class="button perso" onclick="divEditMap(<%= id %>)"><img src="../resources/edit_b.png" /></div> 
 						<div class="button perso" onclick="shareMap(<%= id %>,'<%= sharingID%>')"><img src="../resources/share_b.png" /></div> 
 						<div class="button perso" id="deleteMap" onclick="deleteMap(<%= id %>)" style="color:black"> X </div> 
 					</div>
@@ -49,6 +53,17 @@
 				</form>
 			</div>
 		</script>	
+
+
+		<!--<script id="editMapTemplate" type="text/template">
+			<div class="top_div">
+				<h2><%=name%> <div class="button close" onclick="closeElement('viewMap')" >X</div></h2>
+				Map's name <input type="text" name="name" value="<%=name%>">
+				Public map <input type="checkbox" name="access" checked>
+				<input onclick="editMap()" type="submit" value="Edit">
+			</div>
+		</script>-->
+
 
 		<script id="shareMapTemplate" type="text/template">
 			<div class="top_div">
@@ -125,12 +140,33 @@
 					<div id="address_input" hidden>Address <input type="text" name="address"></div>
 					<p>Description <input type="text" name="description">
 					Label <input type="text" name="label"></p>
-					<p>Start <input type="datetime-local" name="start">
-					End <input type="datetime-local" name="end"></p>
+					Event <input type="checkbox" id="event" onclick="displayEvent()"/>
+					<p id="eventElem" hidden>
+						Start <input id="start" type="datetime-local" name="start">
+						End <input id="end" type="datetime-local" name="end">
+					</p>
 					<input onclick='window.location.reload(false)' type="submit" value="Create">
 				</form>
 			</div>
 		</script>
+
+		<!--
+			<script id="newFavTemplate" type="text/template">
+			<div class="top_div">
+				<h2>New fav <div class="close button" onclick="closeElement('viewFav')" >X</div></h2>
+				<p>Fav's name <input type="text" id="new_name"></p>
+				<div id="address_input" hidden>Address <input type="text" id="new_address"></div>
+				<p>Description <input type="text" id="new_description">
+				Label <input type="text" id="new_label"></p>
+				Event <input type="checkbox" id="event" onclick="displayEvent()"/>
+				<p id="eventElem" hidden>
+					Start <input id="start" type="datetime-local" id="new_start">
+					End <input id="end" type="datetime-local" id="new_end">
+				</p>
+				<input onclick='newFav()' type="submit" value="Create">
+			</div>
+		</script>
+		-->
 
 		<script id="editFavTemplate" type="text/template">
 			<div class="top_div">
@@ -154,33 +190,36 @@
 				ShareYourMap <a href="../home.html">X</a>
 			</h1>
 			<h2 id="userName"></h2>
-			<form class="search" enctype="application/x-www-form-urlencoded">
+			<div class="search">
 				Favs <input class="search_input" type="text" id="searchBar" name="search" value="" placeholder="Search...">
-			</form>
+			</div>
 				
 			<ul id="mapList"></ul>
 				
 			<ul id="favsList"></ul>
 		
 			<div class="button_group">
-				<div class="button icon" onclick="createNewMap()"><img src="../resources/buttonAddMap.png" /></div>
+				<div id="newMap" class="button icon"><img src="../resources/buttonAddMap.png" /></div>
 				<div class="button" onclick="howToGoFull()"><img src="../resources/buttonTravel_r.png" /></div>
 				<div id="meanTranspFull">
 					<div  class="button perso" onclick="goTo(null,null,'car')"><img src="../resources/car_r.png" /></div>
 					<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_r.png" /></div>
 					<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_r.png" /></div>
 				</div>
-				<a href="../publicmap/publicmap.html"><img src='../resources/buttonPublic.png'/></a>
+				<div id="publicmap"></div>
 			</div>
 		</div>
-		<div id="map"></div>
-		<div id="currentMap" hidden></div>
-		<div id="viewFav"></div>
-		<div id="shareMap" hidden></div>
-		<div id="viewMap" class="closable"></div>
-		<div id="newFav" onclick="createNewFav(0,0)" class="button" hidden><img src='../resources/fav.png'/></div>
-		<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
-
+		
+		<div id="leaflet">
+			<div id="map"></div>
+			<div id="currentMap" hidden></div>
+			<div id="viewFav"></div>
+			<div id="shareMap" hidden></div>
+			<div id="viewMap" class="closable"></div>
+			<div id="newFav" onclick="createNewFav(0,0)" class="button" hidden><img src='../resources/fav.png'/></div>
+			<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
+		</div>
+		
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
