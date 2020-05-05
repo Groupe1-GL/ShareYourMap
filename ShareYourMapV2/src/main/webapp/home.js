@@ -52,7 +52,7 @@ $("#sign_up").click(function (){
 	username = document.getElementById("username").value;
 	psw = document.getElementById("passwd").value;
 	cpsw = document.getElementById("cpasswd").value;
-	user = {"name":username,"passwrd":psw,"cpasswrd":cpsw};
+	user = {"name":username,"password":psw,"cpassword":cpsw};
 	putServerData(`/ws/users`,user,navig);
 });
 
@@ -60,14 +60,12 @@ $("#sign_up").click(function (){
 $("#sign_in").click(function (){
 	username = document.getElementById("username").value;
 	psw = document.getElementById("passwd").value;
-	user = {"name":username,"passwrd":psw};
+	user = {"name":username,"password":psw};
 	postServerData(`/ws/users`,user,navig);
 });
 
 
 function navig(result){
-	if(result.hasOwnProperty('sign')){
-		window.alert(result['sign']);
-	}
-	window.location.replace(result['url']);
+	window.alert(res);
+	window.location.replace(url);
 }

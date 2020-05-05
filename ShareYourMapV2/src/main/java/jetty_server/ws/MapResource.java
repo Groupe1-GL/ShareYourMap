@@ -40,9 +40,8 @@ public class MapResource {
 	}
 	
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{name}")
+	@Path("/maps/{name}/user/{user-id}")
 	public boolean createMap(@PathParam("user-id") int uid,
 						     @PathParam("name") String name,
 						     @FormParam("access") int a){
@@ -67,7 +66,7 @@ public class MapResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}")
+	@Path("/maps/{map-id}/user/{user-id}")
 	public boolean editMap(@PathParam("user-id") int uid,
 						   @PathParam("map-id") int mid,
 					       @FormParam("name") String name,
@@ -78,7 +77,7 @@ public class MapResource {
 
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}")
+	@Path("/maps/{map-id}/user/{user-id}")
 	public boolean deleteMap(@PathParam("user-id") int uid,
 							 @PathParam("map-id") int mid) {
 		return mapDAO.deleteMap(uid, mid);

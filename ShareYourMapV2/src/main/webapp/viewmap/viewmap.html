@@ -11,6 +11,11 @@
 	</head>
 	<body>
 		
+		<script id="header_user" type="text/template">
+			<img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
+			<%= name%>'s maps <a href="../home.html">X</a>
+		</script>
+
 		<script id="navigate" type="text/template">
 			<a href="../publicmap/publicmap.html?uid=<%=uid%>"><img src='../resources/buttonPublic.png'/></a>
 		</script>
@@ -29,9 +34,9 @@
 		</script>
 		
 		<script id="listFavs" type="text/template">
-			<li <% if(event==1) {%> class="event" <%}%> ><div class="button perso"
-				onclick="displayFav(<%= id %>)"><%= name %> </div>
+			<li <% if(event==1) {%> class="event" <%}%> >
 				<div class="button perso" onclick="deleteFav(<%= id %>)">X</div>
+				<div class="button perso" onclick="displayFav(<%= id %>)"><%= name %> </div>
 			</li>
 		</script>
 
@@ -46,10 +51,10 @@
 		<script id="editMapTemplate" type="text/template">
 			<div class="top_div">
 				<h2><%=name%> <div class="button close" onclick="closeElement('viewMap')" >X</div></h2>
-				<form action="/ws/users/<%=uid%>/maps/<%=id%>" method="POST" enctype="application/x-www-form-urlencoded">
+				<form action="/ws/maps/<%=id%>/user/<%=uid%>" method="POST" enctype="application/x-www-form-urlencoded">
 					Map's name <input type="text" name="name" value="<%=name%>">
 					Public map <input type="checkbox" name="access" value="1" checked>
-					<input onclick='window.location.reload(false)' type="submit" value="Edit">
+					<input onclick='histo.go(0)' type="submit" value="Edit">
 				</form>
 			</div>
 		</script>	
@@ -80,23 +85,18 @@
 					<h2 class="title"> 
 						<%= name %><div class="button perso" onclick="editFav(<%= mid %>)"><img src="../resources/edit_b.png" /></div> 
 					</h2>
-					<p class="address"> Address </p>
-				</div>
-				<div class="description">
-					<div class="descrip">
-						<h3>Description</h3>
-						<%= description%>
-					</div>
-					<div class="duration">
-					<% if(event==1) {%> 
-						<p>
-							<h3>Duration</h3>
-						</p>
-					<%}%>	
-					</div>
-					<div classs="tags">
-						<h3>Tags</h3>
-						<%= label%> 
+					<div class="description">
+						<div class="descrip">
+							<h3>Description</h3>
+							<%= description%>
+						</div>
+						<div class="duration">
+						<% if(event==1) {%> 
+							<p>
+								<h3>Duration</h3>
+							</p>
+						<%}%>	
+						</div>
 					</div>
 				</div>
 				<div class="pictures">
@@ -121,6 +121,10 @@
 						</form>
 					</div>
 				</div>
+				<div classs="tags">
+					<h3>Tags</h3>
+					<%= label%> 
+				</div>
 				<div class="itinerary">
 					<div class="button perso" onclick="howToGo()"><img src="../resources/Go.png" /></div>
 					<div id="meanTransp" class="perso" hidden>
@@ -135,7 +139,7 @@
 		<script id="newFavTemplate" type="text/template">
 			<div class="top_div">
 				<h2>New fav <div class="close button" onclick="closeElement('viewFav')" >X</div></h2>
-				<form action="/ws/users/<%= uid %>/maps/<%= mid %>/location?x=<%= x %>&y=<%= y %>" method="POST" enctype="application/x-www-form-urlencoded">
+				<form action="/ws/location/map/<%= mid %>/user/<%= uid %>?x=<%= x %>&y=<%= y %>" method="POST" enctype="application/x-www-form-urlencoded">
 					<p>Fav's name <input type="text" name="name"></p>
 					<div id="address_input" hidden>Address <input type="text" name="address"></div>
 					<p>Description <input type="text" name="description">
@@ -171,7 +175,7 @@
 		<script id="editFavTemplate" type="text/template">
 			<div class="top_div">
 				<h2>Edit fav <div class="close button" onclick="closeElement('viewFav')" >X</div></h2>
-				<form action="/ws/users/<%= uid %>/maps/<%= mid %>/location/<%= id %>" method="POST" enctype="application/x-www-form-urlencoded">
+				<form action="/ws/location/<%= id %>/map/<%= mid %>/user/<%= uid %>" method="POST" enctype="application/x-www-form-urlencoded">
 					<p>Fav's name <input type="text" name="name" value="<%= name %>"></p>
 					<p>Description <input type="text" name="description" value="<%= description%>">
 					Label <input type="text" name="label" value="<%= label%>"></p>
@@ -186,16 +190,12 @@
 
 		<div id="toggle" class="button"></div>
 		<div id="nav_bar">
-			<h1 class="brand"><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-				ShareYourMap <a href="../home.html">X</a>
-			</h1>
-			<h2 id="userName"></h2>
+			<h1 id="userName" class="brand"></h1>
 			<div class="search">
 				Favs <input class="search_input" type="text" id="searchBar" name="search" value="" placeholder="Search...">
 			</div>
 				
 			<ul id="mapList"></ul>
-				
 			<ul id="favsList"></ul>
 		
 			<div class="button_group">
@@ -216,7 +216,6 @@
 			<div id="viewFav"></div>
 			<div id="shareMap" hidden></div>
 			<div id="viewMap" class="closable"></div>
-			<div id="newFav" onclick="createNewFav(0,0)" class="button" hidden><img src='../resources/fav.png'/></div>
 			<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
 		</div>
 		
