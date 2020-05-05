@@ -56,8 +56,13 @@ html {
   text-align: center;
 }
 
+#mapList {
+  border-bottom: 1px #393977 solid;
+  padding: 3%;
+}
+
 #favsList {
-  border-top: 1px #393977 solid;
+  padding: 3%;
 }
 
 
@@ -76,7 +81,8 @@ html {
 }
 
 .brand {
-  font-size: medium;
+  font-size: x-large;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   display: inline-block;
 }
 
@@ -98,9 +104,9 @@ html {
 .wrapper {
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: 25% 60% 15%;
   gap: 1px 40px;
-  grid-template-areas: "header ." "pictures description" "msgs msgs" "itinerary .";
+  grid-template-areas: "header ." "pictures msgs" "itinerary tags";
   text-align: left;
 }
   
@@ -109,25 +115,20 @@ html {
   grid-template-columns: auto;
   grid-template-rows: auto auto;
   gap: 1px 1px;
-  grid-template-areas: "title" "address";
+  grid-template-areas: "title" "description";
   grid-area: header;
 }
   
-.title { 
-  grid-area: title; 
-  display: inline-block;
-}
-  
-.address { grid-area: address; }
+.title { grid-area: title; }
   
 .pictures { grid-area: pictures; }
   
 .description {
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   gap: 1px 1px;
-  grid-template-areas: "descrip" "duration" "tags";
+  grid-template-areas: "descrip" "duration";
   grid-area: description;
 }
   
@@ -166,7 +167,7 @@ h3 {
 }
 
 .logo {
-  vertical-align: text-top;
+  vertical-align:middle;
 }
 
 @keyframes bounce {
@@ -195,20 +196,23 @@ h3 {
   border-bottom: 1px #393977 solid;
   margin-left: 15px;
   padding: 5px;
-  text-indent: 18px;
   color: rgba(255, 255, 255, 0.705);
+  text-indent: 18px;
 }
 
 li {
-  width: 85%;
+  width: 94%;
   margin: 5px;
   transition-duration: 0.5s;
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: #090935;
   box-shadow: 5px 1px 4px 1px #02021d;
   margin-top: 10px;
   padding: 3px;
-  text-decoration: none;
+}
+
+#favsList li {
+  text-align: left;
 }
 
 ul {
@@ -216,7 +220,7 @@ ul {
 }
 
 .event {
-  background-position-x: left;
+  background-position-x: right;
   background-repeat: no-repeat;
   background-color: #290b41;
   background-image: url("../resources/event.png");
@@ -244,7 +248,7 @@ h2 {
 
 #geoLoc {
   position: fixed;
-  bottom:60px;
+  bottom:5px;
   right:5px;
   z-index: 2;
 }

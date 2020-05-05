@@ -69,6 +69,7 @@ public class MapDAOImpl implements MapDAO {
 		for (User us: UserDAOImpl.u) {
 			if (us.getId() == uid) {
 				Map newMap = new Map(name, us.getName());
+				us.getMaps().add(newMap);
 				MapDAOImpl.m.add(newMap);
 				return true;
 			}
@@ -108,6 +109,7 @@ public class MapDAOImpl implements MapDAO {
 			if (us.getId() == uid) {
 				for (Map ma : m) {
 					if ((ma.getID() == mid)&&(ma.getCreatorName() == us.getName())) {
+						us.getMaps().remove(ma);
 						return m.remove(ma);
 					}
 				}

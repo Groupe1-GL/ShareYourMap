@@ -96,8 +96,9 @@ $(function(){
  */
 function getUser(result){	
 
-	var user_name = _.template("<%=name%> maps");	
+	var user_name = _.template($('#header_user').html());	
 	$("#userName").html(user_name(result));
+	user_name = _.template('<%= name%>\'s maps')
 	$("#pageName").html(user_name(result));
 
 	document.getElementById('mapList').innerHTML = "";
@@ -161,7 +162,7 @@ $("#newMap").click(function (){
 // Send the request to create a map
 function createMap(){
 	var name = document.getElementById("map_name").value;
-	putServerData(`/ws/maps/${name}/users/${current_user_id}`,refresh);
+	putServerData(`/ws/maps/${name}/user/${current_user_id}`,refresh);
 }
 
 /** 
@@ -224,7 +225,7 @@ function copyLink() {
  * @param {int} mid		the id of the map
  */
 function deleteMap(mid){
-	deleteServerData(`/ws/users/${current_user_id}/maps/${mid}`,refresh);
+	deleteServerData(`/ws/maps/${mid}/user/${current_user_id}`,refresh);
 }
 
 /**
@@ -254,9 +255,6 @@ function createNewFav(x,y){
 	document.getElementById("viewFav").style.display = "block";
 	var newFav = _.template($('#newFavTemplate').html());
 	$("#viewFav").html(newFav(details));
-	if (x==0 && y==0) {
-		document.getElementById("address_input").style.display = "block";
-	}
 }
 
 
@@ -316,7 +314,7 @@ $(document).ready(function(){
 
 // Delete a location
 function deleteFav(lid){
-	deleteServerData(`/ws/users/${current_user_id}/maps/${current_map['id']}/location/${lid}`,refresh);
+	deleteServerData(`/ws/location/${lid}/map/${current_map['id']}/user/${current_user_id}`,refresh);
 }
 
 // Refresh 

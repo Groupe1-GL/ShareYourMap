@@ -35,7 +35,7 @@ public class LocationResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/location")
+	@Path("location/map/{map-id}/user/{user-id}")
 	public boolean createLocationOnMap(@PathParam("user-id") int uid,
 									@PathParam("map-id") int mid,
 									@FormParam("name") String name,
@@ -51,20 +51,7 @@ public class LocationResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}/feed")
-	public boolean contributeOnLocation(@PathParam("user-id") int uid,
-										@PathParam("map-id") int mid,
-										@PathParam("location-id") int lid,
-										@FormParam("message") String message) {
-		return locationDAO.contributeOnLocation(uid, mid, lid, message);
-	}
-	
-	
-	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
-	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}")
+	@Path("location/{location-id}/map/{map-id}/user/{user-id}")
 	public boolean editLocation(@PathParam("user-id") int uid,
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
@@ -78,13 +65,27 @@ public class LocationResource {
 	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}")
+	@Path("location/{location-id}/map/{map-id}/user/{user-id}")
 	public boolean deleteLocation(@PathParam("user-id") int uid,
 								  @PathParam("map-id") int mid,
 								  @PathParam("location-id") int lid) {
 		return locationDAO.deleteLocation(uid, mid, lid);
 	}
 
+	
+	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}/feed")
+	public boolean contributeOnLocation(@PathParam("user-id") int uid,
+										@PathParam("map-id") int mid,
+										@PathParam("location-id") int lid,
+										@FormParam("message") String message) {
+		return locationDAO.contributeOnLocation(uid, mid, lid, message);
+	}
+	
+	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -96,32 +97,6 @@ public class LocationResource {
 										@FormDataParam("file") FormDataContentDisposition fileDetail) {
 		return locationDAO.contributeOnLocationImg(uid, mid, lid, uploadedInputStream, fileDetail);
 	}
-	/*
-	@POST
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public boolean uploadPictures(@FormParam("picture") FileInputStream picture) {
-		return true;
-		
-		  public static void AddEmployee(
-  string photoFilePath
-  
-{  
-  byte[] photo = GetPhoto(photoFilePath);  
- 
-  
-public static byte[] GetPhoto(string filePath)  
-{  
-  FileStream stream = new FileStream(  
-      filePath, FileMode.Open, FileAccess.Read);  
-  BinaryReader reader = new BinaryReader(stream);  
-  
-  byte[] photo = reader.ReadBytes((int)stream.Length);  
-  
-  reader.Close();  
-  stream.Close();  
-  
-  return photo;  
-}  
-		 */
+	
 	
 }
