@@ -38,13 +38,13 @@ public class Map{
 	      upperCaseRule, digitRule);
 	}
 	
-	public Map(String name, String creator) {
+	public Map(String name, String creator, boolean b) {
 		this.locations = new ArrayList<Location>();
 		this.id = id_map++;
 		this.creatorName = creator;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
-		this.access = false;
+		this.access = b;
 		this.sharingID = generateSharingID();
 	}
 	
