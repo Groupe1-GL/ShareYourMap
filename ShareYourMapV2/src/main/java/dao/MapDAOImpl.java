@@ -47,7 +47,7 @@ public class MapDAOImpl implements MapDAO {
 	 */
 	public Response getSharedMap(int mid, String sharedID) {
 		for (Map ma : MapDAOImpl.m) {
-			if ((ma.getID() == mid)&&ma.getAccess()&&ma.getSharingID().equals(sharedID)) {
+			if ((ma.getID() == mid)&&ma.getAccess()&&ma.getSharedID().equals(sharedID)) {
 				return Response.status(Response.Status.SEE_OTHER)
 				         .header(HttpHeaders.LOCATION, "/sharemap/sharemap.html?id=" + mid + "&shared-id=" + sharedID)
 				         .header("X-Foo", "bar")
