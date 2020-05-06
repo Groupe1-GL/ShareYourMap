@@ -41,6 +41,7 @@
 						<% if(event==1) {%> 
 							<p>
 								<h3>Duration</h3>
+								From the <b><%=start['dayOfMonth']%>-<%=start['monthValue']%>-<%=start['year']%></b> (<%=start['dayOfWeek']%>) at <b><%=start['hour']%>:<%=start['minute']%></b><br>To the <b><%=end['dayOfMonth']%>-<%=end['monthValue']%>-<%=end['year']%></b> (<%=end['dayOfWeek']%>) at <b><%=end['hour']%>:<%=end['minute']%></b>
 							</p>
 						<%}%>	
 						</div>
@@ -85,9 +86,11 @@
 
 		<div id="toggle" class="button"></div>
 		<div id="nav_bar">
-			<h1 class="brand"><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-				Public maps <a href="../home.html">X</a>
+			<h1 class="brand">
+				<img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
+				Public maps
 			</h1>
+			<a href="../home.html"><img src="../resources/sign.png"/></a>
 			<div class="search">
 				<input class="search_input" type="text" id="searchBar" name="search" placeholder="Search...">
 			</div>

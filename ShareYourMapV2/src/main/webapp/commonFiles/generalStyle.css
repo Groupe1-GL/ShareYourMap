@@ -65,7 +65,6 @@ html {
   padding: 3%;
 }
 
-
 .top_div {
   position: fixed;
   top:10%;
@@ -106,7 +105,7 @@ html {
   grid-template-columns: auto auto;
   grid-template-rows: 25% 60% 15%;
   gap: 1px 40px;
-  grid-template-areas: "header ." "pictures msgs" "itinerary tags";
+  grid-template-areas: "header ." "pictures msgs" "tags itinerary";
   text-align: left;
 }
   
@@ -229,6 +228,10 @@ ul {
 
 .event:hover {
   background-image: url("../resources/event_b.png");
+}
+
+h1 {
+  margin-right: 4%;
 }
 
 h2 {

@@ -2,6 +2,24 @@
   background-color: #e74c4d;
 }
 
+#userName:hover {
+  color: #e74c4d;
+}
+
+.edit {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 5px 5px;
+  grid-template-areas: "name btn" "mdp mdp";
+  text-align: left;
+}
+
+.name { grid-area: name; }
+.btn { grid-area: btn; }
+.mdp { grid-area: mdp; }
+
+
 li:hover{
     background-color: #e74c4d;
     color: black;
@@ -15,3 +33,4 @@ li:hover{
 li:hover .option {
   display: inline;
 }
+
