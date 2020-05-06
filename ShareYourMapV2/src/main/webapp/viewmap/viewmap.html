@@ -41,7 +41,7 @@
 		<script id="listMap" type="text/template">
 			<li id="<%= id %>" class="my_maps">
 				<div id="mapPerso ">
-					<div class="button perso" class="map" onclick="displayMap(<%= id %>)"><%= name %> </div> 
+					<div class="button perso" class="map" onclick="displayMap(<%= id %>)"><%= name %> <% if(access){%> <i>- Public </i><%}%>  </div> 
 					<div class="option" hidden>
 						<div class="button perso" onclick="divEditMap(<%= id %>)"><img src="../resources/edit_b.png" /></div> 
 						<div class="button perso" onclick="shareMap(<%= id %>,'<%= sharedID%>')"><img src="../resources/share_b.png" /></div> 

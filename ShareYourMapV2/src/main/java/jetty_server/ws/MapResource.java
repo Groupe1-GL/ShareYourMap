@@ -44,7 +44,7 @@ public class MapResource {
 	@Path("/maps/{name}/user/{user-id}")
 	public boolean createMap(@PathParam("user-id") int uid,
 						     @PathParam("name") String name){
-		return mapDAO.createMap(uid, name, true);		
+		return mapDAO.createMap(uid, name, false);		
 	}
 	
 	@GET

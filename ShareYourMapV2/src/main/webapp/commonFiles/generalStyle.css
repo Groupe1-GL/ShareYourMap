@@ -199,6 +199,10 @@ h3 {
   text-indent: 18px;
 }
 
+i {
+  color: #393977;
+}
+
 li {
   width: 94%;
   margin: 5px;
