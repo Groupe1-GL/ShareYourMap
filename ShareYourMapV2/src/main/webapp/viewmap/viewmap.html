@@ -13,7 +13,25 @@
 		
 		<script id="header_user" type="text/template">
 			<img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-			<%= name%>'s maps <a href="../home.html">X</a>
+			<%= name%>'s maps 
+		</script>
+
+		<script id="editUserTemplate" type="text/template">
+			<div class="edit top_div">
+				<div class="name">
+					<h1>
+						<%=name%>
+						<div onclick="deleteUser()" class="button"><img src="../resources/trash.png"/></div>
+					</h1>
+					<h3>Change your password <input type="checkbox" id="editUserCheck" onclick="psw()"/> </h3>
+				</div>
+				<div class="button close" onclick="closeElement('viewMap')" >X</div>
+				<div id="editMpd" class="mdp" hidden>
+					<input type="password" name="opsw" placeholder="Old password"/>
+					<input type="password" name="npsw" placeholder="New password"/>
+					<input type="password" name="cpsw" placeholder="Confirm password"/> <button onclick="editUser()">Edit</button>
+				</div>
+			</div>
 		</script>
 
 		<script id="navigate" type="text/template">
@@ -51,23 +69,11 @@
 		<script id="editMapTemplate" type="text/template">
 			<div class="top_div">
 				<h2><%=name%> <div class="button close" onclick="closeElement('viewMap')" >X</div></h2>
-				<form action="/ws/maps/<%=id%>/user/<%=uid%>" method="POST" enctype="application/x-www-form-urlencoded">
-					Map's name <input type="text" name="name" value="<%=name%>">
-					Public map <input type="checkbox" name="access" value="1" checked>
-					<input onclick='histo.go(0)' type="submit" value="Edit">
-				</form>
+				Map's name <input type="text" id="edit_name" value="<%=name%>">
+				Public map <input type="checkbox" id="edit_access" checked>
+				<button onclick="editMap(<%=id%>)">Edit</button>
 			</div>
-		</script>	
-
-
-		<!--<script id="editMapTemplate" type="text/template">
-			<div class="top_div">
-				<h2><%=name%> <div class="button close" onclick="closeElement('viewMap')" >X</div></h2>
-				Map's name <input type="text" name="name" value="<%=name%>">
-				Public map <input type="checkbox" name="access" checked>
-				<input onclick="editMap()" type="submit" value="Edit">
-			</div>
-		</script>-->
+		</script>
 
 
 		<script id="shareMapTemplate" type="text/template">
@@ -94,6 +100,7 @@
 						<% if(event==1) {%> 
 							<p>
 								<h3>Duration</h3>
+								From the <b><%=start['dayOfMonth']%>-<%=start['monthValue']%>-<%=start['year']%></b> (<%=start['dayOfWeek']%>) at <b><%=start['hour']%>:<%=start['minute']%></b><br>To the <b><%=end['dayOfMonth']%>-<%=end['monthValue']%>-<%=end['year']%></b> (<%=end['dayOfWeek']%>) at <b><%=end['hour']%>:<%=end['minute']%></b>
 							</p>
 						<%}%>	
 						</div>
@@ -190,11 +197,11 @@
 
 		<div id="toggle" class="button"></div>
 		<div id="nav_bar">
-			<h1 id="userName" class="brand"></h1>
+			<h1 id="userName" class="brand button"></h1><a href="../home.html"><img src="../resources/sign.png"/></a>
 			<div class="search">
 				Favs <input class="search_input" type="text" id="searchBar" name="search" value="" placeholder="Search...">
 			</div>
-				
+
 			<ul id="mapList"></ul>
 			<ul id="favsList"></ul>
 		
@@ -211,6 +218,7 @@
 		</div>
 		
 		<div id="leaflet">
+			<div id="editUser" hidden></div>
 			<div id="map"></div>
 			<div id="currentMap" hidden></div>
 			<div id="viewFav"></div>
@@ -218,7 +226,7 @@
 			<div id="viewMap" class="closable"></div>
 			<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
 		</div>
-		
+
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>

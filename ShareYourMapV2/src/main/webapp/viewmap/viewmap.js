@@ -50,7 +50,9 @@ function postServerData(url,data,success){
     $.ajax({
     	type: 'POST',
 		dataType: "json",
-		data: data,
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		processData: false,
         url: url
     }).done(success);
 }
@@ -100,10 +102,14 @@ function getUser(result){
 	$("#userName").html(user_name(result));
 	user_name = _.template('<%= name%>\'s maps')
 	$("#pageName").html(user_name(result));
+	
+	var user_edit = _.template($('#editUserTemplate').html());
+	$("#editUser").html(user_edit(result));
 
 	document.getElementById('mapList').innerHTML = "";
 	var id_template = _.template($('#listMap').html());
 	var maps = result['maps'];
+	
 	_.each(maps, function(map) {
 		map_id = id_template(map);
 		$('#mapList').append(map_id);
@@ -118,6 +124,43 @@ function getUser(result){
 }
 
 //---------------------		Actions on click		---------------------	
+
+$("#userName").click(function(){
+	if (document.getElementById("editUser").style.display != "block"){
+		document.getElementById("editUser").style.display = "block";
+	}
+	else{
+		document.getElementById("editUser").style.display = "none";
+	}
+});
+
+/**
+ * Display the element to edit user's password
+ */
+function psw(){
+	var checkBox = document.getElementById("editUserCheck");
+	if(checkBox.checked){
+		document.getElementById("editMpd").style.display = "block";
+	}
+	else{
+		document.getElementById("editMpd").style.display = "none";
+		document.getElementById("start").value = null;
+		document.getElementById("end").value = null;
+	}
+}
+
+
+function editUser(){
+	
+}
+
+
+/**
+ * Delete a user
+ */
+function deleteUser(){
+	deleteServerData(`/ws/users/${current_user_id}`,refresh);
+}
 
 /**
  * Change backgroung color of the current map
@@ -192,10 +235,10 @@ function showEditMap(result){
  * @param {int} mid 
  */
 function editMap(mid){
-	var name = document.getElementById("name").value;
-	var access = document.getElementById("access").checked;
-	var map = {"name":name, "access":access};
-	postServerData(`/ws/users/${current_user_id}/maps/${mid}`,map,refresh);
+	var name = document.getElementById("edit_name").value;
+	var access = document.getElementById("edit_access").checked;
+	var map = {"id":mid, "name":name, "access":access};
+	postServerData(`/ws/maps/user/${current_user_id}`,map,refresh);
 }
 
 
