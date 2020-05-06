@@ -18,7 +18,6 @@ import dao.LocationDAO;
 public class LocationDAOPersistence implements LocationDAO{
 	
 	private PersistenceManagerFactory pmf;
-	private UserDAOPersistence userDAO;
 	private MapDAOPersistence mapDAO;
 	
 	//manque liaisons des maps et users
