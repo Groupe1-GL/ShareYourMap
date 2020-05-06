@@ -109,6 +109,7 @@ function getUser(result){
 	document.getElementById('mapList').innerHTML = "";
 	var id_template = _.template($('#listMap').html());
 	var maps = result['maps'];
+	
 	_.each(maps, function(map) {
 		map_id = id_template(map);
 		$('#mapList').append(map_id);
