@@ -25,6 +25,9 @@ public class MapDAOPersistence implements MapDAO{
         this.userDAO = new UserDAOPersistence(pmf);
     }
  
+    public UserDAOPersistence getUserDAO() {
+    	return this.userDAO;
+    }
     @SuppressWarnings({ "unchecked", "finally" })
     public List<Map> getMaps(){
         PersistenceManager pm = pmf.getPersistenceManager();
