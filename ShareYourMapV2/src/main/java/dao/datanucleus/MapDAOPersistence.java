@@ -75,7 +75,7 @@ public class MapDAOPersistence implements MapDAO{
     }
  
     @SuppressWarnings("finally")
-    public boolean createMap(int uid, String name){
+    public boolean createMap(int uid, String name, boolean access){
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         boolean res = false;
@@ -83,7 +83,7 @@ public class MapDAOPersistence implements MapDAO{
             tx.begin();
             User us = userDAO.getUser(uid);        
             if (us != null) {
-                Map newMap = new Map(name, us.getName(), true);
+                Map newMap = new Map(name, us.getName(), access);
                 pm.makePersistent(newMap);
                
                 List<Map> maps = us.getMaps();
@@ -96,13 +96,12 @@ public class MapDAOPersistence implements MapDAO{
             if (tx.isActive()) {
                 tx.rollback();
                 pm.close();
-                return false;
             }
             pm.close();
-            return true;
+            return res;
         }
     }
-   
+   /*
     @SuppressWarnings("finally")
     public boolean createMap(int uid, int mid, String name, boolean access){
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -110,7 +109,7 @@ public class MapDAOPersistence implements MapDAO{
         try {
             tx.begin();
             User us = userDAO.getUser(uid);
-            if (us != null) {
+            if (!us.equals(null)) {
                 Map newMap = new Map(mid, name, us.getName(), true);
                 pm.makePersistent(newMap);
                
@@ -128,34 +127,36 @@ public class MapDAOPersistence implements MapDAO{
             pm.close();
             return true;
         }
-    }
+    }*/
  
     @SuppressWarnings("finally")
     public boolean editMap(int uid, int mid, String name, boolean access){
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
+        boolean res = false;
         try {
             tx.begin();
             Map m = this.getMap(mid);
             User us = userDAO.getUser(uid);
-            if(m != null) {
-                Query q = pm.newQuery(Map.class);
+            if(!m.equals(null)) {
+                /*Query q = pm.newQuery(Map.class);
                 q.declareParameters("Integer mid");
                 q.setFilter("id == mid");
                 q.deletePersistentAll(mid);
                 us.getMaps().remove(m);
-               
-                createMap(uid, mid, name, access);
+                createMap(uid, mid, name, access);*/
+            	m.setAccess(access);
+            	m.setName(name);
                 tx.commit();   
+                res = true;
             }
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
                 pm.close();
-                return false;
             }
             pm.close();
-            return true;
+            return res;
         }
     }
  
@@ -163,12 +164,12 @@ public class MapDAOPersistence implements MapDAO{
     public boolean deleteMap(int uid, int mid){
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
-        boolean res = true;
+        boolean res = false;
         User us = userDAO.getUser(uid);
         try {
             tx.begin();
             Map m = this.getMap(mid);
-            if(m != null) {
+            if(!m.equals(null)) {
                 Query q = pm.newQuery(Map.class);
                 q.declareParameters("Integer mid");
                 q.setFilter("id == mid");
@@ -177,11 +178,11 @@ public class MapDAOPersistence implements MapDAO{
                 maps.remove(m);
                 userDAO.editUsersMaps(uid, maps);
                 tx.commit();
+                res = true;
             }
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
-                res = false;
             }
             pm.close();
             return res;
@@ -197,7 +198,7 @@ public class MapDAOPersistence implements MapDAO{
             tx.begin();
             Map m = this.getMap(mid);
             User us = userDAO.getUser(uid);
-            if(m != null) {
+            if(!m.equals(null)) {
                 Query q = pm.newQuery(Map.class);
                 q.declareParameters("Integer mid");
                 q.setFilter("id == mid");
@@ -242,11 +243,6 @@ public class MapDAOPersistence implements MapDAO{
         }
         return res;
     }
-
-	public boolean createMap(int uid, String creator, boolean access) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
    
 }
