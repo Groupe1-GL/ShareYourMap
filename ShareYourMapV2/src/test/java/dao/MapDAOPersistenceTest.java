@@ -19,13 +19,13 @@ public class MapDAOPersistenceTest {
 		Assert.assertEquals(0, mapDAO.getMaps().size());							
 		
 		/* -------------------- Create elements ------------------------------- */
-		Assert.assertTrue(mapDAO.createMap(1, "test1"));
+		/*Assert.assertTrue(mapDAO.createMap(1, "test1"));
 		Assert.assertEquals(1, mapDAO.getMaps().size());
 		Assert.assertTrue(mapDAO.createMap(2, "test2"));
 		Assert.assertTrue(mapDAO.createMap(3, "test3"));
 		Assert.assertEquals(3, mapDAO.getMaps().size());
 		Assert.assertNull(mapDAO.getMap(5));
-		
+		*/
 		/* -------------------- Edit elements ------------------------------- */
 		Assert.assertFalse(mapDAO.editMap(0, 5, "new", true));
 		Assert.assertTrue(mapDAO.editMap(0, 2, "new_test2", true));		

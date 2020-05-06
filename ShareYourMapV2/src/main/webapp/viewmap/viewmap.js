@@ -236,7 +236,7 @@ function showEditMap(result){
 function editMap(mid){
 	var name = document.getElementById("edit_name").value;
 	var access = document.getElementById("edit_access").checked;
-	var map = {"id":mid, "name":name, "access":1};
+	var map = {"id":mid, "name":name, "access":access};
 	postServerData(`/ws/maps/user/${current_user_id}`,map,refresh);
 }
 

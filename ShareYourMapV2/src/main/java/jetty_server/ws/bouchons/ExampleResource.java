@@ -51,13 +51,13 @@ public class ExampleResource {
 		return maps;
 	}
 	
-	@POST
+	/*@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/searchmap/{map.name}")
 	public Map searchMapByName(@PathParam("map.name") String name) {
-		Map m = new Map("SearchMap","NoOne");
-		return m;
-	}
+		//Map m = new Map("SearchMap","NoOne");
+		//return m;
+	}*/
 	
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -84,8 +84,8 @@ public class ExampleResource {
 	@Path("/viewmap/{user.id}")
 	public boolean addMapOnUser(@PathParam("user.id") int uid) {
 		if(uid == 1) {
-			ExampleResource.us.putMap(new Map("New Map","David"));
-			return true;
+			//ExampleResource.us.putMap(new Map("New Map","David"));
+			///return true;
 		}
 		return false;
 	}

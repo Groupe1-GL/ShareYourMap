@@ -19,7 +19,7 @@ public class MapContainerTest {
 		// Save a container with 3 Maps
 		{
 			PersistenceManager pm = pmf.getPersistenceManager();
-
+/*
 			Map Map1 = new Map("Map1", "me");
 			Map Map2 = new Map("Map2", "me");
 			Map Map3 = new Map("Map3", "me");
@@ -32,7 +32,7 @@ public class MapContainerTest {
 			container = pm.makePersistent(container);
 			containerId = container.getId();
 			pm.close();
-		}
+*/		}
 
 		// Retrieve this container
 		{
