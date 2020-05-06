@@ -44,14 +44,14 @@ public interface MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public boolean createMap(int uid, String creator);
+	public boolean createMap(int uid, String creator, boolean access);
 	/**
 	 * Edits a map selected by its id.
 	 * If there is not map matching, it will modify nothing.
      *	 
 	 * @return	true if the operation was successful
 	 */
-	public boolean editMap(int uid, int mid, String name, int access);
+	public boolean editMap(int uid, int mid, String name, boolean access);
 	/**
 	 * Deletes the selected map.
 	 * If there is not map matching, it will return a null object.

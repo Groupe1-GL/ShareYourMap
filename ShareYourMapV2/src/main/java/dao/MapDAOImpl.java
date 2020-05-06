@@ -40,14 +40,14 @@ public class MapDAOImpl implements MapDAO {
 	
 	/**
 	 * Returns a map selected by its id and his token.
-	 * If there is not map matching or the access map is on private mode, 
+	 * If there is no map matching or the access map is on private mode, 
 	 * it will return a null object.
      *	 
 	 * @return	the map
 	 */
 	public Response getSharedMap(int mid, String sharedID) {
 		for (Map ma : MapDAOImpl.m) {
-			if ((ma.getID() == mid)&&ma.getAccess()&&ma.getSharingID().equals(sharedID)) {
+			if ((ma.getID() == mid)&&ma.getAccess()&&ma.getSharedID().equals(sharedID)) {
 				return Response.status(Response.Status.SEE_OTHER)
 				         .header(HttpHeaders.LOCATION, "/sharemap/sharemap.html?id=" + mid + "&shared-id=" + sharedID)
 				         .header("X-Foo", "bar")
@@ -65,10 +65,10 @@ public class MapDAOImpl implements MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public boolean createMap(int uid, String name) {
+	public boolean createMap(int uid, String name, boolean b) {
 		for (User us: UserDAOImpl.u) {
 			if (us.getId() == uid) {
-				Map newMap = new Map(name, us.getName());
+				Map newMap = new Map(name, us.getName(), b);
 				us.getMaps().add(newMap);
 				MapDAOImpl.m.add(newMap);
 				return true;
@@ -85,12 +85,12 @@ public class MapDAOImpl implements MapDAO {
 	 */
 	//voir s'il y a une variable globale de session pour vérifier le current user et/ou
 	// mettre un privilège de modification
-	public boolean editMap(int uid, int mid, String name, int access) {
+	public boolean editMap(int uid, int mid, String name, boolean access) {
 		for (User us: UserDAOImpl.u) {
 			if (us.getId() == uid) {
 				for (Map ma : m) {
 					if ((ma.getID() == mid)&&(uid == us.getId())) {
-						return ma.setName(name)&&ma.setAccess(access==1);
+						return ma.setName(name)&&ma.setAccess(access);
 					}
 				}
 			}

@@ -153,6 +153,8 @@ public class UserDAOPersistence implements UserDAO {
 	
 	@SuppressWarnings("finally")
 	public Response editUser(int uid, String opassword, String password, String cpassword) {
+		//gérer l'autorisation avec l'authentification
+		//action possible uniquement si l'uid est égal au uid de l'auth
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		User u = this.getUser(uid);
@@ -202,6 +204,8 @@ public class UserDAOPersistence implements UserDAO {
 
 	@SuppressWarnings("finally")
 	public boolean deleteUser(int uid) {
+		//gérer l'autorisation avec l'authentification
+		//action possible uniquement si l'uid est égal au uid de l'auth
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		boolean res = false;
@@ -214,8 +218,8 @@ public class UserDAOPersistence implements UserDAO {
 				q.setFilter("id == uid");
 				q.deletePersistentAll(uid);
 				res = true;
-				tx.commit();
 			}
+			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
@@ -228,6 +232,8 @@ public class UserDAOPersistence implements UserDAO {
 	
 	@SuppressWarnings("finally")
 	public boolean editUsersMaps(int uid, List<Map> maps) {
+		//gérer l'autorisation avec l'authentification
+		//action possible uniquement si l'uid est égal au uid de l'auth
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		boolean res = false;
@@ -239,7 +245,7 @@ public class UserDAOPersistence implements UserDAO {
 				Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
 				q.setFilter("id == uid");
-				q.deletePersistentAll(uid);
+				q.deletePersistentAll(uid);//supprimer l'elt pour éviter le doublon
 				u.setMaps(maps);
 				pm.makePersistent(u);
 				res = true;

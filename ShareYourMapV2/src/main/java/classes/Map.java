@@ -15,7 +15,7 @@ public class Map{
 	private int id;
 	private String name, creatorName;
 	private boolean access;
-	private String sharingID;
+	private String sharedID;
 	private List<Location> locations;
 	private List<Event> events;
 	private static int id_map = 1;
@@ -38,14 +38,14 @@ public class Map{
 	      upperCaseRule, digitRule);
 	}
 	
-	public Map(String name, String creator) {
+	public Map(String name, String creator, boolean b) {
 		this.locations = new ArrayList<Location>();
 		this.id = id_map++;
 		this.creatorName = creator;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
-		this.access = false;
-		this.sharingID = generateSharingID();
+		this.access = b;
+		this.sharedID = generateSharingID();
 	}
 	
 	public Map(int ID, String name, String creator, boolean b) {
@@ -54,7 +54,7 @@ public class Map{
 		this.locations = new ArrayList<Location>();
 		this.creatorName = creator;
 		this.access = b;
-		this.sharingID = generateSharingID();
+		this.sharedID = generateSharingID();
 	}
 	
 	public static ArrayList<Map> generateMaps(){
@@ -111,8 +111,8 @@ public class Map{
 			return this.access;
 	}
 	
-	public String getSharingID() {
-		return sharingID;
+	public String getSharedID() {
+		return sharedID;
 	}
 
 	public boolean setName(String name) {

@@ -43,8 +43,9 @@ public class MapResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/maps/{name}/user/{user-id}")
 	public boolean createMap(@PathParam("user-id") int uid,
-						     @PathParam("name") String name){
-		return mapDAO.createMap(uid, name);		
+						     @PathParam("name") String name,
+						     @FormParam("access") int a){
+		return mapDAO.createMap(uid, name, a==1);		
 	}
 	
 	@GET
@@ -70,7 +71,7 @@ public class MapResource {
 						   @PathParam("map-id") int mid,
 					       @FormParam("name") String name,
 					       @FormParam("access") int access) {
-		return mapDAO.editMap(uid, mid, name, access);
+		return mapDAO.editMap(uid, mid, name, access==1);
 	}
 	
 

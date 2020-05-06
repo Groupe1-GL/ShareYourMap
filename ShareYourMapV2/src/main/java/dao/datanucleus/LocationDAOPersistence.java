@@ -1,6 +1,7 @@
 package dao.datanucleus;
 
 import java.io.InputStream;
+import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -10,16 +11,21 @@ import javax.jdo.Transaction;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import classes.Location;
+import classes.Map;
+import classes.User;
 import dao.LocationDAO;
 
 public class LocationDAOPersistence implements LocationDAO{
 	
 	private PersistenceManagerFactory pmf;
 	private UserDAOPersistence userDAO;
+	private MapDAOPersistence mapDAO;
+	
 	//manque liaisons des maps et users
 	public LocationDAOPersistence(PersistenceManagerFactory pmf) {
 		this.pmf = pmf;
-		this.userDAO = new UserDAOPersistence(pmf);
+		this.mapDAO = new MapDAOPersistence(pmf);
+		
 	}
 	
 	@SuppressWarnings("finally")
@@ -53,20 +59,26 @@ public class LocationDAOPersistence implements LocationDAO{
 	public boolean createLocationOnMap(int uid, int mid, String name, String descr, String label, double x, double y) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		
+		boolean res = false;
 		try {
 			tx.begin();
-			Location newFav = new Location(name,"",x,y,descr,label);
-			pm.makePersistent(newFav);
+			User u = mapDAO.getUserDAO().getUser(uid);
+			Location loc = new Location(name,u.getName(),x,y,descr,label);
+			Map m = mapDAO.getMap(mid);
+			List<Location> l = m.getLocations();
+			l.add(loc);
+			if (mapDAO.editMapsLocation(uid,mid,l)) {
+				pm.makePersistent(loc);
+				res = true;
+			}			
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
 				pm.close();
-				return false;
 			}
 			pm.close();
-			return true;
+			return res;
 		}
 	}
 

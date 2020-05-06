@@ -27,8 +27,8 @@ public class MapDAOPersistenceTest {
 		Assert.assertNull(mapDAO.getMap(5));
 		
 		/* -------------------- Edit elements ------------------------------- */
-		Assert.assertFalse(mapDAO.editMap(0, 5, "new",1));
-		Assert.assertTrue(mapDAO.editMap(0, 2, "new_test2",1));		
+		Assert.assertFalse(mapDAO.editMap(0, 5, "new", true));
+		Assert.assertTrue(mapDAO.editMap(0, 2, "new_test2", true));		
 		Assert.assertSame("new_test2", mapDAO.getMap(2).getName());
 		
 		/* -------------------- Delete elements ------------------------------- */
