@@ -20,9 +20,9 @@ public class MapContainerTest {
 		{
 			PersistenceManager pm = pmf.getPersistenceManager();
 
-			Map Map1 = new Map("Map1", "me");
-			Map Map2 = new Map("Map2", "me");
-			Map Map3 = new Map("Map3", "me");
+			Map Map1 = new Map("Map1", "me", true);
+			Map Map2 = new Map("Map2", "me", true);
+			Map Map3 = new Map("Map3", "me", true);
 
 			MapContainer container = new MapContainer();
 			container.getMaps().add(Map1);

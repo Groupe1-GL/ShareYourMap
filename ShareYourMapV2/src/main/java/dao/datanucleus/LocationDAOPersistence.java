@@ -82,6 +82,7 @@ public class LocationDAOPersistence implements LocationDAO{
 	}
 
 	public boolean contributeOnLocation(int uid, int mid, int lid, String message) {
+		
 		return false;
 	}
 

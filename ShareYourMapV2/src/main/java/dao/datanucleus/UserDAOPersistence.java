@@ -109,7 +109,7 @@ public class UserDAOPersistence implements UserDAO {
 				.build();	
 		
 		boolean alreadyExist = false;
-		if(!getUser(name).equals(null)) {
+		if(!name.equals(null)&&!getUser(name).equals(null)) {
 			alreadyExist = true;
 		}
 		
