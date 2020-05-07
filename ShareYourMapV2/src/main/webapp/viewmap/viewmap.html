@@ -143,7 +143,7 @@
 			</div>
 		</script>
 
-		<script id="newFavTemplate" type="text/template">
+		<!-- <script id="newFavTemplate" type="text/template">
 			<div class="top_div">
 				<h2>New fav <div class="close button" onclick="closeElement('viewFav')" >X</div></h2>
 				<form action="/ws/location/map/<%= mid %>/user/<%= uid %>?x=<%= x %>&y=<%= y %>" method="POST" enctype="application/x-www-form-urlencoded">
@@ -159,14 +159,12 @@
 					<input onclick='window.location.reload(false)' type="submit" value="Create">
 				</form>
 			</div>
-		</script>
+		</script>-->
 
-		<!--
-			<script id="newFavTemplate" type="text/template">
+		<script id="newFavTemplate" type="text/template">
 			<div class="top_div">
 				<h2>New fav <div class="close button" onclick="closeElement('viewFav')" >X</div></h2>
 				<p>Fav's name <input type="text" id="new_name"></p>
-				<div id="address_input" hidden>Address <input type="text" id="new_address"></div>
 				<p>Description <input type="text" id="new_description">
 				Label <input type="text" id="new_label"></p>
 				Event <input type="checkbox" id="event" onclick="displayEvent()"/>
@@ -174,10 +172,10 @@
 					Start <input id="start" type="datetime-local" id="new_start">
 					End <input id="end" type="datetime-local" id="new_end">
 				</p>
-				<input onclick='newFav()' type="submit" value="Create">
+				<button onclick='newFav(<%=x%>,<%=y%>)'>Create</button>
 			</div>
 		</script>
-		-->
+		
 
 		<script id="editFavTemplate" type="text/template">
 			<div class="top_div">

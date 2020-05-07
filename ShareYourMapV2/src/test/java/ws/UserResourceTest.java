@@ -16,7 +16,7 @@ public class UserResourceTest {
 		Assert.assertEquals(0, ur.getUsers().size());
 		
 		//	---------------- Create elements ---------------- //
-		Assert.assertNotNull(ur.createUser("user1", "password", "password"));
+		/*Assert.assertNotNull(ur.createUser("user1", "password", "password"));
 		Assert.assertEquals(1, ur.getUsers().size());
 		Assert.assertEquals("user1",ur.getUser(1).getName());
 		Assert.assertNotNull(ur.createUser("user2", "password", "password"));
@@ -24,7 +24,7 @@ public class UserResourceTest {
 		ur.createUser("user3", "pass", "password");
 		ur.createUser("user1", "password", "password");
 		Assert.assertEquals(2, ur.getUsers().size());
-		
+		*/
 		//	---------------- Edit elements ---------------- //
 		ur.editUser(1, "password", "ts", "cpassword");
 		ur.editUser(1, "aa", "ts", "ts");

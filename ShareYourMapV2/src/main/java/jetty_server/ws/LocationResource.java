@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import classes.Location;
 import dao.LocationDAO;
 import dao.LocationDAOImpl;
 
@@ -33,16 +34,17 @@ public class LocationResource {
 	
 	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@PUT
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("location/map/{map-id}/user/{user-id}")
 	public boolean createLocationOnMap(@PathParam("user-id") int uid,
 									@PathParam("map-id") int mid,
-									@FormParam("name") String name,
-									@FormParam("description") String descr,
-									@FormParam("label") String label,
-									@QueryParam("x") double x,
-									@QueryParam("y") double y){
+									Location loc){
+		String name = loc.getName();
+		String descr = loc.getDescription();
+		String label = loc.getLabel();
+		double x = loc.getPosition().getX();
+		double y = loc.getPosition().getY();
 		return locationDAO.createLocationOnMap(uid, mid, name, descr, label, x, y);
 	}
 	

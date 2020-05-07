@@ -80,7 +80,9 @@ function putServerData2(url,data,success){
     $.ajax({
     	type: 'PUT',
 		dataType: "json",
-		data: data,
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		processData: false,
         url: url
     }).done(success);
 }
@@ -304,16 +306,19 @@ function createNewFav(x,y){
 /**
  * Send the request to create a new favorite
  */
-function newFav(){
+function newFav(x,y){
 	var name = document.getElementById("new_name").value;
 	var description = document.getElementById("new_description").value;
 	var label = document.getElementById("new_label").value;
-	var start = document.getElementById("new_start").value;
-	var end = document.getElementById("new_end").value;
-	var fav = {"name":name, "description":description, "label":label, "start":start, "end":end};
-	putServerData2(`/ws/users/${current_user_id}/maps/${current_map['id']/location}`,fav,refresh);
+	var checkBox = document.getElementById("event");
+	var fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}};
+	if(checkBox.checked){
+		var start = document.getElementById("new_start").value;
+		var end = document.getElementById("new_end").value;
+		fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
+	}
+	putServerData2(`/ws/location/map/${current_map['id']}/user/${current_user_id}`,fav,refresh);
 }
-
 
 /** 
  * Send the request to get the map in which the fav is

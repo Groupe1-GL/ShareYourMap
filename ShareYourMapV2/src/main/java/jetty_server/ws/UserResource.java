@@ -40,45 +40,28 @@ public class UserResource {
 		return userDAO.getUsers();
 	}
 	
-
 	@PUT
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_HTML)	
-	public Response createUser(
-		@FormParam("username") String name,
-		@FormParam("passwd") String password,
-		@FormParam("cpasswd") String cpassword) {
+	public Response createUser(User u) {
+		String name = u.getName();
+		String password = u.getPassword();
+		String cpassword = u.getPassword();
 		return userDAO.createUser(name, password, cpassword);
 	}
 	
-	/*  This service tunnels the PUT request because the HTML Standard don't support PUT requests on
-	 *	forms.
-	 */
+	
 	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_HTML)	
-	public Response connectUser(
-		@FormParam("username") String name,
-		@FormParam("passwd") String password,
-		@FormParam("cpasswd") String cpassword,
-		@FormParam("_METHOD") String method) {
-		if (method.equals("PUT")&&!cpassword.equals(null)) {
-			return createUser(name, password, cpassword);
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)	
+	public String connectUser(User u) {
+		String name = u.getName();
+		String password = u.getPassword();
+		User us = userDAO.getUser(name);
+		if (us != null && us.getPassword().equals(password)) {
+			return "Welcome back ^^ &/viewmap/viewmap.html?uid="+us.getId();
 		}
-		else {
-			//connexion = redirection
-			User us = userDAO.getUser(name);
-			if (us != null && us.getPassword().equals(password)) {
-				return Response.status(Response.Status.SEE_OTHER)
-				         .header(HttpHeaders.LOCATION, "/viewmap/viewmap.html?uid="+us.getId())
-				         .header("X-Foo", "bar")
-				         .build();
-			}
-			 return Response
-					 	.status(401)
-			            .entity("Username and password do not match")
-			            .build();
-		}
+		 return "Username and password do not match";
 	}
 
 	

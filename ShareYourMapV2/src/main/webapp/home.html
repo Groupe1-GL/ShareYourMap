@@ -26,37 +26,19 @@
 				<div class="form_inputs">
 					<div id="connection">
 						<h2>Connection</h2>
-						<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
-							<input type="hidden" name="_METHOD" value="POST"/> 
-							<input type="text" placeholder="Username" name="username" required>
-							<input type="password"  placeholder="Password" name="passwd" required>
-							<input onclick="user()" type="submit" id="sign_in" value="Sign In"/>
-						</form>
+						<input type="text" placeholder="Username" id="connect_username" required>
+						<input type="password"  placeholder="Password" id="connect_passwd" required>
+						<button id="sign_in">Let's go</button>
 						<button id="new">Sign up</button>
-						<!-- Not form --><!--
-						<input type="text" placeholder="Username" name="username" required>
-						<input type="password"  placeholder="Password" name="passwd" required>
-						<input type="submit" id="sign_in" value="Sign In"/>	
-						<button id="new">Sign up</button>
-					 	-->
+					 	
 					</div>
 					<div id="newUser" hidden>
-						<h2>Sign up</h2>
-						<!-- Form -->
-						<form action="/ws/users" method="POST" enctype="application/x-www-form-urlencoded">
-							<input type="hidden" name="_METHOD" value="PUT"/> 
-							<input type="text" placeholder="Username" name="username" required>
-							<input type="password" placeholder="Password" name="passwd" required>
-							<input type="password" placeholder="Confirm password" name="cpasswd" required>
-							<input type="submit" id="sign_up" value="Join us !">
-						</form>
+						<h2>Sign up</h2>						
+						<input type="text" placeholder="Username" id="new_username" required>
+						<input type="password" placeholder="Password" id="new_passwd" required>
+						<input type="password" placeholder="Confirm password" id="new_cpasswd" required>
+						<button id="sign_up">Join Us !</button>
 						<button id="connect">Already registered</button>
-						
-						<!--<input type="text" placeholder="Username" name="username" required>
-						<input type="password" placeholder="Password" name="passwd" required>
-						<input type="password" placeholder="Confirm password" name="cpasswd" required>
-						<input type="submit" id="sign_up" value="Join us !">
-						<button id="connect">Already registered</button> -->
 					</div>
 				</div>
 			</div>

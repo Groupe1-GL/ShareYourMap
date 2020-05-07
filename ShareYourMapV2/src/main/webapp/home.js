@@ -10,13 +10,15 @@
  * @param {string} 	 url			The url of the request
  * @param {void} success 		The callback function
  */
-function putServerData(url,user,success){
+function putServerData(url,user){
     $.ajax({
     	type: 'PUT',
 		dataType: "json",
-		data: user,
+		contentType: "application/json",
+		data: JSON.stringify(user),
+		processData: false,
         url: url
-    }).done(success);
+    });
 }
 
 /**
@@ -27,11 +29,13 @@ function putServerData(url,user,success){
 function postServerData(url,user,success){
     $.ajax({
     	type: 'POST',
-		dataType: "json",
-		data: user,
+		dataType: "text",
+		contentType: "application/json",
+		data: JSON.stringify(user),
         url: url
     }).done(success);
 }
+
 
 //----------------------	Visual effects	-------------------------
 // Display div for sign up and hide the connection div
@@ -49,23 +53,28 @@ $("#connect").click(function (){
 
 //---------------------		Actions on click		---------------------	
 $("#sign_up").click(function (){
-	username = document.getElementById("username").value;
-	psw = document.getElementById("passwd").value;
-	cpsw = document.getElementById("cpasswd").value;
-	user = {"name":username,"password":psw,"cpassword":cpsw};
-	putServerData(`/ws/users`,user,navig);
+	username = document.getElementById("new_username").value;
+	psw = document.getElementById("new_passwd").value;
+	cpsw = document.getElementById("new_cpasswd").value;
+	user = {"name":username,"password":psw};
+	putServerData(`/ws/users`,user);
 });
 
 
 $("#sign_in").click(function (){
-	username = document.getElementById("username").value;
-	psw = document.getElementById("passwd").value;
+	username = document.getElementById("connect_username").value;
+	psw = document.getElementById("connect_passwd").value;
 	user = {"name":username,"password":psw};
-	postServerData(`/ws/users`,user,navig);
+	postServerData(`/ws/users`,user,connect);
 });
 
-
-function navig(result){
-	window.alert(res);
-	window.location.replace(url);
+function connect(result){
+	var res = result.split('&');
+	if(res.length <= 1){
+		alert(result);
+	}
+	else{
+		alert(res[0]);
+		location.replace(res[1]);
+	}
 }
