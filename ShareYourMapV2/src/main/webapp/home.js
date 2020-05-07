@@ -7,23 +7,24 @@
 //----------------------	Server functions	---------------------
 /**
  * Send the PUT request ot the server
- * @param {string} 	 url			The url of the request
+ * @param {string} 	 url		The url of the request
+ * @param {JSON} user			The user 
  * @param {void} success 		The callback function
  */
-function putServerData(url,user){
+function putServerData(url,user,success){
     $.ajax({
     	type: 'PUT',
-		dataType: "json",
+		dataType: "text",
 		contentType: "application/json",
 		data: JSON.stringify(user),
-		processData: false,
         url: url
-    });
+    }).done(success);
 }
 
 /**
  * Send the POST request ot the server
- * @param {string} 	 url			The url of the request
+ * @param {string} 	 url		The url of the request
+ * @param {JSON} user			The user 
  * @param {void} success 		The callback function
  */
 function postServerData(url,user,success){
@@ -56,8 +57,13 @@ $("#sign_up").click(function (){
 	username = document.getElementById("new_username").value;
 	psw = document.getElementById("new_passwd").value;
 	cpsw = document.getElementById("new_cpasswd").value;
-	user = {"name":username,"password":psw};
-	putServerData(`/ws/users`,user);
+	if(psw!=cpsw){
+		alert("Passwords don't match");
+	}
+	else{
+		user = {"name":username,"password":psw};
+		putServerData(`/ws/users`,user,connect);
+	}
 });
 
 

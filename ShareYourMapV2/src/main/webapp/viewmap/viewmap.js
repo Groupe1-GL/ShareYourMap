@@ -5,6 +5,7 @@
 
 //---------------------		Global variable	---------------------
 var user_favs = [];
+var user_psw;
  
 
 //----------------------	Visual effects	-------------------------
@@ -49,10 +50,9 @@ function deleteServerData(url,success){
 function postServerData(url,data,success){
     $.ajax({
     	type: 'POST',
-		dataType: "json",
+		dataType: "text",
 		contentType: "application/json",
 		data: JSON.stringify(data),
-		processData: false,
         url: url
     }).done(success);
 }
@@ -105,6 +105,8 @@ function getUser(result){
 	user_name = _.template('<%= name%>\'s maps')
 	$("#pageName").html(user_name(result));
 	
+	user_psw = result['password'];
+	
 	var user_edit = _.template($('#editUserTemplate').html());
 	$("#editUser").html(user_edit(result));
 
@@ -153,7 +155,22 @@ function psw(){
 
 
 function editUser(){
-	
+	var opsw = document.getElementById("opsw").value;
+	var npsw = document.getElementById("npsw").value;
+	var cpsw = document.getElementById("cpsw").value;
+	if(opsw != user_psw){
+		alert("Wrong old password");
+	}
+	else if(npsw==""){
+		alert("Password can't be empty")
+	}
+	else if(npsw != cpsw){
+		alert("New passwords don't match");
+	}
+	else{
+		user = {"password":npsw};
+		postServerData(`/ws/users/${current_user_id}`,user,navig);
+	}
 }
 
 
@@ -364,6 +381,12 @@ $(document).ready(function(){
 function deleteFav(lid){
 	deleteServerData(`/ws/location/${lid}/map/${current_map['id']}/user/${current_user_id}`,refresh);
 }
+
+function navig(result){
+	alert(result);
+	location.reload();
+}
+
 
 // Refresh 
 function refresh(result){

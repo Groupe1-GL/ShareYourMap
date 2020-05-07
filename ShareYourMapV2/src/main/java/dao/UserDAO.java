@@ -23,17 +23,15 @@ public interface UserDAO {
 	public List<User> getUsers();
 	/**
 	 * Creates a new user on the database according to the user's information matching the fields' names.
-	 * If the username is already used it don't finalize the processus and returns a BAD_REQUEST HTTP code.
+	 * If the username is already used it don't finalize the processus.
 	 * This service is used on the signup process.
      *	 
 	 * @param username	a public string identifier of the user
 	 * @param passwd	the password
-	 * @param cpasswd	confirmation of the previous password entry
 	 * 
 	 */
-	public Response createUser( 		String name, 
-										String password, 
-										String cpassword);
+	public String createUser( 		String name, 
+										String password);
 	/**
      * Returns the user selected by his id.
 	 *
@@ -58,15 +56,11 @@ public interface UserDAO {
 	 * The username can not be changed.
 	 *
 	 * @param  uid 		the user identifier 
-	 * @param  opasswd 	the user's current password
 	 * @param  passwd	new password
-	 * @param  cpasswd  confirmation of the new password to avoid mistake
 	 * @return	   		the user object
 	 */
-	public Response editUser(   		int uid, 
-										String opassword, 
-										String password, 
-										String cpassword);
+	public String editUser(   		int uid, 
+										String password);
 	/**
      * Deletes the user selected by his id.
 	 * A user can delete himself only.

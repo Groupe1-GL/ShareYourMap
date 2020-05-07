@@ -22,7 +22,7 @@ public class UserDAOPersistence implements UserDAO {
 	}
 	
 	
-	@SuppressWarnings({ "unchecked", "finally" })
+	@SuppressWarnings("unchecked")
 	public List<User> getUsers() {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -100,43 +100,25 @@ public class UserDAOPersistence implements UserDAO {
 	}
 	
 	
-	public Response createUser(String name, String password, String cpassword) {
+	public String createUser(String name, String password) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		Response res = Response
-				.status(424)
-				.entity("Transaction method failed.")
-				.build();	
+		String res = "Transaction method failed.";
 		
 		boolean alreadyExist = false;
-		if(!name.equals(null)&&!getUser(name).equals(null)) {
+		if( name != null && getUser(name) != null) {
 			alreadyExist = true;
 		}
 		
 		try {
 			tx.begin();
 			if (alreadyExist){
-				res = Response
-						.status(422)//voir quel est le meilleur code erreur
-						.entity("This username is already used.")
-						.build();
+				res = "This username is already used.";
 			}
 			else {
-				//Check if the passwords are equals
-				if (password.equals(cpassword)){
-					User newUser = new User(name,password);
-					pm.makePersistent(newUser);
-					res = Response
-							.status(201)
-							.entity("You've been successfully signed up.")
-							.build();
-				}
-				else {
-					res = Response
-							.status(422)
-							.entity("The passwords do not match.")
-							.build();
-				}
+				User newUser = new User(name,password);
+				pm.makePersistent(newUser);
+				res = "You've been successfully signed up.&viewmap/viewmap.html?uid="+newUser.getId();
 			}
 			tx.commit();
 		} finally {
@@ -151,45 +133,27 @@ public class UserDAOPersistence implements UserDAO {
 	}
 
 	
-	@SuppressWarnings("finally")
-	public Response editUser(int uid, String opassword, String password, String cpassword) {
+	public String editUser(int uid, String password) {
 		//gérer l'autorisation avec l'authentification
 		//action possible uniquement si l'uid est égal au uid de l'auth
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		User u = this.getUser(uid);
-		Response res = Response
-								.status(424)
-								.entity("Transaction method failed.")
-								.build();	
+		String res = "Transaction method failed.";
 						
 		try {
 			tx.begin();
-			if (!u.equals(null) && !opassword.equals(null) && !password.equals(null) && !cpassword.equals(null)){
-				if (opassword.equals(u.getPassword()) && password.equals(cpassword)){
-					Query q = pm.newQuery(User.class);
-					q.declareParameters("Integer uid");
-					q.setFilter("id == uid");
-					q.deletePersistentAll(uid);
-					u.setPassword(password);
-					pm.makePersistent(u);
-					res = Response
-							.status(200)
-							.entity("Password successfully updated!")
-							.build();	
-				}
-				else {
-					res = Response
-							.status(422)
-							.entity("The passwords do not match.")
-							.build();
-				}			
+			if (!u.equals(null)){
+				Query q = pm.newQuery(User.class);
+				q.declareParameters("Integer uid");
+				q.setFilter("id == uid");
+				q.deletePersistentAll(uid);
+				u.setPassword(password);
+				pm.makePersistent(u);
+				res = "Password successfully updated!";	
 			}
 			else {
-				res = Response
-							.status(404)
-							.entity("User not found!")
-							.build();	
+				res = "User not found!";			
 			}
 			tx.commit();
 		} finally {

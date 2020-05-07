@@ -42,12 +42,11 @@ public class UserResource {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_HTML)	
-	public Response createUser(User u) {
+	@Produces(MediaType.TEXT_PLAIN)	
+	public String createUser(User u) {
 		String name = u.getName();
 		String password = u.getPassword();
-		String cpassword = u.getPassword();
-		return userDAO.createUser(name, password, cpassword);
+		return userDAO.createUser(name, password);
 	}
 	
 	
@@ -58,10 +57,13 @@ public class UserResource {
 		String name = u.getName();
 		String password = u.getPassword();
 		User us = userDAO.getUser(name);
-		if (us != null && us.getPassword().equals(password)) {
-			return "Welcome back ^^ &/viewmap/viewmap.html?uid="+us.getId();
+		if (us == null) {
+			return "This user doesn't exist";
 		}
-		 return "Username and password do not match";
+		else if(!us.getPassword().equals(password)) {
+			return "Username and password do not match";
+		}
+		 return "Welcome back ^^ &/viewmap/viewmap.html?uid="+us.getId();
 	}
 
 	
@@ -74,15 +76,12 @@ public class UserResource {
 	
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/{user-id}")
-	public Response editUser(
-		@PathParam("user-id") int uid,
-		@FormParam("opasswd") String opassword,
-		@FormParam("passwd") String password,
-		@FormParam("cpasswd") String cpassword) {//voir si on modifie current_position
-		return userDAO.editUser(uid, opassword, password, cpassword);
+	public String editUser(@PathParam("user-id") int uid, User u) {
+		String password = u.getPassword();
+		return userDAO.editUser(uid, password);
 	}
 	
 	

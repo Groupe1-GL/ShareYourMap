@@ -69,32 +69,16 @@ public class UserDAOImpl implements UserDAO {
 	 * @param cpasswd	confirmation of the previous password entry
 	 * @return			a text that describe the response
 	 */
-	public Response createUser( 		String name, 
-										String password, 
-										String cpassword) {
+	public String createUser( 		String name, 
+									String password) {
 		for (User us : u){
 			if (us.getName().equalsIgnoreCase(name)){
-				return Response
-						.status(400)
-						.entity("This username is already used.")
-						.build();
+				return "This username is already used.";
 			}
 		}
-		//Check if the passwords are equals
-		if (password.equals(cpassword)){
-			//Encrypt & Insert into the database
-			u.add(new User(name,password));
-			return Response
-					.status(201)
-					.entity("You've been successfully signed up.")
-					.build();
-		}
-		else {
-			return Response
-					.status(400)
-					.entity("The passwords do not match.")
-					.build();
-		}		
+		User newUser = new User(name,password);
+		u.add(newUser);
+		return "You've been successfully signed up.&viewmap/viewmap.html?uid="+newUser.getId();
 	}
 	
 	/**
@@ -135,33 +119,15 @@ public class UserDAOImpl implements UserDAO {
 	 * @param  cpasswd  confirmation of the new password to avoid mistake
 	 * @return	   		a text that describe the response
 	 */
-	public Response editUser(   		int uid, 
-										String opassword, 
-										String password, 
-										String cpassword) { 
+	public String editUser(   		int uid, 
+									String password) { 
 		for (User us: u) {
 			if (us.getId() == uid) {
-				if (!opassword.equals(null)&&!password.equals(null)&&!cpassword.equals(null)){
-					if (opassword.equals(us.getPassword())&&password.equals(cpassword)){//ADD getPassword
-						us.setPassword(password);//ADD setPassword encryption
-					}
-					else {
-						return Response
-								.status(400)
-								.entity("The passwords do not match.")
-								.build();
-					}
-				}
-				return Response
-						.status(200)
-						.entity("Password successfully updated!")
-						.build();
-			}					
+				us.setPassword(password);
+				return "Password successfully updated!";
+			}				
 		}
-		return Response
-					.status(404)
-					.entity("User not found!")
-					.build();		
+		return "User not found!";
 	}
 	
 	/**
