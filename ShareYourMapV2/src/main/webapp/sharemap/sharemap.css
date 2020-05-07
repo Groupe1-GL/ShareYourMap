@@ -1,6 +1,14 @@
-#newFav {
-  position: fixed;
-  bottom:5px;
-  right:5px;
-  z-index: 2;
+li:hover{
+    background-color: #e74c4d;
+    color: black;
 }
+
+.option {
+  display: none;
+  transition-delay: 0.5s;
+}
+
+li:hover .option {
+  display: inline;
+}
+

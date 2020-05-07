@@ -13,10 +13,10 @@
 	<body>
 
 		<script id="listFavs" type="text/template">
-			<li>
-				<button 
-				<% if(event==1) {%> class="event" <%} else{ %> class="location" <%}%>			
-				onclick="displayFav(<%= id %>)"><%= name %> </button></li>
+			<li <% if(event==1) {%> class="event" <%}%> >
+				<div class="button perso" onclick="deleteFav(<%= id %>)">X</div>
+				<div class="button perso" onclick="displayFav(<%= id %>)"><%= name %> </div>
+			</li>
 		</script>
 
 		<script id="favDetails" type="text/template">
@@ -24,25 +24,21 @@
 				<div class="button close" onclick="closeElement('viewFav')" >X</div>
 				<div class="header">
 					<h2 class="title"> 
-						<%= name %><div class="button perso" onclick="editFav(<%= mid %>,<%= id %>)"><img src="../resources/edit_b.png" /></div> 
+						<%= name %><div class="button perso" onclick="showEditFav(<%= mid %>)"><img src="../resources/edit_b.png" /></div> 
 					</h2>
-					<p class="address"> Address </p>
-				</div>
-				<div class="description">
-					<div class="descrip">
-						<h3>Description</h3>
-						<%= description%>
-					</div>
-					<div class="duration">
-					<% if(event==1) {%> 
-						<p>
-							<h3>Duration</h3>
-						</p>
-					<%}%>	
-					</div>
-					<div classs="tags">
-						<h3>Tags</h3>
-						<%= label%> 
+					<div class="description">
+						<div class="descrip">
+							<h3>Description</h3>
+							<%= description%>
+						</div>
+						<div class="duration">
+						<% if(event==1) {%> 
+							<p>
+								<h3>Duration</h3>
+								From the <b><%=start['dayOfMonth']%>-<%=start['monthValue']%>-<%=start['year']%></b> (<%=start['dayOfWeek']%>) at <b><%=start['hour']%>:<%=start['minute']%></b><br>To the <b><%=end['dayOfMonth']%>-<%=end['monthValue']%>-<%=end['year']%></b> (<%=end['dayOfWeek']%>) at <b><%=end['hour']%>:<%=end['minute']%></b>
+							</p>
+						<%}%>	
+						</div>
 					</div>
 				</div>
 				<div class="pictures">
@@ -61,77 +57,82 @@
 					<ul id="msgs"></ul>
 					<div id="addMsg" class="feed" hidden>
 						<div class="button close" onclick="closeElement('addMsg')" >X</div>
-						<form action="/<%=uid%>/maps/location/<%=id%>/feed" method="POST" enctype="application/x-www-form-urlencoded">
-							<p>Add a message <input type="text" name="message">
-							<input onclick="closeElement('addMsg')" type="submit" value="Add">
-						</form>
+						<p>Add a message <input type="text" id="message">
+						<button onclick="sendMsg()">Send</button>
 					</div>
 				</div>
+				<div classs="tags">
+					<h3>Tags</h3>
+					<%= label%> 
+				</div>
 				<div class="itinerary">
-					<div class="button perso" onclick="howToGo()"><img src="../resources/go_j.png" /></div>
+					<div class="button perso" onclick="howToGo()"><img src="../resources/Go.png" /></div>
 					<div id="meanTransp" class="perso" hidden>
-						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'car')"><img src="../resources/car_j" /></div>
-						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'train')"><img src="../resources/train_j" /></div>
-						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'foot')"><img src="../resources/foot_j" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'car')"><img src="../resources/car_r.png" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'train')"><img src="../resources/train_r.png" /></div>
+						<div  class="button perso" onclick="goTo(<%= position['x']%>,<%= position['y']%>,'foot')"><img src="../resources/foot_r.png" /></div>
 					</div>
 				</div>
 			</div>
 		</script>
-		
+
 		<script id="newFavTemplate" type="text/template">
 			<div class="top_div">
 				<h2>New fav <div class="close button" onclick="closeElement('viewFav')" >X</div></h2>
-				<form action="/ws/users/<%= uid %>/maps/<%= mid %>/location?x=<%= x %>&y=<%= y %>" method="POST" enctype="application/x-www-form-urlencoded">
-					<p>Fav's name <input type="text" name="name"></p>
-					<div id="address_input" hidden>Address <input type="text" name="address"></div>
-					<p>Description <input type="text" name="description">
-					Label <input type="text" name="label"></p>
-					<p id="eventElem" hidden>
-						Start <input id="start" type="datetime-local" name="start">
-						End <input id="end" type="datetime-local" name="end">
-					</p>
-					<input onclick='window.location.reload(false)' type="submit" value="Create">
-				</form>
+				<p>Fav's name <input type="text" id="new_name"></p>
+				<p>Description <input type="text" id="new_description">
+				Label <input type="text" id="new_label"></p>
+				Event <input type="checkbox" id="event" onclick="displayEvent()"/>
+				<p id="eventElem" hidden>
+					Start <input id="start" type="datetime-local" id="new_start">
+					End <input id="end" type="datetime-local" id="new_end">
+				</p>
+				<button onclick='newFav(<%=x%>,<%=y%>)'>Create</button>
 			</div>
 		</script>
+		
 
 		<script id="editFavTemplate" type="text/template">
 			<div class="top_div">
 				<h2>Edit fav <div class="close button" onclick="closeElement('viewFav')" >X</div></h2>
-				<form action="/ws/users/<%= uid %>/maps/<%= mid %>/location/<%= id %>" method="POST" enctype="application/x-www-form-urlencoded">
-					<p>Fav's name <input type="text" name="name" value="<%= name %>"></p>
-					<p>Description <input type="text" name="description" value="<%= description%>">
-					Label <input type="text" name="label" value="<%= label%>"></p>
-					<% if(event==1){ %>
-						<p>Start <input type="datetime-local" name="start" value="<%= start%>">
-						End <input type="datetime-local" name="end" value="<%= end%>"></p>
-					<% } %>
-					<input onclick='window.location.reload(false)' type="submit" value="Edit">
-				</form>
+				<p>Fav's name <input type="text" id="edit_name" value="<%= name %>"></p>
+				<p>Description <input type="text" id="edit_description" value="<%= description%>">
+				Label <input type="text" id="edit_label" value="<%= label%>"></p>
+				<% if(event==1){ %>
+					<p>Start <input type="datetime-local" id="edit_start" value="<%= start%>">
+					End <input type="datetime-local" id="edit_end" value="<%= end%>"></p>
+				<% } %>
+				<button onclick='editFav(<%=id%>,<%event==1%>)'>Edit</button>
 			</div>
 		</script>
 
 		<div id="toggle" class="button"></div>
 		<div id="nav_bar">
-			<h1 class="brand"><img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
-				ShareYourMap <a href="../home.html">X</a>
+			<h1 class="brand">
+				<img class="logo" src="../resources/heart_localisation.png" height="40px" width="40px"/>
+				Shared map <img onclick="bye()" class="button" src="../resources/sign.png"/>
 			</h1>
-			<h2>Shared maps</h2>
-	
+
 			<ul id="favsList"></ul>
+		
+			<div class="button_group">
+				<div class="button" onclick="howToGoFull()"><img src="../resources/buttonTravel_r.png" /></div>
+				<div id="meanTranspFull">
+					<div  class="button perso" onclick="goTo(null,null,'car')"><img src="../resources/car_r.png" /></div>
+					<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_r.png" /></div>
+					<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_r.png" /></div>
+				</div>
+			</div>
 		</div>
-				
-		<div id="currentMap" hidden></div>
-		<div id="viewFav"></div>
-		<div class="button" onclick="howToGoFull()"><img src="../resources/buttonTravel_j.png" /></div>
-		<div id="meanTranspFull" hidden>
-			<div  class="button perso" onclick="goTo(null,null,'car')"><img src="../resources/car_j" /></div>
-			<div  class="button perso" onclick="goTo(null,null,'train')"><img src="../resources/train_j" /></div>
-			<div  class="button perso" onclick="goTo(null,null,'foot')"><img src="../resources/foot_j" /></div>
+		
+		<div id="leaflet">
+			<div id="map"></div>
+			<div id="currentMap" hidden></div>
+			<div id="viewFav"></div>
+			<div id="shareMap" hidden></div>
+			<div id="viewMap" class="closable"></div>
+			<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_r.png'/></div>
 		</div>
-		<div id="map"></div>
-		<div id="newFav" onclick="createNewFav(0,0)" class="button"><img src='../resources/fav.png'/></div>
-		<div id="geoLoc" class="button" onclick="centerMe()"><img src='../resources/geo_j.png'/></div>
 
 		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>

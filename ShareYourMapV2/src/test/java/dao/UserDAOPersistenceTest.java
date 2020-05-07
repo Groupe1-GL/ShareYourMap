@@ -19,7 +19,7 @@ public class UserDAOPersistenceTest {
 		Assert.assertEquals(0, userDAO.getUsers().size());													
 		
 //		/* -------------------- Create elements ------------------------------- */
-		Assert.assertEquals(200,userDAO.createUser("user1","psw","psw").getStatus());
+//		Assert.assertEquals(200,userDAO.createUser("user1","psw","psw").getStatus());
 //		Assert.assertEquals(1, userDAO.getUsers().size());
 //		
 //		Assert.assertSame("user1",userDAO.getUser(1).getName());

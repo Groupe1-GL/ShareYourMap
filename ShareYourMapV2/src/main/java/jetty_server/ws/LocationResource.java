@@ -51,16 +51,22 @@ public class LocationResource {
 	
 	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	@Path("location/{location-id}/map/{map-id}/user/{user-id}")
-	public boolean editLocation(@PathParam("user-id") int uid,
+	public String editLocation(@PathParam("user-id") int uid,
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
-										@FormParam("message") String name,
-										@FormParam("description") String descr,
-										@FormParam("label") String label) {
-		return locationDAO.editLocation(uid, mid, lid, name, descr, label);
+										Location loc) {
+		String name = loc.getName();
+		String descr = loc.getDescription();
+		String label = loc.getLabel();
+		if(locationDAO.editLocation(uid, mid, lid, name, descr, label)) {
+			return "Successful edition";
+		}
+		else {
+			return "Transaction BDD error";
+		}
 	}
 	
 	
@@ -77,16 +83,14 @@ public class LocationResource {
 	
 	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}/feed")
+	@Path("feed/{msg}/location/{location-id}/map/{map-id}/user/{user-id}")
 	public boolean contributeOnLocation(@PathParam("user-id") int uid,
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
-										@FormParam("message") String message) {
+										@PathParam("msg") String message) {
 		return locationDAO.contributeOnLocation(uid, mid, lid, message);
 	}
-	
 	
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)

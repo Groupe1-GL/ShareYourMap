@@ -178,7 +178,7 @@ function editUser(){
  * Delete a user
  */
 function deleteUser(){
-	deleteServerData(`/ws/users/${current_user_id}`,refresh);
+	deleteServerData(`/ws/users/${current_user_id}`,bye);
 }
 
 /**
@@ -337,29 +337,35 @@ function newFav(x,y){
 	putServerData2(`/ws/location/map/${current_map['id']}/user/${current_user_id}`,fav,refresh);
 }
 
-/** 
- * Send the request to get the map in which the fav is
- * @param {int} mid		the id of the current map
- */
-function editFav(mid){
-	getServerData(`/ws/maps/${mid}`,showEditFav);
-}
 
 /**
  * Display the element in which a user can edit a fav
  * @param {Map} result		The map to edit
  */
-function showEditFav(result){
+function showEditFav(){
 	var uid = {"uid":current_user_id};
-	var mid = {"mid":result['id']};
+	var mid = {"mid":current_map['id']};
 
-	_.each(result['locations'], function(location) {
+	_.each(current_map['locations'], function(location) {
 		if(location['id']==current_fav['id']){
 			var editDetails = $.extend(uid,mid,location);
 			var editFav = _.template($('#editFavTemplate').html());
 			$("#viewFav").html(editFav(editDetails));
 		}
 	});	
+}
+
+function editFav(id,event){
+	var name = document.getElementById("edit_name").value;
+	var description = document.getElementById("edit_description").value;
+	var label = document.getElementById("edit_label").value;	
+	var fav = {"name":name, "description":description, "label":label};
+	if(event){
+		var start = document.getElementById("new_start").value;
+		var end = document.getElementById("new_end").value;
+		fav = {"name":name, "description":description, "label":label, "start":start, "end":end};
+	}
+	postServerData(`/ws/location/${id}/map/${current_map['id']}/user/${current_user_id}`,fav,navig)
 }
 
 

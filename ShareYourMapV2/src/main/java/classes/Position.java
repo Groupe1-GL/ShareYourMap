@@ -1,12 +1,14 @@
 package classes;
 
+import javax.jdo.annotations.PersistenceCapable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-
+@PersistenceCapable
 public class Position {
 	private double x;
 	private double y;
 	
-	public Position(double x, double y) {
+	public Position(@JsonProperty("x") double x, @JsonProperty("y") double y) {
 		this.x = x;
 		this.y = y;
 	}

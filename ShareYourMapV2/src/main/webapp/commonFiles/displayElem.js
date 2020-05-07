@@ -44,6 +44,20 @@ function getServerData(url, success){
     }).done(success);
 }
 
+/**
+ * Send the PUT request ot the server
+ * @param {string} 	 url			The url of the request
+ * @param {void} success 		The callback function
+ */
+function postServerData2(url,success){
+    $.ajax({
+    	type: 'POST',
+		dataType: "json",
+        url: url
+    }).done(success);
+}
+
+
 //---------------------		Automatic actions		---------------------		
 
 // Init user id
@@ -53,7 +67,6 @@ if(urlParams.has('uid')){
 }
 
 // Initialize the initial map display in the page (center on the EIDD)
-
 map.setView([48.8266496,2.3826648], 20);
 var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 map.addLayer(osmLayer);
@@ -96,7 +109,7 @@ function findCenter(list_locations){
 	var y_max = -90;
 	const list_length = list_locations.length;
 	if(list_length == 1){
-		centerMapView(list_locations[0]['position']['x'],list_locations[0]['position']['x'],20);
+		centerMapView(list_locations[0]['position']['x'],list_locations[0]['position']['y'],20);
 		return;
 	}
 	_.each(list_locations, function(location) {
@@ -213,7 +226,7 @@ function displayFav(id){
 			$("#viewFav").html(detail);
 
 			$("#msgs").html("");
-			var msgs_template = _.template("<li><%=txt></li>");
+			var msgs_template = _.template("<li>\"<%=txt>\"</li>");
 			_.each(location['message'], function(msg) {
 				$("#msgs").append(msgs_template({"txt":msg}));
 			});
@@ -241,6 +254,11 @@ function addPix(){
  */
 function addMsg(){
 	document.getElementById("addMsg").style.display = "block";
+}
+
+function sendMsg(id){
+	var msg = document.getElementById("message").value;
+	postServerData2(`ws/feed/${msg}/location/${id}/map/${current_map['id']}/user/${current_user_id}`,refresh);
 }
 
 /**
@@ -305,6 +323,20 @@ function closeElement(id){
 	document.getElementById(id).style.display = "none";
 }
 
+
+//Refresh 
+function refresh(result){
+	history.go(0);
+}
+
+/**
+ * Good bye element
+ * @returns
+ */
+function bye(){
+	alert("Good bye ^^");
+	location.replace("../home.html");
+}
 
 //----------------------	Visual effects	-------------------------
 $("#toggle").click(showNav);

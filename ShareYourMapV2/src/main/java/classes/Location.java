@@ -12,7 +12,7 @@ public class Location{
 	private int id;
 	private String name, creatorName, description;
 	private List<String> messages;
-	private Position pos;
+	private Position position;
 	private String label;
 	private static int loc_id = 1;
 	private List<String> pictures;
@@ -28,7 +28,7 @@ public class Location{
 		this.id = loc_id++;
 		this.creatorName = creatorName;
 		this.name = name;
-		this.pos = new Position(x,y);
+		this.position = new Position(x,y);
 		this.description = descr;
 		this.label = label;
 		this.messages = new ArrayList<String>();
@@ -39,7 +39,7 @@ public class Location{
 		this.id = ID;
 		this.creatorName = creatorName;
 		this.name = name;
-		this.pos = new Position(x,y);
+		this.position = new Position(x,y);
 		this.description = descr;
 		this.label = label;
 		this.messages = new ArrayList<String>();
@@ -58,7 +58,8 @@ public class Location{
 	
 	public static ArrayList<Location> generateLocations2(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Mcdo = new Location(3,"Mcdo","David",48.826792697264764,2.378913867792432,"Filet O fish"," ");
+		Location Mcdo = new Location(3,"Mcdo","David",48.826792697264764,2.378913867792432,"Filet O fish only but tasty","FastFood");
+		Mcdo.addMessage("Close to college, with friendly waitresses");
 		Location KFC = new Location(4,"KFC","David",48.828830387756604, 2.3552615002566095,"Poulet"," ");
 		Location Quick = new Location(5,"Quick","David",48.87568498530489, 2.326958388281866,"Bof"," ");
 		LocalDateTime s = LocalDateTime.now();
@@ -80,7 +81,7 @@ public class Location{
 	}
 	
 	public Position getPosition() {
-		return this.pos;
+		return this.position;
 	}
 	
 	public String getLabel() {
