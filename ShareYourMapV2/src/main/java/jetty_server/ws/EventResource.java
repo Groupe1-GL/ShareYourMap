@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import classes.Event;
+import classes.Location;
 import dao.EventDAO;
 import dao.EventDAOImpl;
 
@@ -32,23 +33,20 @@ public class EventResource {
 	EventDAO eventDAO = new EventDAOImpl();
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/location-v2")
+	@Path("event/map/{map-id}/user/{user-id}")
 	public boolean createLocationOnMap(@PathParam("user-id") int uid,
 									@PathParam("map-id") int mid,
-									@FormParam("name") String name,
-									@FormParam("description") String descr,
-									@FormParam("label") String label,
-									@QueryParam("x") double x,
-									@QueryParam("y") double y,
-									@FormParam("startDate") String start,
-									@FormParam("endDate") String end){		
-		if (start.equals(null)||end.equals(null))
-			return LocationResource.locationDAO.createLocationOnMap(uid, mid, name, descr, label, x, y);
-		else	
-			return eventDAO.createEventOnMap(uid, mid, name, descr, label, x, y, LocalDateTime.parse(start, DateTimeFormatter.ISO_DATE_TIME)
-																		       , LocalDateTime.parse(end, DateTimeFormatter.ISO_DATE_TIME) );
+									Event loc){
+		String name = loc.getName();
+		String descr = loc.getDescription();
+		String label = loc.getLabel();
+		double x = loc.getPosition().getX();
+		double y = loc.getPosition().getY();
+		LocalDateTime start = loc.getStart();
+		LocalDateTime end = loc.getEnd();
+		return eventDAO.createEventOnMap(uid, mid, name, descr, label, x, y, start, end);
 	}
 	
 	@GET

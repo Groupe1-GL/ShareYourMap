@@ -43,6 +43,7 @@ public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 					if (ma.getID() == mid) {
 						Event newEvent = new Event(name, us.getName(), x, y, descr, label, start, end);
 						EventDAOImpl.e.add(newEvent);
+						ma.getLocations().add(newEvent);
 						ma.getEvents().add(newEvent);
 						return true;
 					}

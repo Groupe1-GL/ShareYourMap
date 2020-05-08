@@ -12,11 +12,10 @@ html {
   z-index: 2;
   height: 100%;
   width: 25%;
-  background-color: #181847;
+  background-color: white;
   overflow: auto;
   transform : translateX(0px);
   transition-duration: 1s;
-  color: white;
   text-align: center;
   line-height: 170%;
 }
@@ -29,7 +28,7 @@ html {
   height: 35px;
   width: 35px;
   border-radius: 0 5px 5px 0;
-  background-color: #181847;
+  background-color: white;
   background-position: center;
   background-image: url("../resources/croix.png");
   background-repeat: no-repeat;
@@ -88,7 +87,6 @@ html {
 .search {
   width: 88%;
   margin-left: 5px;
-  background-color: #181847;
 }
 
 
@@ -103,9 +101,9 @@ html {
 .wrapper {
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: 25% 60% 15%;
+  grid-template-rows: auto auto auto auto;
   gap: 1px 40px;
-  grid-template-areas: "header ." "pictures msgs" "tags itinerary";
+  grid-template-areas: "header ." "pictures msgs" ". tags" ". itinerary";
   text-align: left;
 }
   
@@ -136,7 +134,7 @@ html {
 .duration { grid-area: duration; }
   
 .tags { grid-area: tags; }
-  
+
 .msgs { grid-area: msgs; }
  
 .itinerary { grid-area: itinerary; }
@@ -152,11 +150,10 @@ h3 {
   z-index: 3;
   width: 35%;
   height: 50%;
-  background-color: #181847;
+  background-color: #393977;
   padding: 15px;
   padding-right: 35px;
   padding-left: 35px;
-  color: white;
 }
 
 /* ------------------------------  Elements design ------------------------------ */
@@ -187,20 +184,19 @@ h3 {
 
 .search_input {
   background-position: 2.5px;
-  background-color: #181847;
-  background-image: url("../resources/search.png");
+  background-image: url("../resources/search_b.png");
   background-repeat: no-repeat;
   outline: 0;
   border: none;
   border-bottom: 1px #393977 solid;
   margin-left: 15px;
   padding: 5px;
-  color: rgba(255, 255, 255, 0.705);
+  color: rgba(0, 0, 0, 0.705);
   text-indent: 18px;
 }
 
 i {
-  color: #393977;
+  color: #2f2f7e;
 }
 
 li {
@@ -208,25 +204,24 @@ li {
   margin: 5px;
   transition-duration: 0.5s;
   border-radius: 15px;
-  background-color: #090935;
-  box-shadow: 5px 1px 4px 1px #02021d;
   margin-top: 10px;
   padding: 3px;
 }
 
 #favsList li {
   text-align: left;
+  border: 1px #c4c4c4 solid;
 }
 
 ul {
   list-style: none;
 }
 
-.event {
+#favsList .event {
   background-position-x: right;
   background-repeat: no-repeat;
-  background-color: #290b41;
-  background-image: url("../resources/event.png");
+  border:1px #974ad6 solid;
+  background-image: url("../resources/event_b.png");
   transition-duration: 0.5s;
 }
 

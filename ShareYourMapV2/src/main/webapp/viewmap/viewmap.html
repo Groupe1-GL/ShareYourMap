@@ -108,7 +108,7 @@
 				</div>
 				<div class="pictures">
 					<h3>Pictures <div class="button" onclick="addPix()">+</div></h3>
-					<ul id="pics"></ul>
+					<div id="pics"></div>
 					<div id="addPix" class="feed" hidden>
 						<div class="button close" onclick="closeElement('addPix')" >X</div>
 						<form action="/<%=uid%>/maps/location/<%=id%>/feed-img" method="POST" enctype="application/x-www-form-urlencoded">
@@ -117,16 +117,16 @@
 						</form>
 					</div>
 				</div>
-				<div classs="msg">
+				<div class="msg">
 					<h3>Messages <div class="button" onclick="addMsg()">+</div></h3>
-					<ul id="msgs"></ul>
+					<div id="msgs"></div>
 					<div id="addMsg" class="feed" hidden>
 						<div class="button close" onclick="closeElement('addMsg')" >X</div>
 						<p>Add a message <input type="text" id="message">
 						<button onclick="sendMsg(<%=id%>)">Send</button>
 					</div>
 				</div>
-				<div classs="tags">
+				<div class="tags">
 					<h3>Tags</h3>
 					<%= label%> 
 				</div>
@@ -149,8 +149,8 @@
 				Label <input type="text" id="new_label"></p>
 				Event <input type="checkbox" id="event" onclick="displayEvent()"/>
 				<p id="eventElem" hidden>
-					Start <input id="start" type="datetime-local" id="new_start">
-					End <input id="end" type="datetime-local" id="new_end">
+					Start <input type="datetime-local" id="new_start" placeholder="YYYY-MM-DD HH:MM:SS" value="00-00-00-00-00-00";>
+					End <input type="datetime-local" id="new_end" placeholder="YYYY-MM-DD HH:MM:SS" value="00-00-00-00-00-00";>
 				</p>
 				<button onclick='newFav(<%=x%>,<%=y%>)'>Create</button>
 			</div>

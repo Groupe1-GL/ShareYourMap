@@ -40,7 +40,7 @@ public class JettyMain {
 		rc.register(JacksonFeature.class);
 		rc.register(LoggingFilter.class);
 		rc.register(MultiPartFeature.class); //add MultiPart compatibility
-       // rc.register(AuthenticationFilter.class);
+        //rc.register(AuthenticationFilter.class);
 
 		// Add a servlet handler for web services (/ws/*)
 		ServletHolder servletHolder = new ServletHolder(new ServletContainer(rc));

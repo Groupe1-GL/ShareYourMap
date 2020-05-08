@@ -62,16 +62,19 @@ public class Location{
 		Mcdo.addMessage("Close to college, with friendly waitresses");
 		Location KFC = new Location(4,"KFC","David",48.828830387756604, 2.3552615002566095,"Poulet"," ");
 		Location Quick = new Location(5,"Quick","David",48.87568498530489, 2.326958388281866,"Bof"," ");
-		LocalDateTime s = LocalDateTime.now();
-		LocalDateTime e = LocalDateTime.now().plusDays(2);
-		Event Cafe = new Event(6,"Honorine","David",48.826510168645356, 2.3809641010924447,"Chocolat","Breakfast", s,e);
+		LocalDateTime s = LocalDateTime.of(2020,1,15,10,00);
+		LocalDateTime e = LocalDateTime.of(2020,1,15,10,45);
+		Event Cafe = new Event(6,"Honorine","David",48.826510168645356, 2.3809641010924447,"Raspberry Cheesecake","Birthday party",s,e);
+		Cafe.addMessage("Don't forget candles");
+		Cafe.addMessage("Enjoy your time ^^");
+		Cafe.addMessage("Happy birthday");
 		locations.add(Mcdo);
 		locations.add(KFC);
 		locations.add(Quick);
 		locations.add(Cafe);
 		return locations;
 	}
-
+	
 	public int getID() {
 		return this.id;
 	}

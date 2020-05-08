@@ -2,8 +2,11 @@
   background-color:  #F7DD48;
 }
 
+#mapList li{
+  border: 1px solid #F7DD48;
+}
+
 li:hover{
-  color: black;
   background-color:  #F7DD48;
 }
 

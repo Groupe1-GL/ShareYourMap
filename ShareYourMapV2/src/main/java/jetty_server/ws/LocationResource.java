@@ -14,11 +14,15 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import classes.Event;
 import classes.Location;
+import dao.EventDAO;
+import dao.EventDAOImpl;
 import dao.LocationDAO;
 import dao.LocationDAOImpl;
 
 import java.io.InputStream;
+import java.time.LocalDateTime;
 
 /**
  * LocationResource is the class of the locations resource used in the ShareYourMap website.
@@ -30,7 +34,7 @@ import java.io.InputStream;
 @Path("/")
 public class LocationResource {
 	
-	static LocationDAO locationDAO = new LocationDAOImpl(); //static because used on EventResource
+	static LocationDAO locationDAO = new LocationDAOImpl();
 	
 	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@PUT
@@ -95,7 +99,7 @@ public class LocationResource {
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/location/{location-id}/feed-img")
+	@Path("feed-img/{msg}/location/{location-id}/map/{map-id}/user/{user-id}")
 	public boolean contributeOnLocationImg(@PathParam("user-id") int uid,
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,

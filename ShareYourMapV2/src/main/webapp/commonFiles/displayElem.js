@@ -144,7 +144,6 @@ function centerMe(){
 	centerMapView(current_loc_x,current_loc_y,20);
 }
 
-
 /**
  * Send the request to have the map with a certain id
  * @param {string} id		The id of the wanted map
@@ -226,13 +225,13 @@ function displayFav(id){
 			$("#viewFav").html(detail);
 
 			$("#msgs").html("");
-			var msgs_template = _.template("<li>\"<%=txt>\"</li>");
-			_.each(location['message'], function(msg) {
+			var msgs_template = _.template("\"<%=txt%>\"<br>");
+			_.each(location['messages'], function(msg) {
 				$("#msgs").append(msgs_template({"txt":msg}));
 			});
 
 			$("#pics").html("");
-			var pics_template = _.template("<li><%=pix></li>");
+			var pics_template = _.template("<%=pix><br>");
 			_.each(location['pictures'], function(pix) {
 				$("#pics").append(pics_template({"pix":pix}));
 			});
@@ -258,7 +257,7 @@ function addMsg(){
 
 function sendMsg(id){
 	var msg = document.getElementById("message").value;
-	postServerData2(`ws/feed/${msg}/location/${id}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+	postServerData2(`/ws/feed/${msg}/location/${id}/map/${current_map['id']}/user/${current_user_id}`,refresh);
 }
 
 /**

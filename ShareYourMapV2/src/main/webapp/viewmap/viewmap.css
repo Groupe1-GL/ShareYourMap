@@ -2,6 +2,10 @@
   background-color: #e74c4d;
 }
 
+#mapList li{
+  border: 1px solid #e74c4d77;
+}
+
 #userName:hover {
   color: #e74c4d;
 }
@@ -22,7 +26,6 @@
 
 li:hover{
     background-color: #e74c4d;
-    color: black;
 }
 
 .option {

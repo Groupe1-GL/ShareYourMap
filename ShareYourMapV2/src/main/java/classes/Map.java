@@ -44,6 +44,7 @@ public class Map{
 		this.creatorName = creator;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
+		this.events = new ArrayList<Event>();
 		this.access = b;
 		this.sharedID = generateSharingID();
 	}
@@ -52,6 +53,7 @@ public class Map{
 		this.id = ID;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
+		this.events = new ArrayList<Event>();
 		this.creatorName = creator;
 		this.access = b;
 		this.sharedID = generateSharingID();
@@ -59,9 +61,9 @@ public class Map{
 	
 	public static ArrayList<Map> generateMaps(){
 		ArrayList <Map> maps = new ArrayList<Map>();
-		Map m1 = new Map(1,"Magasin","David",true);
+		Map m1 = new Map(1,"Magasin","Emrick",true);
 		m1.setLocation(Location.generateLocations());
-		Map m2 = new Map(2,"Fast Food","David",false);
+		Map m2 = new Map(2,"Fast Food","Emrick",false);
 		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);
@@ -70,9 +72,9 @@ public class Map{
 	
 	public static ArrayList<Map> generateMaps2(){
 		ArrayList <Map> maps = new ArrayList<Map>();
-		Map m1 = new Map(3,"Shop","Emrick",false);
+		Map m1 = new Map(3,"Shop","David",false);
 		m1.setLocation(Location.generateLocations());
-		Map m2 = new Map(4,"Manger","Emrick",true);
+		Map m2 = new Map(4,"Let's eat","David",true);
 		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);

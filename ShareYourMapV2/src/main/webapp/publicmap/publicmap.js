@@ -49,16 +49,15 @@ function editMapColor(id){
 	var maps = document.getElementById('mapList').getElementsByClassName('public_maps');
 
 	_.each(maps, function(map) {
-		map.style.backgroundColor = "#090935";
-		map.style.color = "white";
+		map.style.backgroundColor = "white";
 		map.onmouseover = function(){
 			if (this != c_map) {
-				this.style.backgroundColor ="#F7DD48";  this.style.color = "black";
+				this.style.backgroundColor ="#F7DD48";
 			}
 		};
         map.onmouseout = function(){
 			if (this != c_map) {
-				this.style.backgroundColor ="#090935";  this.style.color = "white";
+				this.style.backgroundColor ="white";
 			}
 		};;
 	});

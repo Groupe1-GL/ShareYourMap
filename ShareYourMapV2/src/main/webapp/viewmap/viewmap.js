@@ -190,22 +190,19 @@ function editMapColor(id){
 	var maps = document.getElementById('mapList').getElementsByClassName('my_maps');
 
 	_.each(maps, function(map) {
-		map.style.backgroundColor = "#090935";
-		map.style.color = "white";
+		map.style.backgroundColor = "white";
 		map.onmouseover = function(){
 			if (this != c_map) {
-				this.style.backgroundColor ="#e74c4d";  this.style.color = "black";
+				this.style.backgroundColor ="#e74c4d";
 			}
 		};
         map.onmouseout = function(){
 			if (this != c_map) {
-				this.style.backgroundColor ="#090935";  this.style.color = "white";
+				this.style.backgroundColor ="white";
 			}
 		};;
 	});
-
 	c_map.style.backgroundColor = "#e74c4d";
-	c_map.style.color = "black";
 }
 
 
@@ -300,8 +297,8 @@ function displayEvent(){
 	}
 	else{
 		document.getElementById("eventElem").style.display = "none";
-		document.getElementById("start").value = null;
-		document.getElementById("end").value = null;
+		document.getElementById("start").value = "00-00-00-00-00-00";
+		document.getElementById("end").value = "00-00-00-00-00-00";
 	}
 }
 
@@ -330,11 +327,16 @@ function newFav(x,y){
 	var checkBox = document.getElementById("event");
 	var fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}};
 	if(checkBox.checked){
-		var start = document.getElementById("new_start").value;
-		var end = document.getElementById("new_end").value;
-		fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
+		var start = document.getElementById("new_start").value.split(" ");
+		var end = document.getElementById("new_end").value.split(" ");
+		var startTime = start[1].split(":")[0]+"-"+start[1].split(":")[1]+"-"+start[1].split(":")[2];
+		var endTime = end[1].split(":")[0]+"-"+end[1].split(":")[1]+"-"+end[1].split(":")[2];
+		fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
+		putServerData2(`/ws/event/map/${current_map['id']}/user/${current_user_id}`,fav,refresh);
 	}
-	putServerData2(`/ws/location/map/${current_map['id']}/user/${current_user_id}`,fav,refresh);
+	else{
+		putServerData2(`/ws/location/map/${current_map['id']}/user/${current_user_id}`,fav,refresh);
+	}
 }
 
 
@@ -364,8 +366,11 @@ function editFav(id,event){
 		var start = document.getElementById("new_start").value;
 		var end = document.getElementById("new_end").value;
 		fav = {"name":name, "description":description, "label":label, "start":start, "end":end};
+		postServerData(`/ws/event/${id}/map/${current_map['id']}/user/${current_user_id}`,fav,navig);
 	}
-	postServerData(`/ws/location/${id}/map/${current_map['id']}/user/${current_user_id}`,fav,navig)
+	else{
+		postServerData(`/ws/location/${id}/map/${current_map['id']}/user/${current_user_id}`,fav,navig);
+	}
 }
 
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.jdo.annotations.PersistenceCapable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.*;
 
 @PersistenceCapable
@@ -14,7 +16,7 @@ public class User{
 	private List<Map> listMap;
 	private static int user_id = 1;
 	
-	public User(String name, String password) {
+	public User(@JsonProperty("name") String name,@JsonProperty("password") String password) {
 		this.id=user_id++;
 		this.name = name;
 		this.password = password;
