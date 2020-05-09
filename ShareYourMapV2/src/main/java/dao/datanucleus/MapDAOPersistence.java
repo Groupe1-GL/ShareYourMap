@@ -141,7 +141,7 @@ public class MapDAOPersistence implements MapDAO{
             tx.begin();
             Map m = this.getMap(mid);
             User us = userDAO.getUser(uid);
-            if(!m.equals(null)) {
+            if(m != null) {
                 /*Query q = pm.newQuery(Map.class);
                 q.declareParameters("Integer mid");
                 q.setFilter("id == mid");
@@ -172,7 +172,7 @@ public class MapDAOPersistence implements MapDAO{
         try {
             tx.begin();
             Map m = this.getMap(mid);
-            if(!m.equals(null)) {
+            if(m != null) {
                 Query q = pm.newQuery(Map.class);
                 q.declareParameters("Integer mid");
                 q.setFilter("id == mid");
@@ -201,7 +201,7 @@ public class MapDAOPersistence implements MapDAO{
             tx.begin();
             Map m = this.getMap(mid);
             User us = userDAO.getUser(uid);
-            if(!m.equals(null)) {
+            if(m != null) {
                 Query q = pm.newQuery(Map.class);
                 q.declareParameters("Integer mid");
                 q.setFilter("id == mid");

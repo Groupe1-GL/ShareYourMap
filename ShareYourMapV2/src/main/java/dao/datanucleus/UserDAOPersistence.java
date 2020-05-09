@@ -143,7 +143,7 @@ public class UserDAOPersistence implements UserDAO {
 						
 		try {
 			tx.begin();
-			if (!u.equals(null)){
+			if (u != null){
 				Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
 				q.setFilter("id == uid");
@@ -176,7 +176,7 @@ public class UserDAOPersistence implements UserDAO {
 		try {
 			tx.begin();
 			User u = this.getUser(uid);
-			if(!u.equals(null)) {
+			if(u != null) {
 				Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
 				q.setFilter("id == uid");
@@ -205,7 +205,7 @@ public class UserDAOPersistence implements UserDAO {
 		try {
 			tx.begin();
 			User u = this.getUser(uid);
-			if (!u.equals(null)){
+			if (u != null){
 				Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
 				q.setFilter("id == uid");

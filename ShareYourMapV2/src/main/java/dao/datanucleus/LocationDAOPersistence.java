@@ -82,12 +82,40 @@ public class LocationDAOPersistence implements LocationDAO{
 	}
 
 	public boolean contributeOnLocation(int uid, int mid, int lid, String message) {
-		
-		return false;
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean res = false;
+		try {
+			tx.begin();
+			Location l = getLocation(lid);
+			
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+				pm.close();
+			}
+			pm.close();
+			return res;
+		}
 	}
 
 	public boolean editLocation(int uid, int mid, int lid, String message, String descr, String label) {
-		return false;
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean res = false;
+		try {
+			tx.begin();
+			
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+				pm.close();
+			}
+			pm.close();
+			return res;
+		}
 	}
 
 	@SuppressWarnings("finally")
@@ -118,8 +146,21 @@ public class LocationDAOPersistence implements LocationDAO{
 
 	public boolean contributeOnLocationImg(int uid, int mid, int lid, InputStream uploadedInputStream,
 			FormDataContentDisposition fileDetail) {
-		// TODO Auto-generated method stub
-		return false;
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean res = false;
+		try {
+			tx.begin();
+			
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+				pm.close();
+			}
+			pm.close();
+			return res;
+		}
 	}
 
 }
