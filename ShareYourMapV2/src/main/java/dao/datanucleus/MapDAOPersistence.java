@@ -28,7 +28,8 @@ public class MapDAOPersistence implements MapDAO{
     public UserDAOPersistence getUserDAO() {
     	return this.userDAO;
     }
-    @SuppressWarnings({ "unchecked", "finally" })
+    
+    @SuppressWarnings("unchecked")
     public List<Map> getMaps(){
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -60,8 +61,8 @@ public class MapDAOPersistence implements MapDAO{
             tx.begin();
  
             Query q = pm.newQuery(Map.class);
-            q.declareParameters("Integer id");
-            q.setFilter("mid == id");
+            q.declareParameters("Integer mid");
+            q.setFilter("id == mid");
             q.setUnique(true);
            
             map = (Map) q.execute(mid);
@@ -87,11 +88,13 @@ public class MapDAOPersistence implements MapDAO{
             User us = userDAO.getUser(uid);        
             if (us != null) {
                 Map newMap = new Map(name, us.getName(), access);
-                pm.makePersistent(newMap);
+                //pm.makePersistent(newMap);
                
-                List<Map> maps = us.getMaps();
-                maps.add(newMap);
-                userDAO.editUsersMaps(uid, maps);
+                //List<Map> maps = us.getMaps();
+                System.out.println(us.getMaps());
+                //maps.add(newMap);
+                //userDAO.editUsersMaps(uid, maps);
+                
                 tx.commit();
                 res = true;
             }

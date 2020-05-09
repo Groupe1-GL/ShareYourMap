@@ -2,11 +2,8 @@ package dao;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-
-import classes.Event;
 
 public interface EventDAO  extends LocationDAO{
 	

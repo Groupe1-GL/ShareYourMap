@@ -13,7 +13,8 @@ import org.passay.PasswordGenerator;
 @PersistenceCapable
 public class Map{
 	private int id;
-	private String name, creatorName;
+	private String name;
+	private String creatorName;
 	private boolean access;
 	private String sharedID;
 	private List<Location> locations;
@@ -38,7 +39,6 @@ public class Map{
 	}
 	
 	public Map(String name, String creator, boolean b) {
-		this.locations = new ArrayList<Location>();
 		this.id = id_map++;
 		this.creatorName = creator;
 		this.name = name;

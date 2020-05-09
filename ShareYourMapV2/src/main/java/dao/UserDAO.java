@@ -1,8 +1,6 @@
 package dao;
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-
 import classes.User;
 
 /**
