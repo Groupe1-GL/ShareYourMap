@@ -85,15 +85,12 @@ public class UserResource {
 	}
 	
 	
-	 //voir si la réponse est cohérente si l'user n'existe pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{user-id}")
 	public boolean deleteUser(@PathParam("user-id") int uid) {
 		return userDAO.deleteUser(uid);
 	}
-	
-
 
 	
 }

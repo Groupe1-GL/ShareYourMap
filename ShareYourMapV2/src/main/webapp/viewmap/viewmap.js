@@ -168,7 +168,7 @@ function editUser(){
 		alert("New passwords don't match");
 	}
 	else{
-		user = {"password":npsw};
+		user = {"id":0, "password":npsw};
 		postServerData(`/ws/users/${current_user_id}`,user,navig);
 	}
 }
@@ -297,8 +297,6 @@ function displayEvent(){
 	}
 	else{
 		document.getElementById("eventElem").style.display = "none";
-		document.getElementById("start").value = "00-00-00-00-00-00";
-		document.getElementById("end").value = "00-00-00-00-00-00";
 	}
 }
 
@@ -327,11 +325,20 @@ function newFav(x,y){
 	var checkBox = document.getElementById("event");
 	var fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}};
 	if(checkBox.checked){
-		var start = document.getElementById("new_start").value.split(" ");
-		var end = document.getElementById("new_end").value.split(" ");
-		var startTime = start[1].split(":")[0]+"-"+start[1].split(":")[1]+"-"+start[1].split(":")[2];
-		var endTime = end[1].split(":")[0]+"-"+end[1].split(":")[1]+"-"+end[1].split(":")[2];
-		fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
+		var startIn = document.getElementById("new_start").value;
+		var endIn = document.getElementById("new_end").value;
+		var start = startIn.split(" ");
+		var end = endIn.split(" ");
+		if(start[1] != null && end[1] != null){
+			var startTime = start[1].split(":")[0]+"-"+start[1].split(":")[1]+"-"+start[1].split(":")[2];
+			var endTime = end[1].split(":")[0]+"-"+end[1].split(":")[1]+"-"+end[1].split(":")[2];
+			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
+		}
+		else{
+			start = startIn.split('T')[0]+"-"+startIn.split('T')[1].split(':')[0]+"-"+startIn.split('T')[1].split(':')[1];
+			end = endIn.split('T')[0]+"-"+endIn.split('T')[1].split(':')[0]+"-"+endIn.split('T')[1].split(':')[1];
+			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
+		}
 		putServerData2(`/ws/event/map/${current_map['id']}/user/${current_user_id}`,fav,refresh);
 	}
 	else{
@@ -363,9 +370,20 @@ function editFav(id,event){
 	var label = document.getElementById("edit_label").value;	
 	var fav = {"name":name, "description":description, "label":label};
 	if(event){
-		var start = document.getElementById("new_start").value;
-		var end = document.getElementById("new_end").value;
-		fav = {"name":name, "description":description, "label":label, "start":start, "end":end};
+		var startIn = document.getElementById("new_start").value;
+		var endIn = document.getElementById("new_end").value;
+		var start = startIn.split(" ");
+		var end = endIn.split(" ");
+		if(start[1] != null && end[1] != null){
+			var startTime = start[1].split(":")[0]+"-"+start[1].split(":")[1]+"-"+start[1].split(":")[2];
+			var endTime = end[1].split(":")[0]+"-"+end[1].split(":")[1]+"-"+end[1].split(":")[2];
+			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
+		}
+		else{
+			start = startIn.split('T')[0]+"-"+startIn.split('T')[1].split(':')[0]+"-"+startIn.split('T')[1].split(':')[1];
+			end = endIn.split('T')[0]+"-"+endIn.split('T')[1].split(':')[0]+"-"+endIn.split('T')[1].split(':')[1];
+			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
+		}
 		postServerData(`/ws/event/${id}/map/${current_map['id']}/user/${current_user_id}`,fav,navig);
 	}
 	else{
@@ -390,7 +408,16 @@ $(document).ready(function(){
 
 // Delete a location
 function deleteFav(lid){
-	deleteServerData(`/ws/location/${lid}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+	_.each(current_map['locations'], function(location) {
+		if(location['id']==lid){
+			if(location['event']==1){
+				deleteServerData(`/ws/event/${lid}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+			}
+			else{
+				deleteServerData(`/ws/location/${lid}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+			}
+		}
+	});
 }
 
 function navig(result){

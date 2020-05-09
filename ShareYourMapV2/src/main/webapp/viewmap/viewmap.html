@@ -149,8 +149,8 @@
 				Label <input type="text" id="new_label"></p>
 				Event <input type="checkbox" id="event" onclick="displayEvent()"/>
 				<p id="eventElem" hidden>
-					Start <input type="datetime-local" id="new_start" placeholder="YYYY-MM-DD HH:MM:SS" value="00-00-00-00-00-00";>
-					End <input type="datetime-local" id="new_end" placeholder="YYYY-MM-DD HH:MM:SS" value="00-00-00-00-00-00";>
+					Start <input type="datetime-local" id="new_start" placeholder="YYYY-MM-DD HH:MM:SS">
+					End <input type="datetime-local" id="new_end" placeholder="YYYY-MM-DD HH:MM:SS">
 				</p>
 				<button onclick='newFav(<%=x%>,<%=y%>)'>Create</button>
 			</div>
@@ -164,8 +164,8 @@
 				<p>Description <input type="text" id="edit_description" value="<%= description%>">
 				Label <input type="text" id="edit_label" value="<%= label%>"></p>
 				<% if(event==1){ %>
-					<p>Start <input type="datetime-local" id="edit_start" value="<%= start%>">
-					End <input type="datetime-local" id="edit_end" value="<%= end%>"></p>
+					<p>Start <input type="datetime-local" id="edit_start" value="<%=start['dayOfMonth']%>-<%=start['monthValue']%>-<%=start['year']%> <%=start['hour']%>:<%=start['minute']%>:00" placeholder="YYYY-MM-DD hh-mm-ss">
+					End <input type="datetime-local" id="edit_end" value="<%=end['dayOfMonth']%>-<%=end['monthValue']%>-<%=end['year']%> <%=end['hour']%>:<%=end['minute']%>:00" placeholder="YYYY-MM-DD hh-mm-ss"></p>
 				<% } %>
 				<button onclick='editFav(<%=id%>,<%event==1%>)'>Edit</button>
 			</div>

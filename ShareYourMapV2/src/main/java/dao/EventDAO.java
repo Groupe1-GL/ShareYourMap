@@ -35,15 +35,7 @@ public interface EventDAO  extends LocationDAO{
 										double y,
 										LocalDateTime start,
 										LocalDateTime end);
-	
-	/**
-     * Gives the next events according to the current time on the current map.
-	 *
-	 * @param	mid		the map identifier
-	 * @return			an event list
-	 */
-	public List<Event> nextEvents(int mid);
-	
+
 	/**
      * Removes an event on a map.
 	 *
