@@ -16,10 +16,13 @@ public class UserDAOPersistenceTest {
 		UserDAOPersistence userDAO = new UserDAOPersistence(pmf);
 
 		/* -------------------- Get elements (NULL) ------------------------------- */
-		Assert.assertEquals(0, userDAO.getUsers().size());													
+		Assert.assertEquals(0, userDAO.getUsers().size());		
+		Assert.assertEquals(null, userDAO.getUser(0));		
 		
 //		/* -------------------- Create elements ------------------------------- */
-//		Assert.assertEquals(200,userDAO.createUser("user1","psw","psw").getStatus());
+		userDAO.createUser("user1","psw");
+		Assert.assertEquals(1, userDAO.getUsers().size());
+		System.out.println(userDAO.getUser(1));
 //		Assert.assertEquals(1, userDAO.getUsers().size());
 //		
 //		Assert.assertSame("user1",userDAO.getUser(1).getName());
