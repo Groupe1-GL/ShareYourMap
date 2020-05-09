@@ -88,7 +88,9 @@ public class LocationDAOPersistence implements LocationDAO{
 		try {
 			tx.begin();
 			Location l = getLocation(lid);
-			
+			l.addMessage(message);
+			pm.deletePersistent(l);
+			pm.makePersistent(l);
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
