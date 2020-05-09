@@ -1,5 +1,8 @@
 package dao.datanucleus;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -102,13 +105,17 @@ public class LocationDAOPersistence implements LocationDAO{
 		}
 	}
 
-	public boolean editLocation(int uid, int mid, int lid, String message, String descr, String label) {
+	public boolean editLocation(int uid, int mid, int lid, String name, String descr, String label) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		boolean res = false;
 		try {
 			tx.begin();
-			
+			Location l = getLocation(lid);
+			pm.deletePersistent(l);
+			if (l.setName(name)&&l.setDescription(descr)&&l.setLabel(label)) {
+				pm.makePersistent(l);
+			}
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
@@ -148,12 +155,28 @@ public class LocationDAOPersistence implements LocationDAO{
 
 	public boolean contributeOnLocationImg(int uid, int mid, int lid, InputStream uploadedInputStream,
 			FormDataContentDisposition fileDetail) {
+		String fileLocation = System.getProperty("user.dir") + "upload/img" + fileDetail.getFileName(); 
+		try {  
+            FileOutputStream out = new FileOutputStream(new File(fileLocation));  
+            int read = 0;  
+            byte[] bytes = new byte[1024];  
+            out = new FileOutputStream(new File(fileLocation));  
+            while ((read = uploadedInputStream.read(bytes)) != -1) {  
+                out.write(bytes, 0, read);  
+            }  
+            out.flush();  
+            out.close();  
+        } catch (IOException e) {e.printStackTrace();} 
+		
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		boolean res = false;
 		try {
 			tx.begin();
-			
+			Location l = getLocation(lid);
+			l.addPicture(fileLocation);
+			pm.deletePersistent(l);
+			pm.makePersistent(l);
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {

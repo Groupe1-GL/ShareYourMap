@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.JDOHelper;
-import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.PersistenceManagerFactory; 
 
 import org.junit.Assert;
 import org.junit.Test;

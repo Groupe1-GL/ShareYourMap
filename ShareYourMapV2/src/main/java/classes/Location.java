@@ -130,13 +130,23 @@ public class Location{
 	}
 
 	public boolean addMessage(String msg) {
-		this.getMessages().add(msg);
-		return true;
+		if (msg != null) {
+			this.getMessages().add(msg);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
-	public boolean addPicture(String msg) {
-		this.getPictures().add(msg);
-		return true;
+	public boolean addPicture(String pic) {
+		if (pic != null) {
+			this.getPictures().add(pic);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 }
