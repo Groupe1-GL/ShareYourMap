@@ -95,7 +95,7 @@ public class LocationDAOPersistence implements LocationDAO{
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				pm.close();
+				pm.close(); 
 			}
 			pm.close();
 			return res;
