@@ -17,7 +17,6 @@ public class Map{
 	private boolean access;
 	private String sharedID;
 	private List<Location> locations;
-	private List<Event> events;
 	private static int id_map = 1;
 	
 	public static String generateSharingID() {
@@ -44,7 +43,6 @@ public class Map{
 		this.creatorName = creator;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
-		this.events = new ArrayList<Event>();
 		this.access = b;
 		this.sharedID = generateSharingID();
 	}
@@ -53,7 +51,6 @@ public class Map{
 		this.id = ID;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
-		this.events = new ArrayList<Event>();
 		this.creatorName = creator;
 		this.access = b;
 		this.sharedID = generateSharingID();
@@ -79,14 +76,6 @@ public class Map{
 		maps.add(m1);
 		maps.add(m2);
 		return maps;
-	}
-
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<Event> events) {
-		this.events = events;
 	}
 
 	public int getID() {
@@ -118,7 +107,7 @@ public class Map{
 	}
 
 	public boolean setName(String name) {
-		if (!name.equals(null)) {
+		if (name != null) {
 			this.name= name;
 			return true;
 		}

@@ -21,7 +21,7 @@ public class ExampleResource {
 
 	public static List<User> users = new ArrayList<User>();
 	public static List<Map> maps = Map.generateMaps2();
-	public static User us = User.getUser();
+	public static User us = User.generateUsers().get(0);
 
 	
 	@GET

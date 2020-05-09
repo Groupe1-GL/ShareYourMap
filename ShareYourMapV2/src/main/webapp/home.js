@@ -61,7 +61,7 @@ $("#sign_up").click(function (){
 		alert("Passwords don't match");
 	}
 	else{
-		user = {"name":username,"password":psw};
+		user = {"id":0, "name":username,"password":psw};
 		putServerData(`/ws/users`,user,connect);
 	}
 });
@@ -70,9 +70,10 @@ $("#sign_up").click(function (){
 $("#sign_in").click(function (){
 	username = document.getElementById("connect_username").value;
 	psw = document.getElementById("connect_passwd").value;
-	user = {"name":username,"password":psw};
+	user = {"id":0, "name":username,"password":psw};
 	postServerData(`/ws/users`,user,connect);
 });
+
 
 function connect(result){
 	var res = result.split('&');

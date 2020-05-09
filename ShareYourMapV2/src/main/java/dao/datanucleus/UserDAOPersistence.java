@@ -7,7 +7,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-import javax.ws.rs.core.Response;
 
 import classes.Map;
 import classes.User;
@@ -134,8 +133,6 @@ public class UserDAOPersistence implements UserDAO {
 
 	
 	public String editUser(int uid, String password) {
-		//gérer l'autorisation avec l'authentification
-		//action possible uniquement si l'uid est égal au uid de l'auth
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		User u = this.getUser(uid);
@@ -165,11 +162,7 @@ public class UserDAOPersistence implements UserDAO {
 		return res; 
 	}
 	
-
-	@SuppressWarnings("finally")
 	public boolean deleteUser(int uid) {
-		//gérer l'autorisation avec l'authentification
-		//action possible uniquement si l'uid est égal au uid de l'auth
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		boolean res = false;
@@ -194,10 +187,7 @@ public class UserDAOPersistence implements UserDAO {
 	}
 	
 	
-	@SuppressWarnings("finally")
 	public boolean editUsersMaps(int uid, List<Map> maps) {
-		//gérer l'autorisation avec l'authentification
-		//action possible uniquement si l'uid est égal au uid de l'auth
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		boolean res = false;

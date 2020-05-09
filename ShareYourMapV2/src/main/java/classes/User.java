@@ -16,7 +16,7 @@ public class User{
 	private List<Map> listMap;
 	private static int user_id = 1;
 	
-	public User(@JsonProperty("name") String name,@JsonProperty("password") String password) {
+	public User(String name, String password) {
 		this.id=user_id++;
 		this.name = name;
 		this.password = password;
@@ -28,12 +28,6 @@ public class User{
 		this.name = name;
 		this.password = password;
 		this.listMap = new ArrayList<Map>();		
-	}
-	
-	public static User getUser() {
-		User u1 = new User("Paul","ddd");
-		u1.setMaps(Map.generateMaps2());
-		return u1;
 	}
 	
 	public static ArrayList<User> generateUsers() {
@@ -55,15 +49,11 @@ public class User{
 	}
 	
 	public boolean setName(String name) {
-		if (!name.equals(null)) {
+		if (name != null) {
 			this.name = name;
 			return true;
 		}
 		return false;
-	}
-	
-	public String getUserInfo() {
-		return "ID: "+String.valueOf(this.id)+" Username: "+this.name;
 	}
 	
 	public void putMap(Map m) {
@@ -82,9 +72,9 @@ public class User{
 		this.listMap = m;
 	}
 
-	public boolean setPassword(String password2) {
-		if (!password2.equals(null)) {
-			this.password = password2;
+	public boolean setPassword(String password) {
+		if (password != null) {
+			this.password = password;
 			return true;
 		}
 		return false;

@@ -1,5 +1,6 @@
 package jetty_server.ws;
 
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -14,6 +16,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import classes.Event;
 import classes.Location;
@@ -49,20 +54,34 @@ public class EventResource {
 		return eventDAO.createEventOnMap(uid, mid, name, descr, label, x, y, start, end);
 	}
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("maps/{map-id}/next-events")
-	public List<Event> nextEvents(@PathParam("map-id") int mid) {
-		return eventDAO.nextEvents(mid);
-	}
 	
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/users/{user-id}/maps/{map-id}/event/{event-id}")
+	@Path("event/{event-id}/map/{map-id}/user/{user-id}")
 	public boolean deleteEvent(@PathParam("user-id") int uid,
 								  @PathParam("map-id") int mid,
 								  @PathParam("event-id") int eid) {
 		return eventDAO.deleteEvent(uid, mid, eid);
+	}
+	
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("event/{location-id}/map/{map-id}/user/{user-id}")
+	public String editEvent(@PathParam("user-id") int uid,
+										@PathParam("map-id") int mid,
+										@PathParam("location-id") int lid,
+										Event loc) {
+		String name = loc.getName();
+		String descr = loc.getDescription();
+		String label = loc.getLabel();
+		if(eventDAO.editLocation(uid, mid, lid, name, descr, label)) {
+			return "Successful edition";
+		}
+		else {
+			return "Transaction BDD error";
+		}
 	}
 	
 }

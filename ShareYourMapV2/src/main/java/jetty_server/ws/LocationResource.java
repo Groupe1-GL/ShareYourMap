@@ -53,7 +53,6 @@ public class LocationResource {
 	}
 	
 	
-	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
@@ -74,7 +73,6 @@ public class LocationResource {
 	}
 	
 	
-	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("location/{location-id}/map/{map-id}/user/{user-id}")

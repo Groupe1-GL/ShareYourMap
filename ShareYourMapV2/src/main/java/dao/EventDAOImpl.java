@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.Event;
+import classes.Location;
 import classes.Map;
 import classes.User;
 
@@ -44,7 +45,6 @@ public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 						Event newEvent = new Event(name, us.getName(), x, y, descr, label, start, end);
 						EventDAOImpl.e.add(newEvent);
 						ma.getLocations().add(newEvent);
-						ma.getEvents().add(newEvent);
 						return true;
 					}
 				}
@@ -52,26 +52,7 @@ public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 		}
 		return false;		
 	}
-	
-	/**
-     * Gives the next events according to the current time on the current map.
-	 *
-	 * @param	mid		the map identifier
-	 * @return			an event list
-	 */
-	public List<Event> nextEvents(int mid) {
-		List<Event> res = new ArrayList<Event>();
-		for (Map ma: MapDAOImpl.m) {
-			if (ma.getID() == mid) {
-				for (Event ev : ma.getEvents()) {
-					if (ev.getStart().isAfter(LocalDateTime.now())) {
-						res.add(ev);
-					}
-				}
-			}
-		}
-		return res;
-	}
+
 	
 	/**
      * Removes an event on a map.
@@ -86,9 +67,9 @@ public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 			if (us.getId() == uid) {
 				for (Map ma: us.getMaps()) {
 					if (ma.getID() == mid) {
-						for (Event ev: ma.getEvents()) {
-							if (ev.getID() == eid) {								
-								ma.getEvents().remove(ev);
+						for (Location loc: ma.getLocations()) {
+							if (loc.getID() == eid) {								
+								ma.getLocations().remove(loc);
 								return true;
 							}
 						}
