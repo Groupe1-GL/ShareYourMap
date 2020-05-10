@@ -195,11 +195,13 @@ public class UserDAOPersistence implements UserDAO {
 		try {
 			tx.begin();
 			User u = this.getUser(uid);
+			System.out.println("d");
 			if (u != null){
-				Query q = pm.newQuery(User.class);
+				/*Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
 				q.setFilter("id == uid");
 				q.deletePersistentAll(uid);//supprimer l'elt pour éviter le doublon
+				*/ 
 				u.setMaps(maps);
 				pm.makePersistent(u);
 				res = true;

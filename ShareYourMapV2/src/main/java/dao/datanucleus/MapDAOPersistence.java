@@ -84,16 +84,21 @@ public class MapDAOPersistence implements MapDAO{
         boolean res = false;
         try {
             tx.begin();
-            User us = userDAO.getUser(uid);        
+            User us = userDAO.getUser(uid);       
+            System.out.println(us.getName());
             if (us != null) {
                 Map newMap = new Map(name, us.getName(), access);
+                System.out.println(us.getName());
                 pm.makePersistent(newMap);
-               
+                
                 List<Map> maps = us.getMaps();
                 maps.add(newMap);
-                userDAO.editUsersMaps(uid, maps);
+                System.out.println(maps);
+                if (userDAO.editUsersMaps(uid, maps))
+                	res = true;
+                System.out.println("s");
                 tx.commit();
-                res = true;
+                
             }
         } finally {
             if (tx.isActive()) {
