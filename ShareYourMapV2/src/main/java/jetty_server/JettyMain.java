@@ -62,13 +62,6 @@ public class JettyMain {
 		contexts.setHandlers(new Handler[] { handlerWebServices, handlerPortalCtx });
 		server.setHandler(contexts);
 
-		// Créé user test
-		/*PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
-		UserDAOPersistence u = new UserDAOPersistence(pmf);
-		MapDAOPersistence m = new MapDAOPersistence(pmf);
-		u.createUser("Thomas", "psw", "psw");
-		m.createMap(1, "Shop");
-		*/
 		// Start server
 		server.start();
 

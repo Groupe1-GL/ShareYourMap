@@ -1,19 +1,17 @@
 package classes;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import javax.jdo.annotations.PersistenceCapable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.*;
 
 @PersistenceCapable
 public class User{
 	private int id;
 	private String name;
 	private String password;
-	private List<Map> listMap;
+	private List<Map> listMap = new ArrayList<Map>();
 	private static int user_id = 1;
 	
 	public User(String name, String password) {
@@ -65,7 +63,7 @@ public class User{
 	}
 	
 	public List<Map> getMaps() {
-		return this.listMap;
+		return listMap;
 	}
 	
 	public void setMaps(List<Map> m) {
