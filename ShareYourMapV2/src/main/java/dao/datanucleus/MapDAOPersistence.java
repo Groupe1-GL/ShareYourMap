@@ -89,17 +89,7 @@ public class MapDAOPersistence implements MapDAO{
             System.out.println(us.getName());
             if (us != null) {
                 Map newMap = new Map(name, us.getName(), access);
-<<<<<<< HEAD
-                System.out.println(us.getName());
-                pm.makePersistent(newMap);
-                
-                List<Map> maps = us.getMaps();
-                maps.add(newMap);
-                System.out.println(maps);
-                if (userDAO.editUsersMaps(uid, maps))
-                	res = true;
-                System.out.println("s");
-=======
+
                 //pm.makePersistent(newMap);
                
                 //List<Map> maps = us.getMaps();
@@ -107,7 +97,6 @@ public class MapDAOPersistence implements MapDAO{
                 //maps.add(newMap);
                 //userDAO.editUsersMaps(uid, maps);
                 
->>>>>>> branch 'master' of https://github.com/Groupe1-GL/ShareYourMap
                 tx.commit();
                 
             }

@@ -23,30 +23,10 @@ public class UserDAOPersistenceTest {
 		/* -------------------- Get elements (NULL) ------------------------------- */
 		Assert.assertEquals(0, userDAO.getUsers().size());													
 		
-<<<<<<< HEAD
-		/* -------------------- Create elements ------------------------------- */
-		userDAO.createUser("David","ddd");
-=======
 		
 		/* -------------------- Create elements ------------------------------- */
 		Assert.assertEquals("You've been successfully signed up.&viewmap/viewmap.html?uid=1",userDAO.createUser("user1","psw"));
->>>>>>> branch 'master' of https://github.com/Groupe1-GL/ShareYourMap
 		Assert.assertEquals(1, userDAO.getUsers().size());
-<<<<<<< HEAD
-		System.out.println(userDAO.getUser(1).getId());
-		
-		Assert.assertNull(userDAO.getUser(8));//		
-		userDAO.createUser("user2","psw");
-		userDAO.createUser("user3","psw");
-		Assert.assertEquals(3, userDAO.getUsers().size());
-		
-		/* -------------------- Edit elements ------------------------------- */
-		Assert.assertEquals("User not found!",userDAO.editUser(4,"psw"));
-		Assert.assertEquals("Password successfully updated!",userDAO.editUser(1,"psw")); 									
-		Assert.assertSame("psw", userDAO.getUser(1).getPassword());																//Probleme de ré-indexion
-		
-		/* -------------------- Delete elements ------------------------------- */
-=======
 		Assert.assertSame("user1",userDAO.getUser(1).getName());
 		Assert.assertSame("user1",userDAO.getUser("user1").getName());
 		Assert.assertNull(userDAO.getUser(8));
@@ -69,7 +49,6 @@ public class UserDAOPersistenceTest {
 		Assert.assertEquals(maps,userDAO.getUser(1).getMaps());
 		
 //		/* -------------------- Delete elements ------------------------------- */
->>>>>>> branch 'master' of https://github.com/Groupe1-GL/ShareYourMap
 		Assert.assertFalse(userDAO.deleteUser(0));
 		Assert.assertEquals(3, userDAO.getUsers().size());
 		Assert.assertTrue(userDAO.deleteUser(2));
