@@ -44,28 +44,18 @@ public class Map{
 	}
 	
 	public Map(String name, String creator, boolean b) {
-		this.id = id_map++;
 		this.creatorName = creator;
 		this.name = name;
 		this.locations = new ArrayList<Location>();
-		this.access = b;
-		this.sharedID = generateSharingID();
-	}
-	
-	public Map(int ID, String name, String creator, boolean b) {
-		this.id = ID;
-		this.name = name;
-		this.locations = new ArrayList<Location>();
-		this.creatorName = creator;
 		this.access = b;
 		this.sharedID = generateSharingID();
 	}
 	
 	public static ArrayList<Map> generateMaps(){
 		ArrayList <Map> maps = new ArrayList<Map>();
-		Map m1 = new Map(1,"Magasin","Emrick",true);
+		Map m1 = new Map("Magasin","Emrick",true);
 		m1.setLocation(Location.generateLocations());
-		Map m2 = new Map(2,"Fast Food","Emrick",false);
+		Map m2 = new Map("Fast Food","Emrick",false);
 		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);
@@ -74,9 +64,9 @@ public class Map{
 	
 	public static ArrayList<Map> generateMaps2(){
 		ArrayList <Map> maps = new ArrayList<Map>();
-		Map m1 = new Map(3,"Shop","David",false);
+		Map m1 = new Map("Shop","David",false);
 		m1.setLocation(Location.generateLocations());
-		Map m2 = new Map(4,"Let's eat","David",true);
+		Map m2 = new Map("Let's eat","David",true);
 		m2.setLocation(Location.generateLocations2());
 		maps.add(m1);
 		maps.add(m2);
