@@ -20,14 +20,6 @@ public class User{
 	private static int user_id = 1;
 	
 	public User(String name, String password) {
-		this.id=user_id++;
-		this.name = name;
-		this.password = password;
-		this.listMap = new ArrayList<Map>();		
-	}
-	
-	public User(int id, String name, String password) {
-		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.listMap = new ArrayList<Map>();		
@@ -71,8 +63,12 @@ public class User{
 		return listMap;
 	}
 	
-	public void setMaps(List<Map> m) {
-		this.listMap = m;
+	public boolean setMaps(List<Map> m) {
+		if (m != null) {
+			this.listMap = m;
+			return true;
+		}
+		return false;
 	}
 
 	public boolean setPassword(String password) {

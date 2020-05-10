@@ -143,7 +143,7 @@ public class UserDAOPersistence implements UserDAO {
 			if (u != null){
 				Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
-				q.setFilter("id == uid");
+				q.setFilter("uid == id");
 				q.deletePersistentAll(uid);
 				u.setPassword(password);
 				pm.makePersistent(u);
@@ -200,10 +200,10 @@ public class UserDAOPersistence implements UserDAO {
 				q.declareParameters("Integer uid");
 				q.setFilter("id == uid");
 				q.deletePersistentAll(uid);//supprimer l'elt pour éviter le doublon
-				*/ 
-				u.setMaps(maps);
-				//pm.makePersistent(u);
-				pm.makePersistent(maps);
+				*/ 				
+				if (u.setMaps(maps)) {
+					pm.makePersistent(u);
+				}
 				res = true;
 			}
 			tx.commit();
