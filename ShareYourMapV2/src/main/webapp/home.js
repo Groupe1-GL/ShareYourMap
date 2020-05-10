@@ -6,7 +6,7 @@
 
 //----------------------	Server functions	---------------------
 /**
- * Send the PUT request ot the server
+ * Sends the PUT request to the server
  * @param {string} 	 url		The url of the request
  * @param {JSON} user			The user 
  * @param {void} success 		The callback function
@@ -22,7 +22,7 @@ function putServerData(url,user,success){
 }
 
 /**
- * Send the POST request ot the server
+ * Sends the POST request to the server
  * @param {string} 	 url		The url of the request
  * @param {JSON} user			The user 
  * @param {void} success 		The callback function
@@ -39,20 +39,28 @@ function postServerData(url,user,success){
 
 
 //----------------------	Visual effects	-------------------------
-// Display div for sign up and hide the connection div
+/*
+ * Displays div for sign up and hide the connection div
+ */
 $("#new").click(function (){
 	document.getElementById("newUser").style.display = "block";
 	document.getElementById("connection").style.display = "none";
 });
 
-// Display div for connection and hide the sign in div
+/**
+ * Displays div for connection and hide the sign in div
+ */ 
 $("#connect").click(function (){
 	document.getElementById("newUser").style.display = "none";
 	document.getElementById("connection").style.display = "block";
 });
 
 
-//---------------------		Actions on click		---------------------	
+//---------------------		Actions on click		---------------------
+/**
+ * Sends the request to create a user with a username and a password
+ * Verifies if the username isn't already used
+ */ 	
 $("#sign_up").click(function (){
 	username = document.getElementById("new_username").value;
 	psw = document.getElementById("new_passwd").value;
@@ -66,7 +74,9 @@ $("#sign_up").click(function (){
 	}
 });
 
-
+/**
+ * Sends the request to connect a user with its username and its password
+ */
 $("#sign_in").click(function (){
 	username = document.getElementById("connect_username").value;
 	psw = document.getElementById("connect_passwd").value;
@@ -74,9 +84,16 @@ $("#sign_in").click(function (){
 	postServerData(`/ws/users`,user,connect);
 });
 
-
+/**
+ * Displays the message for a connection and switchs to the personal page if the connection is validated
+ * If the connection is validated, the message will be: a message + '&' + path to the personal page
+ * Else, it will be: a message
+ * @param {String} result	The response for a connection or a subscription
+ */
 function connect(result){
 	var res = result.split('&');
+	
+	// Check the type of response 
 	if(res.length <= 1){
 		alert(result);
 	}
