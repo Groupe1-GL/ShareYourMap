@@ -194,8 +194,7 @@ public class UserDAOPersistence implements UserDAO {
 		
 		try {
 			tx.begin();
-			User u = this.getUser(uid);
-			System.out.println("d");
+			User u = this.getUser(uid); //detached User
 			if (u != null){
 				/*Query q = pm.newQuery(User.class);
 				q.declareParameters("Integer uid");
@@ -203,7 +202,8 @@ public class UserDAOPersistence implements UserDAO {
 				q.deletePersistentAll(uid);//supprimer l'elt pour éviter le doublon
 				*/ 
 				u.setMaps(maps);
-				pm.makePersistent(u);
+				//pm.makePersistent(u);
+				pm.makePersistent(maps);
 				res = true;
 			}
 			tx.commit();

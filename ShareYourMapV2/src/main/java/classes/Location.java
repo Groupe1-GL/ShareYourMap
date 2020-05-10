@@ -2,13 +2,18 @@ package classes;
 
 import java.util.ArrayList;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 @PersistenceCapable
 public class Location{
+	@PrimaryKey
+	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private int id;
 	private String name, creatorName, description;
 	private List<String> messages;

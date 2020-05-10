@@ -3,7 +3,10 @@ package classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
@@ -12,6 +15,8 @@ import org.passay.PasswordGenerator;
 
 @PersistenceCapable
 public class Map{
+	@PrimaryKey
+	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private int id;
 	private String name;
 	private String creatorName;

@@ -3,15 +3,20 @@ package classes;
 import java.util.List;
 import java.util.ArrayList;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
 
 @PersistenceCapable
 public class User{
+	@PrimaryKey
+	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private int id;
 	private String name;
 	private String password;
-	private List<Map> listMap = new ArrayList<Map>();
+	private List<Map> listMap;
 	private static int user_id = 1;
 	
 	public User(String name, String password) {
