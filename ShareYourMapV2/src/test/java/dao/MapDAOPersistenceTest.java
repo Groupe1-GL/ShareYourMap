@@ -37,18 +37,23 @@ public class MapDAOPersistenceTest {
 		//Assert.assertEquals("testc",mapDAO.getMap(2).getName());
 	
 		Assert.assertFalse(mapDAO.createMap(2, "test5", true));
-
+		Assert.assertTrue(mapDAO.editMap(1, 1, "new", true));
+		Assert.assertTrue(mapDAO.editMap(1, 1, "new2", true));
 		Assert.assertTrue(mapDAO.createMap(1, "test6",true));
 		Assert.assertTrue(mapDAO.createMap(1, "test7",true));
-
+		//for (Map m: mapDAO.getUserDAO().getUser(1).getMaps()) {
+		//	System.out.println("u1"+m.getName());
+		//}
 
 		/* -------------------- Edit elements ------------------------------- */
 		Assert.assertTrue(mapDAO.editMap(1, 1, "new", true));
+		Assert.assertTrue(mapDAO.editMap(1, 4, "new3", false));
+		Assert.assertFalse(mapDAO.getMap(4).getAccess());
 		for (int i = 0; i < 7; i++) {
 			System.out.println("id "+mapDAO.getMaps().get(i).getID()+" "+mapDAO.getMaps().get(i).getName());
+			System.out.println("id "+mapDAO.getMap(i).getID()+" "+mapDAO.getMap(i).getName());
 		}
-		//System.out.println(mapDAO.getMap(11).getName());
-		//Assert.assertEquals("new",mapDAO.getMap(2).getName());
+		Assert.assertEquals("test3",mapDAO.getMap(2).getName());
 		
 		/* -------------------- Delete elements ------------------------------- */
 		//Assert.assertFalse(mapDAO.deleteMap(0, 7));

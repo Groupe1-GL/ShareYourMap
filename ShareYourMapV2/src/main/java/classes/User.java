@@ -18,7 +18,7 @@ public class User{
 	private int id;
 	private String name;
 	private String password;
-	@Persistent(defaultFetchGroup="true") @Element(dependent = "true")
+	@Persistent(defaultFetchGroup="true") 
 	private List<Map> listMap;
 	
 	public User(String name, String password) {
