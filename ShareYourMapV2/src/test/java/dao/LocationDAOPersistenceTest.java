@@ -14,6 +14,7 @@ public class LocationDAOPersistenceTest {
 	public void test() {
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
 		LocationDAOPersistence locationDAO = new LocationDAOPersistence(pmf);
+		MapDAOPersistenceTest.test();
 		
 		/* -------------------- Get elements (NULL) ------------------------------- */
 		Assert.assertNull(locationDAO.getLocation(1));								

@@ -152,6 +152,7 @@ public class MapDAOPersistence implements MapDAO{
     }
    
     @SuppressWarnings("finally")
+    //replace the new location list on the map
     public boolean editMapsLocation(int uid, int mid, List<Location> locations){
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
@@ -159,20 +160,14 @@ public class MapDAOPersistence implements MapDAO{
         try {
             tx.begin();
             Map m = this.getMap(mid);
-            User us = userDAO.getUser(uid);
-            if(m != null) {
-                Query q = pm.newQuery(Map.class);
-                q.declareParameters("Integer mid");
-                q.setFilter("id == mid");
-                q.deletePersistentAll(mid);
-                us.getMaps().remove(m);
-                tx.commit();   
+            if((m != null)&&m.setLocation(locations)) {
+            	pm.makePersistent(m);
                 res = true;
             }
+            tx.commit();   
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
-                pm.close();
             }
             pm.close();
             return res;

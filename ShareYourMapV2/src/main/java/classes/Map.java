@@ -20,8 +20,7 @@ public class Map{
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
 	private int id;	
-	private String name;
-	private String creatorName;
+	private String name, creatorName;
 	private boolean access;
 	private String sharedID;
 	@Persistent(defaultFetchGroup="true") 
@@ -87,8 +86,12 @@ public class Map{
 		return this.locations;
 	}
 	
-	public void setLocation(List<Location> locs) {
-		this.locations = locs;
+	public boolean setLocation(List<Location> locs) {
+		if (locs != null) {		
+			this.locations = locs;
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean addLocation(Location l) {

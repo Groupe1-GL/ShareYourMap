@@ -16,7 +16,7 @@ import dao.datanucleus.MapDAOPersistence;
 public class MapDAOPersistenceTest {
 
 	@Test
-	public void test() {
+	public static void test() {
 		
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
 		MapDAOPersistence mapDAO = new MapDAOPersistence(pmf);
@@ -72,6 +72,9 @@ public class MapDAOPersistenceTest {
 				System.out.println(u.getName()+":"+m.getID()+m.getName());
 			}
 		}
+		/* -------------------- generateSharedID ------------------------------- */
+		//à tester sur le site
+		
 	}
 
 }

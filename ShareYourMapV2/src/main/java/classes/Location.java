@@ -16,13 +16,12 @@ public class Location{
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private int id;
-	private String name, creatorName, description;
-	@Persistent(defaultFetchGroup="true")
-	private List<String> messages;
+	private String name, creatorName, description, label;
 	private Position position;
-	private String label;
 	@Persistent(defaultFetchGroup="true")
 	private List<String> pictures;
+	@Persistent(defaultFetchGroup="true")
+	private List<String> messages;
 	
 	public Location() {
 		this.name = "Location"+String.valueOf(this.id);
