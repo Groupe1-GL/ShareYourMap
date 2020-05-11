@@ -55,23 +55,23 @@ public class MapDAOPersistence implements MapDAO{
     public Map getMap(int mid){
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
-        Map map = null;
         Map detached = null;
         try {
-            tx.begin();
- 
+ /*
             Query q = pm.newQuery(Map.class);
             q.declareParameters("Integer mid");
             q.setFilter("id == mid");
             q.setUnique(true);
-           
+        
             map = (Map) q.execute(mid);
             detached = (Map) pm.detachCopy(map);
- 
-            tx.commit();
+*/
+            detached = pm.getObjectById(Map.class, mid);
+            pm.deletePersistent(detached);
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
+                return detached;
             }
             pm.close();
         }
@@ -88,10 +88,10 @@ public class MapDAOPersistence implements MapDAO{
             User us = userDAO.getUser(uid);
             if (us != null) {
                 Map newMap = new Map(name, us.getName(), access);
-                pm.makePersistent(newMap);               
                 List<Map> maps = us.getMaps();
                 maps.add(newMap);
                 userDAO.editUsersMaps(uid, maps);
+                res = true;
             }
             tx.commit();
         } finally {
@@ -138,24 +138,20 @@ public class MapDAOPersistence implements MapDAO{
         boolean res = false;
         try {
             tx.begin();
-            Map m = this.getMap(mid);
-            User us = userDAO.getUser(uid);
-            if(m != null) {
+            Map m = pm.getObjectById(Map.class, mid);
+            if((m != null)&&m.setAccess(access)&&m.setName(name)) {
                 /*Query q = pm.newQuery(Map.class);
                 q.declareParameters("Integer mid");
                 q.setFilter("id == mid");
                 q.deletePersistentAll(mid);
                 us.getMaps().remove(m);
                 createMap(uid, mid, name, access);*/
-            	m.setAccess(access);
-            	m.setName(name);
-                tx.commit();   
                 res = true;
             }
+            tx.commit();   
         } finally {
             if (tx.isActive()) {
                 tx.rollback();
-                pm.close();
             }
             pm.close();
             return res;

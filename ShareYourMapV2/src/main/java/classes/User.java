@@ -9,15 +9,16 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 
-@PersistenceCapable
+@PersistenceCapable(detachable="true" )
 public class User{
+	
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private int id;
 	private String name;
 	private String password;
+	@Persistent(defaultFetchGroup="true")
 	private List<Map> listMap;
-	private static int user_id = 1;
 	
 	public User(String name, String password) {
 		this.name = name;

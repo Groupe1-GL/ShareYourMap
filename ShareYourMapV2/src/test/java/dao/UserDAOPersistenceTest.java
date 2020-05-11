@@ -16,7 +16,7 @@ import dao.datanucleus.UserDAOPersistence;
 public class UserDAOPersistenceTest {
 
 	@Test
-	public void test() {
+	public static void test() {
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
 		UserDAOPersistence userDAO = new UserDAOPersistence(pmf);
 
@@ -40,27 +40,18 @@ public class UserDAOPersistenceTest {
 		/* -------------------- Edit elements ------------------------------- */
 		Assert.assertEquals("User not found!",userDAO.editUser(4,"psw"));
 		Assert.assertEquals(3, userDAO.getUsers().size());
-		System.out.println(userDAO.getUser(2).getPassword());
-		Assert.assertEquals("Password successfully updated!",userDAO.editUser(2,"new_psw"));	
+		Assert.assertEquals("Password successfully updated!",userDAO.editUser(2,"new_psw"));
 		Assert.assertEquals(3, userDAO.getUsers().size());
-		System.out.println(userDAO.getUser(2).getPassword());	
-		//System.out.println(userDAO.getUser(2).getPassword());	
-		//System.out.println(userDAO.getUser(2).getPassword());	
 		
-		//List<Map> maps = new ArrayList<Map>();
-		//maps.add(new Map("map1","user1",true));
-		//Assert.assertTrue(userDAO.editUsersMaps(1, maps));
-		//userDAO.getUser(1).setMaps(maps);
-		//User us = userDAO.getUser(1);
-		//us.setMaps(maps);
-		//System.out.println(us.getName());
-		//Assert.assertEquals(maps,userDAO.getUser(1).getMaps());
-		
+		List<Map> maps = new ArrayList<Map>();
+		maps.add(new Map("map1","user1",true));
+		Assert.assertTrue(userDAO.editUsersMaps(1, maps));
+		Assert.assertEquals("map1",userDAO.getUser(1).getMaps().get(0).getName());
 		/* -------------------- Delete elements ------------------------------- */
-//		Assert.assertFalse(userDAO.deleteUser(0));
-//		Assert.assertEquals(3, userDAO.getUsers().size());
-//		Assert.assertTrue(userDAO.deleteUser(2));
-//		Assert.assertEquals(2, userDAO.getUsers().size());
+		Assert.assertFalse(userDAO.deleteUser(0));
+		Assert.assertEquals(3, userDAO.getUsers().size());
+		Assert.assertTrue(userDAO.deleteUser(2));
+		Assert.assertEquals(2, userDAO.getUsers().size());
 	}
 
 }

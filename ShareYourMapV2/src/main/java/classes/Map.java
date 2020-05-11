@@ -13,17 +13,18 @@ import org.passay.EnglishCharacterData;
 import org.passay.CharacterData;
 import org.passay.PasswordGenerator;
 
-@PersistenceCapable
+@PersistenceCapable(detachable="true")
 public class Map{
+	
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
+	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
 	private int id;
 	private String name;
 	private String creatorName;
 	private boolean access;
 	private String sharedID;
+	@Persistent(defaultFetchGroup="true")
 	private List<Location> locations;
-	private static int id_map = 1;
 	
 	public static String generateSharingID() {
 	    PasswordGenerator gen = new PasswordGenerator();
