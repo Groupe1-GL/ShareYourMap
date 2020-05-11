@@ -85,12 +85,15 @@ public class MapDAOPersistence implements MapDAO{
         boolean res = false;
         try {
             tx.begin();
-            User us = userDAO.getUser(uid);
+            User us = userDAO.getUser(uid);            
             if (us != null) {
-                Map newMap = new Map(name, us.getName(), access);
+            	Map newMap = new Map(name, us.getName(), access);
                 List<Map> maps = us.getMaps();
                 maps.add(newMap);
-                userDAO.editUsersMaps(uid, maps);
+                int mid = newMap.getID();
+                System.out.println(mid);//probleme avec l'id
+                
+                userDAO.editUsersMaps(uid, newMap);
                 res = true;
             }
             tx.commit();

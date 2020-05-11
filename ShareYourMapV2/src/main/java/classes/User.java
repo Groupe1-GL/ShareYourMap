@@ -3,13 +3,14 @@ package classes;
 import java.util.List;
 import java.util.ArrayList;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 
-@PersistenceCapable(detachable="true" )
+@PersistenceCapable(detachable="true")
 public class User{
 	
 	@PrimaryKey
@@ -17,7 +18,7 @@ public class User{
 	private int id;
 	private String name;
 	private String password;
-	@Persistent(defaultFetchGroup="true")
+	@Persistent(defaultFetchGroup="true") @Element(dependent = "true")
 	private List<Map> listMap;
 	
 	public User(String name, String password) {

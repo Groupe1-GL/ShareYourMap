@@ -3,6 +3,7 @@ package classes;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -17,13 +18,13 @@ import org.passay.PasswordGenerator;
 public class Map{
 	
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
-	private int id;
+	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
+	private int id;	
 	private String name;
 	private String creatorName;
 	private boolean access;
 	private String sharedID;
-	@Persistent(defaultFetchGroup="true")
+	@Persistent(defaultFetchGroup="true") @Element(dependent = "true")
 	private List<Location> locations;
 	
 	public static String generateSharingID() {

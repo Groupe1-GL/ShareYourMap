@@ -216,4 +216,26 @@ public class UserDAOPersistence implements UserDAO {
 		return res; 
 	}
 
+	public boolean editUsersMaps(int uid, Map maps) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		boolean res = false;
+		
+		try {
+			tx.begin();
+			User u = this.getUser(uid); //detached User
+			
+			if (u != null && u.getMaps().add(maps)) {
+					pm.makePersistent(u);
+					res = true;
+			}
+			tx.commit();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();	
+		}
+		return res; 
+	}
 }
