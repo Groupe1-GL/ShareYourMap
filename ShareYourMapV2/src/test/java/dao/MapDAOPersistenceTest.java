@@ -23,33 +23,37 @@ public class MapDAOPersistenceTest {
 
 		
 		/* -------------------- Init ------------------------------- */
-		//Assert.assertEquals(0, mapDAO.getMaps().size());							
-		//Assert.assertEquals("You've been successfully signed up.&viewmap/viewmap.html?uid=1", mapDAO.getUserDAO().createUser("user1", "psw"));
-		//System.out.println(mapDAO.getUserDAO().getUser(1).getMaps());
+		Assert.assertEquals(1, mapDAO.getMaps().size());							
+		Assert.assertEquals("This username is already used.", mapDAO.getUserDAO().createUser("user1", "psw"));
 		
 		/* -------------------- Create elements ------------------------------- */
-		//mapDAO.createMap(1, "testc", false);
-		//Assert.assertEquals(1, mapDAO.getMaps().size());
-//		Assert.assertTrue(mapDAO.createMap(2, "test2", true));
-//		Assert.assertTrue(mapDAO.createMap(3, "test3", true));
-//		Assert.assertEquals(3, mapDAO.getMaps().size());
-//		Assert.assertNull(mapDAO.getMap(5));
-		
-//		Assert.assertFalse(mapDAO.createMap(2, "test1", true));
-//		Assert.assertEquals(0, mapDAO.getMaps().size());
-//		Assert.assertTrue(mapDAO.createMap(1, "test1", true));
-//		Assert.assertTrue(mapDAO.createMap(1, "test2",true));
-//		Assert.assertEquals(2, mapDAO.getMaps().size());
-
+		Assert.assertTrue(mapDAO.createMap(1, "test2", false));
+		Assert.assertEquals(2, mapDAO.getMaps().size());
+		Assert.assertTrue(mapDAO.createMap(1, "test3", true));
+		Assert.assertTrue(mapDAO.createMap(3, "test4", true));
+		Assert.assertEquals("test4",mapDAO.getUserDAO().getUser(3).getMaps().get(0).getName());
+		Assert.assertTrue(mapDAO.createMap(3, "test5", true));
+		Assert.assertEquals("test5",mapDAO.getUserDAO().getUser(3).getMaps().get(1).getName());
+		//Assert.assertEquals("testc",mapDAO.getMap(2).getName());
+	
+		Assert.assertFalse(mapDAO.createMap(2, "test5", true));
+		Assert.assertTrue(mapDAO.editMap(1, 1, "new", true));
+		Assert.assertTrue(mapDAO.editMap(1, 1, "new2", true));
+		Assert.assertTrue(mapDAO.createMap(1, "test6",true));
+		Assert.assertTrue(mapDAO.createMap(1, "test7",true));
+		//for (Map m: mapDAO.getUserDAO().getUser(1).getMaps()) {
+		//	System.out.println("u1"+m.getName());
+		//}
 
 		/* -------------------- Edit elements ------------------------------- */
-		//Assert.assertFalse(mapDAO.editMap(0, 5, "new", true));
-		//Assert.assertTrue(mapDAO.editMap(0, 2, "new_test2", true));		
-		//Assert.assertSame("new_test2", mapDAO.getMap(2).getName());
-		/*Assert.assertFalse(mapDAO.editMap(0, 5, "new", true));
-		Assert.assertTrue(mapDAO.editMap(0, 2, "new_test2", true));		
-		Assert.assertSame("new_test2", mapDAO.getMap(2).getName());*/
-		
+		Assert.assertTrue(mapDAO.editMap(1, 1, "new", true));
+		Assert.assertTrue(mapDAO.editMap(1, 4, "new3", false));
+		Assert.assertFalse(mapDAO.getMap(4).getAccess());
+		for (int i = 0; i < 7; i++) {
+			System.out.println("id "+mapDAO.getMaps().get(i).getID()+" "+mapDAO.getMaps().get(i).getName());
+			System.out.println("id "+mapDAO.getMap(i).getID()+" "+mapDAO.getMap(i).getName());
+		}
+		Assert.assertEquals("test3",mapDAO.getMap(2).getName());
 		
 		/* -------------------- Delete elements ------------------------------- */
 		//Assert.assertFalse(mapDAO.deleteMap(0, 7));

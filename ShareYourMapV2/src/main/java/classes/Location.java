@@ -10,27 +10,27 @@ import javax.jdo.annotations.PrimaryKey;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@PersistenceCapable
+@PersistenceCapable(detachable="true")
 public class Location{
+	
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
 	private int id;
 	private String name, creatorName, description;
+	@Persistent(defaultFetchGroup="true")
 	private List<String> messages;
 	private Position position;
 	private String label;
-	private static int loc_id = 1;
+	@Persistent(defaultFetchGroup="true")
 	private List<String> pictures;
 	
 	public Location() {
-		this.id = loc_id++;
 		this.name = "Location"+String.valueOf(this.id);
 		this.messages = new ArrayList<String>();
 		this.pictures = new ArrayList<String>();
 	}
 	
 	public Location(String name, String creatorName, double x, double y, String descr, String label) {
-		this.id = loc_id++;
 		this.creatorName = creatorName;
 		this.name = name;
 		this.position = new Position(x,y);
