@@ -340,7 +340,7 @@ function newFav(x,y){
 	const description = document.getElementById("new_description").value;
 	const label = document.getElementById("new_label").value;
 	const checkBox = document.getElementById("event");
-	var fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}};
+	var fav = {"id":0, "name":name, "description":description, "label":label, "position":{"x":x, "y":y}};
 
 	// Adds informations for a event to the request
 	if(checkBox.checked){
@@ -390,7 +390,7 @@ function editFav(id,event){
 	var name = document.getElementById("edit_name").value;
 	var description = document.getElementById("edit_description").value;
 	var label = document.getElementById("edit_label").value;	
-	var fav = {"name":name, "description":description, "label":label};
+	var fav = {"id":0, "name":name, "description":description, "label":label};
 
 	// Adds informations for a event to the request
 	if(event){
