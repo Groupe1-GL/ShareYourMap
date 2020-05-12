@@ -37,7 +37,7 @@ public interface MapDAO {
      *	 
 	 * @return	the map
 	 */
-	public Response getSharedMap(int mid, String sharedID);
+	public Response getSharedMap(int uid, int mid, String sharedID);
 	
 	/**
 	 * Creates a map.
