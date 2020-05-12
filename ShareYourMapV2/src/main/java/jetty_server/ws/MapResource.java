@@ -63,8 +63,9 @@ public class MapResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/map")
 	public Response getSharedMap(@QueryParam("id") int mid,
-					@QueryParam("shared-id") String sharedID) {	
-			return mapDAO.getSharedMap(mid, sharedID);
+					@QueryParam("shared-id") String sharedID,
+					@QueryParam("uid") int uid) {	
+			return mapDAO.getSharedMap(uid, mid, sharedID);
 	}
 	
 	@POST
@@ -76,8 +77,7 @@ public class MapResource {
 		String name = m.getName();
 		boolean access = m.getAccess();
 		return mapDAO.editMap(uid, mid, name, access);
-	}
-	
+	}	
 
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)

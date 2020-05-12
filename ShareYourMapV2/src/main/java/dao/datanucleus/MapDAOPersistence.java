@@ -197,7 +197,7 @@ public class MapDAOPersistence implements MapDAO{
         return res;
     }
  
-    public Response getSharedMap(int mid, String sharedID) {
+    public Response getSharedMap(int uid, int mid, String sharedID) {
         PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx = pm.currentTransaction();
         Response res = Response
@@ -210,7 +210,7 @@ public class MapDAOPersistence implements MapDAO{
             if (sharedID.equals(m.getSharedID())) {
                 return Response
                          .status(Response.Status.SEE_OTHER)
-                         .header(HttpHeaders.LOCATION, "/sharemap/sharemap.html?id=" + mid + "&shared-id=" + sharedID)
+                         .header(HttpHeaders.LOCATION, "/sharemap/sharemap.html?id=" + mid + "&shared-id=" + sharedID + "&uid=" + uid)
                          .header("X-Foo", "bar")
                          .build();
             }
