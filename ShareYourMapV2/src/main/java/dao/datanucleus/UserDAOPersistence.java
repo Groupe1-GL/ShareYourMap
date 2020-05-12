@@ -224,8 +224,8 @@ public class UserDAOPersistence implements UserDAO {
 		try {
 			tx.begin();
 			User u = this.getUser(uid); //detached User
-			
 			if (u != null && u.getMaps().add(maps)) {
+					
 					pm.makePersistent(u);
 					res = true;
 			}

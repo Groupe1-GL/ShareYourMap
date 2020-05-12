@@ -1,5 +1,7 @@
 package jetty_server.ws;
 
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
@@ -28,7 +30,8 @@ import java.util.*;
 public class UserResource {
 	
 	//UserDAO userDAO = new UserDAOPersistence(JDOHelper.getPersistenceManagerFactory("gl"));
-	UserDAO userDAO = new UserDAOImpl();
+	PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
+	UserDAO userDAO = new UserDAOPersistence(pmf);
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -40,9 +43,7 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)	
 	public String createUser(User u) {
-		String name = u.getName();
-		String password = u.getPassword();
-		return userDAO.createUser(name, password);
+		return userDAO.createUser(u.getName(), u.getPassword());
 	}
 	
 	
@@ -50,13 +51,11 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)	
 	public String connectUser(User u) {
-		String name = u.getName();
-		String password = u.getPassword();
-		User us = userDAO.getUser(name);
+		User us = userDAO.getUser(u.getName());
 		if (us == null) {
 			return "This user doesn't exist";
 		}
-		else if(!us.getPassword().equals(password)) {
+		else if(!us.getPassword().equals(u.getPassword())) {
 			return "Username and password do not match";
 		}
 		 return "viewmap/viewmap.html?uid="+us.getId();
@@ -76,8 +75,7 @@ public class UserResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/{user-id}")
 	public String editUser(@PathParam("user-id") int uid, User u) {
-		String password = u.getPassword();
-		return userDAO.editUser(uid, password);
+		return userDAO.editUser(uid, u.getPassword());
 	}
 	
 	

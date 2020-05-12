@@ -10,12 +10,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import classes.Map;
+import classes.User;
 import dao.datanucleus.MapDAOPersistence;
 
 public class MapDAOPersistenceTest {
 
 	@Test
-	public void test() {
+	public static void test() {
 		
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
 		MapDAOPersistence mapDAO = new MapDAOPersistence(pmf);
@@ -41,29 +42,39 @@ public class MapDAOPersistenceTest {
 		Assert.assertTrue(mapDAO.editMap(1, 1, "new2", true));
 		Assert.assertTrue(mapDAO.createMap(1, "test6",true));
 		Assert.assertTrue(mapDAO.createMap(1, "test7",true));
-		//for (Map m: mapDAO.getUserDAO().getUser(1).getMaps()) {
-		//	System.out.println("u1"+m.getName());
-		//}
+
 
 		/* -------------------- Edit elements ------------------------------- */
 		Assert.assertTrue(mapDAO.editMap(1, 1, "new", true));
 		Assert.assertTrue(mapDAO.editMap(1, 4, "new3", false));
 		Assert.assertFalse(mapDAO.getMap(4).getAccess());
-		for (int i = 0; i < 7; i++) {
-			System.out.println("id "+mapDAO.getMaps().get(i).getID()+" "+mapDAO.getMaps().get(i).getName());
-			System.out.println("id "+mapDAO.getMap(i).getID()+" "+mapDAO.getMap(i).getName());
-		}
 		Assert.assertEquals("test3",mapDAO.getMap(2).getName());
 		
+		for (int i = 0; i < 7; i++) {
+			System.out.println("id "+mapDAO.getMap(i).getID()+" "+mapDAO.getMap(i).getName());
+		}
+
+		for (User u: mapDAO.getUserDAO().getUsers()) {
+			for (Map m: u.getMaps()) {
+				System.out.println(u.getName()+":"+m.getID()+m.getName());
+			}
+		}
+		
 		/* -------------------- Delete elements ------------------------------- */
-		//Assert.assertFalse(mapDAO.deleteMap(0, 7));
-		//Assert.assertEquals(3, mapDAO.getMaps().size());
-		//Assert.assertTrue(mapDAO.deleteMap(0, 1));
-		//Assert.assertEquals(2, mapDAO.getMaps().size());
-		/*Assert.assertFalse(mapDAO.deleteMap(0, 7));
-		Assert.assertEquals(3, mapDAO.getMaps().size());
-		Assert.assertTrue(mapDAO.deleteMap(0, 1));
-		Assert.assertEquals(2, mapDAO.getMaps().size());*/
+		Assert.assertFalse(mapDAO.deleteMap(0, 7));
+		Assert.assertEquals(7, mapDAO.getMaps().size());
+		//Assert.assertTrue(mapDAO.deleteMap(3, 0));
+		//Assert.assertEquals(6, mapDAO.getMaps().size());
+		//ajout d'une map sur deux user
+		Assert.assertTrue(mapDAO.getUserDAO().editUsersMaps(3, mapDAO.getMap(0)));
+		for (User u: mapDAO.getUserDAO().getUsers()) {
+			for (Map m: u.getMaps()) {
+				System.out.println(u.getName()+":"+m.getID()+m.getName());
+			}
+		}
+		/* -------------------- generateSharedID ------------------------------- */
+		//à tester sur le site
+		
 	}
 
 }
