@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -24,6 +26,7 @@ import classes.Event;
 import classes.Location;
 import dao.EventDAO;
 import dao.EventDAOImpl;
+import dao.datanucleus.EventDAOPersistence;
 
 /**
  * EventResource is the class of the events resource used in the ShareYourMap website.
@@ -35,7 +38,8 @@ import dao.EventDAOImpl;
 @Path("/")
 public class EventResource {
 	
-	EventDAO eventDAO = new EventDAOImpl();
+	PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
+	EventDAO eventDAO = new EventDAOPersistence(pmf);
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -54,17 +58,6 @@ public class EventResource {
 		return eventDAO.createEventOnMap(uid, mid, name, descr, label, x, y, start, end);
 	}
 	
-	
-	@DELETE
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("event/{event-id}/map/{map-id}/user/{user-id}")
-	public boolean deleteEvent(@PathParam("user-id") int uid,
-								  @PathParam("map-id") int mid,
-								  @PathParam("event-id") int eid) {
-		return eventDAO.deleteEvent(uid, mid, eid);
-	}
-	
-	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
@@ -76,7 +69,7 @@ public class EventResource {
 		String name = loc.getName();
 		String descr = loc.getDescription();
 		String label = loc.getLabel();
-		if(eventDAO.editLocation(uid, mid, lid, name, descr, label)) {
+		if(eventDAO.editEvent(uid, mid, lid, name, descr, label, loc.getStart(), loc.getEnd())) {
 			return "Successful edition";
 		}
 		else {

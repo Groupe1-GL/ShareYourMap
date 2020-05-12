@@ -20,8 +20,8 @@ import dao.LocationDAO;
 
 public class LocationDAOPersistence implements LocationDAO{
 	
-	private PersistenceManagerFactory pmf;
-	private MapDAOPersistence mapDAO;
+	protected PersistenceManagerFactory pmf;
+	protected MapDAOPersistence mapDAO;
 	private UserDAOPersistence userDAO;
 	
 	public LocationDAOPersistence(PersistenceManagerFactory pmf) {
@@ -88,8 +88,8 @@ public class LocationDAOPersistence implements LocationDAO{
 			tx.begin();
 			Location l = getLocation(lid);
 			if (l.addMessage(message)){
-					res = true;
 					pm.makePersistent(l);
+					res = true;
 			}
 			tx.commit();
 		} finally {

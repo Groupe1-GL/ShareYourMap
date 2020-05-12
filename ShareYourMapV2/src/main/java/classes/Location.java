@@ -128,9 +128,7 @@ public class Location{
 			this.getMessages().add(msg);
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 	
 	public boolean addPicture(String pic) {

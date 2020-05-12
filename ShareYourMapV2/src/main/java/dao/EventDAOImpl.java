@@ -53,31 +53,12 @@ public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 		return false;		
 	}
 
-	
-	/**
-     * Removes an event on a map.
-	 *
-	 * @param	uid		the user identifier 
-	 * @param	mid		the map identifier
-	 * @param	eid		the event identifier
-	 * @return			true if the operation was successful
-	 */
-	public boolean deleteEvent(int uid, int mid, int eid){
-		for (User us: UserDAOImpl.u) {
-			if (us.getId() == uid) {
-				for (Map ma: us.getMaps()) {
-					if (ma.getID() == mid) {
-						for (Location loc: ma.getLocations()) {
-							if (loc.getID() == eid) {								
-								ma.getLocations().remove(loc);
-								return true;
-							}
-						}
-					}
-				}
-			}
-		}
+	public boolean editEvent(int uid, int mid, int lid, String name, String descr, String label, LocalDateTime start,
+			LocalDateTime end) {
+		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 
 }

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
-public interface EventDAO  extends LocationDAO{
+public interface EventDAO extends LocationDAO{
 	
 	/**
      * Creates and adds a location on a map selected by its id.
@@ -32,18 +32,29 @@ public interface EventDAO  extends LocationDAO{
 										double y,
 										LocalDateTime start,
 										LocalDateTime end);
-
+	
 	/**
-     * Removes an event on a map.
+     * Edits the selected event.
 	 *
 	 * @param	uid		the user identifier 
-	 * @param	mid		the map identifier
-	 * @param	eid		the event identifier
+	 * @param	mid		the map identifier 
+	 * @param	lid		the location identifier
+	 * @param	name	the location name
+	 * @param	descr	the location description
+	 * @param	label	the location label
+	 * @param   start	the event start date
+	 * @param	end		the event end date
 	 * @return			true if the operation was successful
 	 */
-	public boolean deleteEvent(int uid, int mid, int eid);
-
-	boolean contributeOnLocationImg(int uid, int mid, int lid, InputStream uploadedInputStream,
-			FormDataContentDisposition fileDetail);
+	public boolean editEvent(			int uid, 
+										int mid, 
+										int lid,
+										String name, 
+										String descr, 
+										String label,
+										LocalDateTime start,
+										LocalDateTime end);
+	
+	
 	
 }
