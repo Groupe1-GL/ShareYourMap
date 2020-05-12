@@ -276,6 +276,24 @@ function addPix(){
 }
 
 /**
+ * Sends the request to add a picture to a location
+ * @param {int} id	The id of the location in which the picture will be add 
+ */
+function sendPix(id){
+	const picture = document.getElementById("pix").value;
+	_.each(current_map['locations'], function(location) {
+		if(location['id']==id){
+			if(location['event']==1){
+				postServerData(`/ws/feed-img/event/${id}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
+			}
+			else{
+				postServerData(`/ws/feed-img/location/${id}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
+			}
+		}
+	});
+}
+
+/**
  * Displays the div in which the user can add a msg
  */
 function addMsg(){
@@ -287,8 +305,17 @@ function addMsg(){
  * @param {int} id	The id of the location in which the message will be add 
  */
 function sendMsg(id){
-	var msg = document.getElementById("message").value;
-	postServerData2(`/ws/feed/${msg}/location/${id}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+	const msg = document.getElementById("message").value;
+	_.each(current_map['locations'], function(location) {
+		if(location['id']==id){
+			if(location['event']==1){
+				postServerData2(`/ws/feed/${msg}/event/${id}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+			}
+			else{
+				postServerData2(`/ws/feed/${msg}/location/${id}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+			}
+		}
+	});
 }
 
 /**

@@ -46,10 +46,8 @@
 					<ul id="pics"></ul>
 					<div id="addPix" class="feed" hidden>
 						<div class="button close" onclick="closeElement('addPix')" >X</div>
-						<form action="/<%=uid%>/maps/location/<%=id%>/feed-img" method="POST" enctype="application/x-www-form-urlencoded">
-							<p>Add a picture <input type="file" name="picture" accept="image/png, image/jpeg"> </p>
-							<input onclick='closeElement('addPix') type="submit" value="Add">
-						</form>
+						<p>Add a picture <input type="file" id="pix">
+						<button onclick="sendPix()">Send</button>
 					</div>
 				</div>
 				<div classs="msg">
