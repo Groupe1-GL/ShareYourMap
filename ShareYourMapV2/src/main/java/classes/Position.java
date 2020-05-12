@@ -3,7 +3,8 @@ package classes;
 import javax.jdo.annotations.PersistenceCapable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@PersistenceCapable
+
+@PersistenceCapable(detachable="true")
 public class Position {
 	private double x;
 	private double y;
