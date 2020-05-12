@@ -2,14 +2,16 @@ package classes;
 
 import java.time.LocalDateTime;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @PersistenceCapable(detachable="true")
 public class Event extends Location{
-	
+	@Persistent(defaultFetchGroup="true") 
 	private LocalDateTime start;
+	@Persistent(defaultFetchGroup="true") 
 	private LocalDateTime end;
 	
 	public Event(@JsonProperty("name") String name,@JsonProperty("creatorName") String creatorName,@JsonProperty("x") double x,@JsonProperty("y") double y,@JsonProperty("descr") String descr,@JsonProperty("label") String label,@JsonProperty("start") String start, @JsonProperty("end") String end) {
@@ -25,20 +27,18 @@ public class Event extends Location{
 		this.start = start;
 		this.end = end;
 	}
-	/*
-	public Event(int ID, String name, String creatorName, double x, double y, String descr, String label, LocalDateTime start, LocalDateTime end) {
-		super(ID,name, creatorName, x, y, descr, label);
-		this.start = start;
-		this.end = end;
-	}*/
 
 	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	public LocalDateTime getStart() {
 		return start;
 	}
 
-	public void setStart(LocalDateTime start) {
-		this.start = start;
+	public boolean setStart(LocalDateTime start) {
+		if (start != null) {
+			this.start = start;
+			return true;
+		}
+		return false;
 	}
 	
 	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
@@ -46,8 +46,12 @@ public class Event extends Location{
 		return end;
 	}
 	
-	public void setEnd(LocalDateTime end) {
-		this.end = end;
+	public boolean setEnd(LocalDateTime end) {
+		if (end != null) {
+			this.end = end;
+			return true;
+		}
+		return false;
 	}
 
 
