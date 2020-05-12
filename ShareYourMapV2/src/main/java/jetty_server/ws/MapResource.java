@@ -1,5 +1,7 @@
 package jetty_server.ws;
 
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,7 +17,9 @@ import javax.ws.rs.core.Response;
 import classes.Map;
 import dao.MapDAO;
 import dao.MapDAOImpl;
+import dao.UserDAO;
 import dao.datanucleus.MapDAOPersistence;
+import dao.datanucleus.UserDAOPersistence;
 
 import java.util.*;
 
@@ -30,7 +34,8 @@ import java.util.*;
 public class MapResource {
 	
 	//MapDAO mapDAO = new MapDAOPersistence(JDOHelper.getPersistenceManagerFactory("gl"));
-	MapDAO mapDAO = new MapDAOImpl();
+	PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
+	MapDAO mapDAO = new MapDAOPersistence(pmf);
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

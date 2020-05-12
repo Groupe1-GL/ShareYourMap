@@ -1,5 +1,7 @@
 package jetty_server.ws;
 
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -20,6 +22,9 @@ import dao.EventDAO;
 import dao.EventDAOImpl;
 import dao.LocationDAO;
 import dao.LocationDAOImpl;
+import dao.MapDAO;
+import dao.datanucleus.LocationDAOPersistence;
+import dao.datanucleus.MapDAOPersistence;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -34,7 +39,9 @@ import java.time.LocalDateTime;
 @Path("/")
 public class LocationResource {
 	
-	static LocationDAO locationDAO = new LocationDAOImpl();
+	//static LocationDAO locationDAO = new LocationDAOImpl();
+	PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
+	LocationDAO locationDAO = new LocationDAOPersistence(pmf);
 	
 	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@PUT

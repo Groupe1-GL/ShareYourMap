@@ -12,7 +12,7 @@ import classes.User;
 public class MapDAOImpl implements MapDAO {
 	
 	static List<Map> m = Map.generateMaps2();
-
+	
 	/**
 	 * Returns the list of all maps.
 	 * If there is no maps, it will return a null object.
