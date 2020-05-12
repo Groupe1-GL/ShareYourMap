@@ -466,5 +466,4 @@ function navig(result){
  */
  function refresh(result){
 	history.go(0);
->>>>>>> branch 'master' of https://github.com/Groupe1-GL/ShareYourMap
 }
