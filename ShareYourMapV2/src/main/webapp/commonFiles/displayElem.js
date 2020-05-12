@@ -280,12 +280,7 @@ function addPix(){
  */
 function sendPix(){
 	const picture = document.getElementById("pix").value;
-	if(current_fav['event']==1){
-		postServerData2(`/ws/feed-img/event/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
-	}
-	else{
-		postServerData2(`/ws/feed-img/location/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
-	}
+	postServerData2(`/ws/feed-img/location/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
 }
 
 /**
@@ -300,12 +295,7 @@ function addMsg(){
  */
 function sendMsg(){
 	const msg = document.getElementById("message").value;
-	if(current_fav['event']==1){
-		postServerData2(`/ws/feed/${msg}/event/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,refresh);
-	}
-	else{
-		postServerData2(`/ws/feed/${msg}/location/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,refresh);
-	}
+	postServerData2(`/ws/feed/${msg}/location/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,refresh);
 }
 
 /**
