@@ -50,16 +50,6 @@ public class MapDAOPersistenceTest {
 		Assert.assertFalse(mapDAO.getMap(4).getAccess());
 		Assert.assertEquals("test3",mapDAO.getMap(2).getName());
 		
-		for (int i = 0; i < 7; i++) {
-			System.out.println("id "+mapDAO.getMap(i).getID()+" "+mapDAO.getMap(i).getName());
-		}
-
-		for (User u: mapDAO.getUserDAO().getUsers()) {
-			for (Map m: u.getMaps()) {
-				System.out.println(u.getName()+":"+m.getID()+m.getName());
-			}
-		}
-		
 		/* -------------------- Delete elements ------------------------------- */
 		Assert.assertFalse(mapDAO.deleteMap(0, 7));
 		Assert.assertEquals(7, mapDAO.getMaps().size());
@@ -67,13 +57,8 @@ public class MapDAOPersistenceTest {
 		//Assert.assertEquals(6, mapDAO.getMaps().size());
 		//ajout d'une map sur deux user
 		Assert.assertTrue(mapDAO.getUserDAO().editUsersMaps(3, mapDAO.getMap(0)));
-		for (User u: mapDAO.getUserDAO().getUsers()) {
-			for (Map m: u.getMaps()) {
-				System.out.println(u.getName()+":"+m.getID()+m.getName());
-			}
-		}
 		/* -------------------- generateSharedID ------------------------------- */
-		//à tester sur le site
+		//testé sur le site, result: OK
 		
 	}
 

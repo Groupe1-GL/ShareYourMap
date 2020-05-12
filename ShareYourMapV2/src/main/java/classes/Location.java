@@ -17,6 +17,7 @@ public class Location{
 	@Persistent(valueStrategy=IdGeneratorStrategy.NATIVE)
 	private int id;
 	private String name, creatorName, description, label;
+	@Persistent(defaultFetchGroup="true")
 	private Position position;
 	@Persistent(defaultFetchGroup="true")
 	private List<String> pictures;

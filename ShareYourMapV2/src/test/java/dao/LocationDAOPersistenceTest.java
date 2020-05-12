@@ -14,7 +14,7 @@ import dao.datanucleus.LocationDAOPersistence;
 public class LocationDAOPersistenceTest {
 
 	@Test
-	public void test() {
+	public  void test() {
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
 		LocationDAOPersistence locationDAO = new LocationDAOPersistence(pmf);
 		MapDAOPersistenceTest.test();

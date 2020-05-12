@@ -25,14 +25,14 @@ public class UserDAOPersistenceTest {
 		
 		
 		/* -------------------- Create elements ------------------------------- */
-		Assert.assertEquals("viewmap/viewmap.html?uid=1",userDAO.createUser("user1","psw"));
+		Assert.assertEquals("viewmap/viewmap.html?uid=0",userDAO.createUser("user1","psw"));
 		Assert.assertEquals(1, userDAO.getUsers().size());
-		Assert.assertSame("user1",userDAO.getUser(1).getName());
+		Assert.assertSame("user1",userDAO.getUser(0).getName());
 		Assert.assertSame("user1",userDAO.getUser("user1").getName());
 		Assert.assertNull(userDAO.getUser(8));		
 		Assert.assertEquals("This username is already used.",userDAO.createUser("user1","psw"));
-		Assert.assertEquals("viewmap/viewmap.html?uid=2",userDAO.createUser("user2","psw"));
-		Assert.assertEquals("viewmap/viewmap.html?uid=3",userDAO.createUser("user3","psw"));
+		Assert.assertEquals("viewmap/viewmap.html?uid=1",userDAO.createUser("user2","psw"));
+		Assert.assertEquals("viewmap/viewmap.html?uid=2",userDAO.createUser("user3","psw"));
 		Assert.assertEquals(3, userDAO.getUsers().size());
 		Assert.assertSame(2,userDAO.getUser(2).getId());
 		
