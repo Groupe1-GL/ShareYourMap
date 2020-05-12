@@ -143,41 +143,43 @@ function showEditFav(){
 	$("#viewFav").html(editFav(editDetails));
 }
 
+
 /**
  * Sends the request to edit a favorite
  * @param {int} id 
  * @param {boolean} event 
  */
-function editFav(id,event){
+function editFav(){
 	var name = document.getElementById("edit_name").value;
 	var description = document.getElementById("edit_description").value;
 	var label = document.getElementById("edit_label").value;	
-	var fav = {"name":name, "description":description, "label":label};
-
+	var fav = {"id":current_fav['id'], "name":name, "description":description, "label":label};
+	
 	// Adds informations for a event to the request
-	if(event){
-		var startIn = document.getElementById("new_start").value;
-		var endIn = document.getElementById("new_end").value;
+	if(current_fav['event']==1){
+		var startIn = document.getElementById("edit_start").value;
+		var endIn = document.getElementById("edit_end").value;
 		var start = startIn.split(" ");
 		var end = endIn.split(" ");	
 
 		// Different formats for Firefox and Chrome/Edge
 		if(start[1] != null && end[1] != null){
-			var startTime = start[1].split(":")[0]+"-"+start[1].split(":")[1]+"-"+start[1].split(":")[2];
-			var endTime = end[1].split(":")[0]+"-"+end[1].split(":")[1]+"-"+end[1].split(":")[2];
-			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
+			const startTime = start[1].split(":")[0]+"-"+start[1].split(":")[1]+"-"+start[1].split(":")[2];
+			const endTime = end[1].split(":")[0]+"-"+end[1].split(":")[1]+"-"+end[1].split(":")[2];
+			document.getElementById("currentMap").style.display = "block";
+			fav = {"name":name, "description":description, "label":label, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
 		}
 		else{
 			start = startIn.split('T')[0]+"-"+startIn.split('T')[1].split(':')[0]+"-"+startIn.split('T')[1].split(':')[1];
 			end = endIn.split('T')[0]+"-"+endIn.split('T')[1].split(':')[0]+"-"+endIn.split('T')[1].split(':')[1];
-			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
+			fav = {"name":name, "description":description, "label":label, "start":start, "end":end};
 		}
 		// Sends the request to edit a location
-		postServerData(`/ws/event/${id}/map/${current_map['id']}/user/${current_user_id}`,fav,navig);
+		postServerData(`/ws/event/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,fav,navig);
 	}
 	else{
 		// Sends the request to edit a location
-		postServerData(`/ws/location/${id}/map/${current_map['id']}/user/${current_user_id}`,fav,navig);
+		postServerData(`/ws/location/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,fav,navig);
 	}
 }
 
@@ -186,17 +188,7 @@ function editFav(id,event){
  * @param {int} lid		The id of the map to delete
  */
 function deleteFav(lid){
-	// Searchs the map to  delete in the list of favorite of the current map
-	_.each(current_map['locations'], function(location) {
-		if(location['id']==lid){
-			if(location['event']==1){
-				deleteServerData(`/ws/event/${lid}/map/${current_map['id']}/user/${current_user_id}`,refresh);
-			}
-			else{
-				deleteServerData(`/ws/location/${lid}/map/${current_map['id']}/user/${current_user_id}`,refresh);
-			}
-		}
-	});
+	deleteServerData(`/ws/location/${lid}/map/${current_map['id']}/user/${current_user_id}`,refresh);
 }
 
 /**

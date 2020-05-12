@@ -97,10 +97,10 @@
 				<p>Description <input type="text" id="edit_description" value="<%= description%>">
 				Label <input type="text" id="edit_label" value="<%= label%>"></p>
 				<% if(event==1){ %>
-					<p>Start <input type="datetime-local" id="edit_start" value="<%= start%>">
-					End <input type="datetime-local" id="edit_end" value="<%= end%>"></p>
+					<p>Start <input type="datetime-local" id="edit_start" value="<%=start['year']%>-<%=start['monthValue']%>-<%=start['dayOfMonth']%> <%=start['hour']%>:<%=start['minute']%>:00" placeholder="YYYY-MM-DD hh-mm-ss">
+					End <input type="datetime-local" id="edit_end" value="<%=end['year']%>-<%=end['monthValue']%>-<%=end['dayOfMonth']%> <%=end['hour']%>:<%=end['minute']%>:00" placeholder="YYYY-MM-DD hh-mm-ss"></p>
 				<% } %>
-				<button onclick='editFav(<%=id%>,<%event==1%>)'>Edit</button>
+				<button onclick='editFav()'>Edit</button>
 			</div>
 		</script>
 
