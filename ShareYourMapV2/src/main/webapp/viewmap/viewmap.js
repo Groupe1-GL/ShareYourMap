@@ -340,7 +340,7 @@ function newFav(x,y){
 	const description = document.getElementById("new_description").value;
 	const label = document.getElementById("new_label").value;
 	const checkBox = document.getElementById("event");
-	var fav = {"id":0, "name":name, "description":description, "label":label, "position":{"x":x, "y":y}};
+	var fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}};
 
 	// Adds informations for a event to the request
 	if(checkBox.checked){
@@ -353,12 +353,12 @@ function newFav(x,y){
 		if(start[1] != null && end[1] != null){
 			const startTime = start[1].split(":")[0]+"-"+start[1].split(":")[1]+"-"+start[1].split(":")[2];
 			const endTime = end[1].split(":")[0]+"-"+end[1].split(":")[1]+"-"+end[1].split(":")[2];
-			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
+			fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
 		}
 		else{
 			start = startIn.split('T')[0]+"-"+startIn.split('T')[1].split(':')[0]+"-"+startIn.split('T')[1].split(':')[1];
 			end = endIn.split('T')[0]+"-"+endIn.split('T')[1].split(':')[0]+"-"+endIn.split('T')[1].split(':')[1];
-			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
+			fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
 		}
 		// Sends the request to create a event
 		putServerData2(`/ws/event/map/${current_map['id']}/user/${current_user_id}`,fav,refresh);
@@ -390,7 +390,7 @@ function editFav(id,event){
 	var name = document.getElementById("edit_name").value;
 	var description = document.getElementById("edit_description").value;
 	var label = document.getElementById("edit_label").value;	
-	var fav = {"id":0, "name":name, "description":description, "label":label};
+	var fav = {"name":name, "description":description, "label":label};
 
 	// Adds informations for a event to the request
 	if(event){
@@ -403,12 +403,12 @@ function editFav(id,event){
 		if(start[1] != null && end[1] != null){
 			var startTime = start[1].split(":")[0]+"-"+start[1].split(":")[1]+"-"+start[1].split(":")[2];
 			var endTime = end[1].split(":")[0]+"-"+end[1].split(":")[1]+"-"+end[1].split(":")[2];
-			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
+			fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start[0]+"-"+startTime, "end":end[0]+"-"+endTime};
 		}
 		else{
 			start = startIn.split('T')[0]+"-"+startIn.split('T')[1].split(':')[0]+"-"+startIn.split('T')[1].split(':')[1];
 			end = endIn.split('T')[0]+"-"+endIn.split('T')[1].split(':')[0]+"-"+endIn.split('T')[1].split(':')[1];
-			fav = {"id":0,"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
+			fav = {"name":name, "description":description, "label":label, "position":{"x":x, "y":y}, "start":start, "end":end};
 		}
 		// Sends the request to edit a location
 		postServerData(`/ws/event/${id}/map/${current_map['id']}/user/${current_user_id}`,fav,navig);
