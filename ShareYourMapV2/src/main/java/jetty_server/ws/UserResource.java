@@ -58,7 +58,7 @@ public class UserResource {
 		else if(!us.getPassword().equals(u.getPassword())) {
 			return "Username and password do not match";
 		}
-		 return "Welcome back ^^ &/viewmap/viewmap.html?uid="+us.getId();
+		 return "viewmap/viewmap.html?uid="+us.getId();
 	}
 
 	

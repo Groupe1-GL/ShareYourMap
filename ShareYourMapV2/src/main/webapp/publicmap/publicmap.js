@@ -4,7 +4,7 @@
  */
 
 /**
- * Send the GET request ot the server
+ * Sends the GET request ot the server
  * @param {string} 	 url			The url of the request
  * @param {void} success 		The callback function
  */
@@ -17,16 +17,21 @@ function getServerData(url, success){
 
 /*		---------------------		Automatic actions		---------------------		*/	
 
-// Send the request to have the list of public maps
+/**
+ * Fills the navigation button with the current user id
+ * And sends the request to have the list of public maps
+ */ 
 $(function(){
 	var user = _.template($('#navigate').html());
 	$("#viewmap").html(user({"uid":current_user_id}));
+
 	getServerData("/ws/maps",displayMapsList);
 });
 
 /**
- * Display public maps in a list of button based on the 'listPublicMap' template
- * @param {List<Map>}	The list of public map stocked in the database
+ * Displays public maps in a list of button based on the 'listPublicMap' template
+ * Filters maps based on the 'access' atribute (access == true if the map is public)
+ * @param {List<Map>} result	The list of map stocked in the database
  */
 function displayMapsList(result){
 
@@ -41,8 +46,8 @@ function displayMapsList(result){
 }
 
 /**
- * Change backgroung color of the current map
- * @param {*} id	id of the currentMap
+ * Changes backgroung color of the current map and sets the hover effect on others maps
+ * @param {int} id	id of the currentMap
  */
 function editMapColor(id){
 	var c_map = document.getElementById(id);
@@ -66,7 +71,7 @@ function editMapColor(id){
 }
 
 /**
- * Filter the list of maps regarding a research
+ * Filter the list of maps regarding a research (String)
  */
 $(document).ready(function(){
 	$("#searchBar").on("keyup", function() {
