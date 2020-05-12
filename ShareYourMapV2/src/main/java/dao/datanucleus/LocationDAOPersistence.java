@@ -22,40 +22,39 @@ public class LocationDAOPersistence implements LocationDAO{
 	
 	private PersistenceManagerFactory pmf;
 	private MapDAOPersistence mapDAO;
+	private UserDAOPersistence userDAO;
 	
-	//manque liaisons des maps et users
 	public LocationDAOPersistence(PersistenceManagerFactory pmf) {
 		this.pmf = pmf;
 		this.mapDAO = new MapDAOPersistence(pmf);
 		
 	}
 	
+	 public MapDAOPersistence getMapDAO() {
+	    	return this.mapDAO;
+	 }
+	    
+	
 	@SuppressWarnings("finally")
-	public Location getLocation(int lid){
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		Location location = null;
-		Location detached = null;
-		try {
-			tx.begin();
-
-			Query q = pm.newQuery(Location.class);
-			q.declareParameters("Integer lid");
-			q.setFilter("lid == id");
-			q.setUnique(true);
-			
-			location = (Location) q.execute(lid);
-			detached = (Location) pm.detachCopy(location);
-
+    public Location getLocation(int lid){
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        Location detached = null;
+        try {
+        	tx.begin();
+            detached = pm.getObjectById(Location.class, lid);
+            pm.setDetachAllOnCommit(true);
 			tx.commit();
-		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-			return detached;
-		}
-	}
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+                return detached;
+            }
+            pm.close();
+        }
+        return detached;
+    }
+   
 
 	@SuppressWarnings("finally")
 	public boolean createLocationOnMap(int uid, int mid, String name, String descr, String label, double x, double y) {
@@ -77,11 +76,10 @@ public class LocationDAOPersistence implements LocationDAO{
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				pm.close();
 			}
 			pm.close();
-			return res;
 		}
+		return res;
 	}
 
 	public boolean contributeOnLocation(int uid, int mid, int lid, String message) {
@@ -91,18 +89,18 @@ public class LocationDAOPersistence implements LocationDAO{
 		try {
 			tx.begin();
 			Location l = getLocation(lid);
-			l.addMessage(message);
-			pm.deletePersistent(l);
-			pm.makePersistent(l);
+			if (l.addMessage(message)){
+					res = true;
+					pm.makePersistent(l);
+			}
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				pm.close(); 
 			}
 			pm.close();
-			return res;
 		}
+		return res;
 	}
 
 	public boolean editLocation(int uid, int mid, int lid, String name, String descr, String label) {
@@ -112,44 +110,40 @@ public class LocationDAOPersistence implements LocationDAO{
 		try {
 			tx.begin();
 			Location l = getLocation(lid);
-			pm.deletePersistent(l);
 			if (l.setName(name)&&l.setDescription(descr)&&l.setLabel(label)) {
 				pm.makePersistent(l);
+				res = true;
 			}
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				pm.close();
 			}
 			pm.close();
-			return res;
 		}
+		return res;
 	}
 
-	@SuppressWarnings("finally")
+
 	public boolean deleteLocation(int uid, int mid, int lid) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		boolean res = true;
+		boolean res = false;
 		try {
 			tx.begin();
 			Location l = this.getLocation(lid);																							// Need delay between the 2 queries
 			if(l != null) {
-				Query q = pm.newQuery(Location.class);
-				q.declareParameters("Integer lid");
-				q.setFilter("id == lid");
-				q.deletePersistentAll(lid);
-				tx.commit();
+				pm.deletePersistentAll(l);
+				res = true;			
 			}
+			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				res = false;
 			}
 			pm.close();
-			return res;
 		}
+		return res;
 	}
 
 
@@ -181,11 +175,10 @@ public class LocationDAOPersistence implements LocationDAO{
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				pm.close();
 			}
 			pm.close();
-			return res;
 		}
+		return res;
 	}
 
 }

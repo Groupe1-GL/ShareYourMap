@@ -39,22 +39,11 @@ public class Location{
 		this.pictures = new ArrayList<String>();
 	}
 	
-	public Location(int ID, String name, String creatorName, double x, double y, String descr, String label) {
-		this.id = ID;
-		this.creatorName = creatorName;
-		this.name = name;
-		this.position = new Position(x,y);
-		this.description = descr;
-		this.label = label;
-		this.messages = new ArrayList<String>();
-		this.pictures = new ArrayList<String>();
-	}
-	
 	
 	public static ArrayList<Location> generateLocations(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Monoprix = new Location(1,"Monoprix","David",48.830211167315326, 2.3784144024565013,"Cher"," ");
-		Location Carrefour = new Location(2,"Carrefour","David",48.83211100128898, 2.362379298178112,"Proche"," ");
+		Location Monoprix = new Location("Monoprix","David",48.830211167315326, 2.3784144024565013,"Cher"," ");
+		Location Carrefour = new Location("Carrefour","David",48.83211100128898, 2.362379298178112,"Proche"," ");
 		locations.add(Carrefour);
 		locations.add(Monoprix);
 		return locations;
@@ -62,10 +51,10 @@ public class Location{
 	
 	public static ArrayList<Location> generateLocations2(){
 		ArrayList<Location> locations = new ArrayList<Location>();
-		Location Mcdo = new Location(3,"Mcdo","David",48.826792697264764,2.378913867792432,"Filet O fish only but tasty","FastFood");
+		Location Mcdo = new Location("Mcdo","David",48.826792697264764,2.378913867792432,"Filet O fish only but tasty","FastFood");
 		Mcdo.addMessage("Close to college, with friendly waitresses");
-		Location KFC = new Location(4,"KFC","David",48.828830387756604, 2.3552615002566095,"Poulet"," ");
-		Location Quick = new Location(5,"Quick","David",48.87568498530489, 2.326958388281866,"Bof"," ");
+		Location KFC = new Location("KFC","David",48.828830387756604, 2.3552615002566095,"Poulet"," ");
+		Location Quick = new Location("Quick","David",48.87568498530489, 2.326958388281866,"Bof"," ");
 		LocalDateTime s = LocalDateTime.of(2020,1,15,10,00);
 		LocalDateTime e = LocalDateTime.of(2020,1,15,10,45);
 		Event Cafe = new Event(6,"Honorine","David",48.826510168645356, 2.3809641010924447,"Raspberry Cheesecake","Birthday party",s,e);
