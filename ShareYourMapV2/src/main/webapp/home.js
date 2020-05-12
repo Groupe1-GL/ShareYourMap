@@ -85,20 +85,17 @@ $("#sign_in").click(function (){
 });
 
 /**
- * Displays the message for a connection and switchs to the personal page if the connection is validated
- * If the connection is validated, the message will be: a message + '&' + path to the personal page
+ * Switchs to the personal page if the connection is validated or displays the error message
+ * If the connection is validated, the result will be: path to the personal page
  * Else, it will be: a message
  * @param {String} result	The response for a connection or a subscription
  */
 function connect(result){
-	var res = result.split('&');
-	
 	// Check the type of response 
-	if(res.length <= 1){
+	if(result.split('/')[0] != 'viewmap'){
 		alert(result);
 	}
 	else{
-		alert(res[0]);
-		location.replace(res[1]);
+		location.replace(result);
 	}
 }

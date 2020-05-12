@@ -78,7 +78,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		User newUser = new User(name,password);
 		u.add(newUser);
-		return "You've been successfully signed up.&viewmap/viewmap.html?uid="+newUser.getId();
+		return "viewmap/viewmap.html?uid="+newUser.getId();
 	}
 	
 	/**

@@ -117,7 +117,7 @@ public class UserDAOPersistence implements UserDAO {
 			else {
 				User newUser = new User(name,password);
 				pm.makePersistent(newUser);
-				res = "You've been successfully signed up.&viewmap/viewmap.html?uid="+newUser.getId();
+				res = "viewmap/viewmap.html?uid="+newUser.getId();
 			}
 			tx.commit();
 		} finally {
