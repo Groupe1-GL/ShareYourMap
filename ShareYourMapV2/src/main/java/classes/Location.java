@@ -14,7 +14,7 @@ import java.util.*;
 public class Location{
 	
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
+	@Persistent(valueStrategy=IdGeneratorStrategy.NATIVE)
 	private int id;
 	private String name, creatorName, description, label;
 	private Position position;
@@ -57,7 +57,7 @@ public class Location{
 		Location Quick = new Location("Quick","David",48.87568498530489, 2.326958388281866,"Bof"," ");
 		LocalDateTime s = LocalDateTime.of(2020,1,15,10,00);
 		LocalDateTime e = LocalDateTime.of(2020,1,15,10,45);
-		Event Cafe = new Event(6,"Honorine","David",48.826510168645356, 2.3809641010924447,"Raspberry Cheesecake","Birthday party",s,e);
+		Event Cafe = new Event("Honorine","David",48.826510168645356, 2.3809641010924447,"Raspberry Cheesecake","Birthday party",s,e);
 		Cafe.addMessage("Don't forget candles");
 		Cafe.addMessage("Enjoy your time ^^");
 		Cafe.addMessage("Happy birthday");

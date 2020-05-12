@@ -18,7 +18,7 @@ import org.passay.PasswordGenerator;
 public class Map{
 	
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
+	@Persistent(valueStrategy=IdGeneratorStrategy.NATIVE)
 	private int id;	
 	private String name, creatorName;
 	private boolean access;

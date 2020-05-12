@@ -173,6 +173,29 @@ public class MapDAOPersistence implements MapDAO{
             return res;
         }
     }
+    
+    
+    //replace the new location list on the map
+    public boolean editMapsLocation(int uid, int mid, Location location){
+        PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx = pm.currentTransaction();
+        boolean res = false;
+        try {
+            tx.begin();
+            Map m = this.getMap(mid);
+            if((m != null)&&m.getLocations().add(location)) {
+            	pm.makePersistent(m);
+                res = true;
+            }
+            tx.commit();   
+        } finally {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            pm.close();
+        }
+        return res;
+    }
  
     public Response getSharedMap(int mid, String sharedID) {
         PersistenceManager pm = pmf.getPersistenceManager();
@@ -184,7 +207,7 @@ public class MapDAOPersistence implements MapDAO{
         try {
             tx.begin();
             Map m = this.getMap(mid);
-            if (m.getSharedID()==sharedID) {
+            if (sharedID.equals(m.getSharedID())) {
                 return Response
                          .status(Response.Status.SEE_OTHER)
                          .header(HttpHeaders.LOCATION, "/sharemap/sharemap.html?id=" + mid + "&shared-id=" + sharedID)

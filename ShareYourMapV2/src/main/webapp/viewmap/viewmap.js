@@ -333,7 +333,7 @@ function createNewFav(x,y){
 /**
  * Sends the request to create a new favorite
  * @param {float} x 	The latitude of the location
- * @param {float} y 	The lonngitude of the location
+ * @param {float} y 	The longitude of the location
  */
 function newFav(x,y){
 	const name = document.getElementById("new_name").value;

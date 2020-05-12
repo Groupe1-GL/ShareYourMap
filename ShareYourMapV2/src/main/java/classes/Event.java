@@ -25,12 +25,12 @@ public class Event extends Location{
 		this.start = start;
 		this.end = end;
 	}
-	
+	/*
 	public Event(int ID, String name, String creatorName, double x, double y, String descr, String label, LocalDateTime start, LocalDateTime end) {
 		super(ID,name, creatorName, x, y, descr, label);
 		this.start = start;
 		this.end = end;
-	}
+	}*/
 
 	@JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	public LocalDateTime getStart() {

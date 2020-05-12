@@ -14,7 +14,7 @@ import javax.jdo.annotations.PrimaryKey;
 public class User{
 	
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.INCREMENT)
+	@Persistent(valueStrategy=IdGeneratorStrategy.NATIVE)
 	private int id;
 	private String name;
 	private String password;

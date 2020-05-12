@@ -56,7 +56,7 @@ public class LocationDAOPersistence implements LocationDAO{
     }
    
 
-	@SuppressWarnings("finally")
+
 	public boolean createLocationOnMap(int uid, int mid, String name, String descr, String label, double x, double y) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -66,9 +66,7 @@ public class LocationDAOPersistence implements LocationDAO{
 			User u = mapDAO.getUserDAO().getUser(uid);
 			Location loc = new Location(name,u.getName(),x,y,descr,label);
 			Map m = mapDAO.getMap(mid);
-			List<Location> l = m.getLocations();
-			l.add(loc);
-			if (mapDAO.editMapsLocation(uid,mid,l)) {
+			if (mapDAO.editMapsLocation(uid,mid,loc)) {
 				pm.makePersistent(loc);
 				res = true;
 			}			
