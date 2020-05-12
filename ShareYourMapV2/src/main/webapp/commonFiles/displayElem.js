@@ -277,20 +277,15 @@ function addPix(){
 
 /**
  * Sends the request to add a picture to a location
- * @param {int} id	The id of the location in which the picture will be add 
  */
-function sendPix(id){
+function sendPix(){
 	const picture = document.getElementById("pix").value;
-	_.each(current_map['locations'], function(location) {
-		if(location['id']==id){
-			if(location['event']==1){
-				postServerData(`/ws/feed-img/event/${id}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
-			}
-			else{
-				postServerData(`/ws/feed-img/location/${id}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
-			}
-		}
-	});
+	if(current_fav['event']==1){
+		postServerData2(`/ws/feed-img/event/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
+	}
+	else{
+		postServerData2(`/ws/feed-img/location/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,picture,refresh);
+	}
 }
 
 /**
@@ -302,20 +297,15 @@ function addMsg(){
 
 /**
  * Sends the request to add a message to a location
- * @param {int} id	The id of the location in which the message will be add 
  */
-function sendMsg(id){
+function sendMsg(){
 	const msg = document.getElementById("message").value;
-	_.each(current_map['locations'], function(location) {
-		if(location['id']==id){
-			if(location['event']==1){
-				postServerData2(`/ws/feed/${msg}/event/${id}/map/${current_map['id']}/user/${current_user_id}`,refresh);
-			}
-			else{
-				postServerData2(`/ws/feed/${msg}/location/${id}/map/${current_map['id']}/user/${current_user_id}`,refresh);
-			}
-		}
-	});
+	if(current_fav['event']==1){
+		postServerData2(`/ws/feed/${msg}/event/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+	}
+	else{
+		postServerData2(`/ws/feed/${msg}/location/${current_fav['id']}/map/${current_map['id']}/user/${current_user_id}`,refresh);
+	}
 }
 
 /**

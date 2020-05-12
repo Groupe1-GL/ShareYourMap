@@ -55,12 +55,17 @@ function putServerData2(url,data,success){
 //-------------------		Automatic actions		-----------------		
 // Sends the request to get the shared map
 if(urlParams.has('id')){
-	var current_user_id;
 	var id = urlParams.get('id');
 	displayMap(id);
 }
 
-//---------------------		Actions on click		---------------------	
+//---------------------		Actions on click		---------------------
+/**
+ * Implementation default 
+ * @param {int} id	id of the currentMap
+ */
+function editMapColor(id){}
+
 /**
  * Displays the element to create an event
  */

@@ -280,7 +280,7 @@ function editMap(mid){
  * @param {int} mid		the id of the current map
  */
 function shareMap(mid,sid){
-	const link = {"link": "localhost:8080/ws/map?id="+mid+"&shared-id="+sid+"&uid="+current_user_id};
+	const link = {"link": "localhost:8080/ws/map?id="+mid+"&shared-id="+sid};
 	document.getElementById("shareMap").style.display = "block";
 	const sharingLink = _.template($('#shareMapTemplate').html());
 	$("#shareMap").html(sharingLink(link));
@@ -292,7 +292,7 @@ function shareMap(mid,sid){
 function copyLink() {
 	const copyText = document.getElementById("shareLink");
 	copyText.select();
-	alert("Sharing link copied !");
+	alert("Share link copied !");
 	document.execCommand("copy");
   }
 
