@@ -1,10 +1,3 @@
-/** DISPLAY ELEMENTS
- * Functions to display maps and locations details
- */
-
-  
-// ---------------------		Global variables	---------------------
-// Variables to locate the user
 var current_loc_x = null;
 var current_loc_y = null;
 
