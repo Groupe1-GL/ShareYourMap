@@ -8,42 +8,28 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
-
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-
-import classes.Event;
 import classes.Location;
-import dao.EventDAO;
-import dao.EventDAOImpl;
 import dao.LocationDAO;
-import dao.LocationDAOImpl;
-import dao.MapDAO;
 import dao.datanucleus.LocationDAOPersistence;
-import dao.datanucleus.MapDAOPersistence;
-
 import java.io.InputStream;
-import java.time.LocalDateTime;
 
 /**
  * LocationResource is the class of the locations resource used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
- * @version %I%, %G%
+ * @version 2.0
  * @since 1.0
  */
 @Path("/")
 public class LocationResource {
 	
-	//static LocationDAO locationDAO = new LocationDAOImpl();
 	PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
 	LocationDAO locationDAO = new LocationDAOPersistence(pmf);
 	
-	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -79,18 +65,6 @@ public class LocationResource {
 		}
 	}
 	
-	
-	@DELETE
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("location/{location-id}/map/{map-id}/user/{user-id}")
-	public boolean deleteLocation(@PathParam("user-id") int uid,
-								  @PathParam("map-id") int mid,
-								  @PathParam("location-id") int lid) {
-		return locationDAO.deleteLocation(uid, mid, lid);
-	}
-
-	
-	//voir si la r�ponse est coh�rente si l'user et/ou la map et/ou la location n'existent pas
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("feed/{msg}/location/{location-id}/map/{map-id}/user/{user-id}")
@@ -104,14 +78,22 @@ public class LocationResource {
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("feed-img/{msg}/location/{location-id}/map/{map-id}/user/{user-id}")
+	@Path("feed-img/location/{location-id}/map/{map-id}/user/{user-id}")
 	public boolean contributeOnLocationImg(@PathParam("user-id") int uid,
 										@PathParam("map-id") int mid,
 										@PathParam("location-id") int lid,
 										@FormDataParam("file") InputStream uploadedInputStream,
 										@FormDataParam("file") FormDataContentDisposition fileDetail) {
 		return locationDAO.contributeOnLocationImg(uid, mid, lid, uploadedInputStream, fileDetail);
-	}
+	}	
 	
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("location/{location-id}/map/{map-id}/user/{user-id}")
+	public boolean deleteLocation(@PathParam("user-id") int uid,
+								  @PathParam("map-id") int mid,
+								  @PathParam("location-id") int lid) {
+		return locationDAO.deleteLocation(uid, mid, lid);
+	}
 	
 }

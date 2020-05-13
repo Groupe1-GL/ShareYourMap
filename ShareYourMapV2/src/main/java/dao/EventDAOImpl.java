@@ -5,30 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.Event;
-import classes.Location;
 import classes.Map;
 import classes.User;
 
+/**
+ * EventDAOImpl is the implementation of the EventDAO interface used for debugging purposes.
+ *
+ * @author Mohamed Ahmed
+ * @version %I%, %G%
+ * @since 1.0
+ */
 public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 
 	static List<Event> e = new ArrayList<Event>();
 	
-	/**
-     * Creates and adds a location on a map selected by its id.
-	 * If the map or the location doesn't exist nothing is added.
-	 *
-	 * @param	uid		the user identifier 
-	 * @param	mid		the map identifier 
-	 * @param	lid		the location identifier
-	 * @param	name	the location name
-	 * @param	descr	the location description
-	 * @param	label	the location label
-	 * @param	x		the longitude
-	 * @param	y		the latitude
-	 * @param   start	the event start date
-	 * @param	end		the event end date
-	 * @return			true if the operation was successful
-	 */
 	public boolean createEventOnMap(	int uid, 
 										int mid, 
 										String name, 
@@ -58,7 +48,4 @@ public class EventDAOImpl extends LocationDAOImpl implements EventDAO {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	
-
 }

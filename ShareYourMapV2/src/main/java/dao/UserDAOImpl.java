@@ -16,7 +16,7 @@ import javax.jdo.Transaction;
 */
 
 /**
- * UserDAOImpl is the implementation of the UserDAO interface.
+ * UserDAOImpl is the implementation of the UserDAO interface used for debugging purposes.
  *
  * @author Mohamed Ahmed
  * @version %I%, %G%
@@ -26,24 +26,10 @@ public class UserDAOImpl implements UserDAO {
 	
 	static List<User> u = User.generateUsers();
 	
-	/**
-	 * Returns the list of all registered users.
-	 * If there is not users, it will return a null object.
-     *	 
-	 * @return	the users on the database
-	 */
 	public List<User> getUsers() {
 		return u;
 	}
 	
-	
-	/**
-     * Connect a user on the website and redirect it to his map page.
-	 *
-	 * @param	username 			the username 
-	 * @param	password	the user's password 
-	 * @return	   			a text that describe the response
-	 */
 	public Response connectUser(		String username, String password) {
 		for (User us: u) {
 			if (us.getName().equals(username)&&us.getPassword().equals(password)) {
@@ -59,16 +45,6 @@ public class UserDAOImpl implements UserDAO {
 		            .build();
 	}
 	
-	/**
-	 * Creates a new user on the database according to the user's information matching the fields' names.
-	 * If the username is already used it don't finalize the processus and returns a BAD_REQUEST HTTP code.
-	 * This service is used on the signup process.
-     *	 
-	 * @param username	a public string identifier of the user
-	 * @param passwd	the password
-	 * @param cpasswd	confirmation of the previous password entry
-	 * @return			a text that describe the response
-	 */
 	public String createUser( 		String name, 
 									String password) {
 		for (User us : u){
@@ -81,12 +57,6 @@ public class UserDAOImpl implements UserDAO {
 		return "viewmap/viewmap.html?uid="+newUser.getId();
 	}
 	
-	/**
-     * Returns the user selected by his id.
-	 *
-	 * @param  uid the user identifier 
-	 * @return	   the user object
-	 */
 	public User getUser(int uid) {
 		for (User us: u) {
 			if (us.getId() == uid)
@@ -95,12 +65,6 @@ public class UserDAOImpl implements UserDAO {
 		return null;		
 	}
 	
-	/**
-     * Returns the user selected by his name.
-	 *
-	 * @param  uid the user identifier 
-	 * @return	   the user object
-	 */
 	public User getUser(String username) {
 		for (User us: u) {
 			if (us.getName().equalsIgnoreCase(username))
@@ -109,16 +73,6 @@ public class UserDAOImpl implements UserDAO {
 		return null;		
 	}
 	
-	/**
-     * Edits the user selected by his id.
-	 * The username can not be changed.
-	 *
-	 * @param  uid 		the user identifier 
-	 * @param  opasswd 	the user's current password
-	 * @param  passwd	new password
-	 * @param  cpasswd  confirmation of the new password to avoid mistake
-	 * @return	   		a text that describe the response
-	 */
 	public String editUser(   		int uid, 
 									String password) { 
 		for (User us: u) {
@@ -130,13 +84,6 @@ public class UserDAOImpl implements UserDAO {
 		return "User not found!";
 	}
 	
-	/**
-     * Deletes the user selected by his id.
-	 * A user can delete himself only.
-	 *
-	 * @param  uid the user identifier 
-	 * @return	   true if the operation was successful
-	 */
 	public boolean deleteUser(			int uid) {
 		for (User us: u) {
 			if (us.getId() == uid) {
@@ -147,15 +94,6 @@ public class UserDAOImpl implements UserDAO {
 		return false;		
 	}
 	
-	/**
-     * Returns a list of the user's maps selected by his id.
-	 * If the user doesn't exist a null object is returned.
-	 * This resource method is used in order to display the list of the user's maps 
-	 * on the web application.
-	 *
-	 * @param  uid the user identifier 
-	 * @return	   list of maps
-	 */
 	public List<Map> getMapsOfUser(		int uid) {
 		for (User us: u) {
 			if (us.getId() == uid) {

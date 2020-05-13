@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
@@ -12,22 +11,17 @@ import classes.Location;
 import classes.Map;
 import classes.User;
 
+/**
+ * LocationDAOImpl is the implementation of the LocationDAO interface used for debugging purposes.
+ *
+ * @author Mohamed Ahmed
+ * @version %I%, %G%
+ * @since 1.0
+ */
 public class LocationDAOImpl implements LocationDAO {
 
-	//static List<Location> l = Location.generateLocations();
-	static List<Location> l = new ArrayList<Location>();
-	/**
-     * Creates and adds a location on a map selected by its id.
-	 * If the map or the location doesn't exist nothing is added.
-	 *
-	 * @param	uid		the user identifier 
-	 * @param	mid		the map identifier 
-	 * @param	lid		the location identifier
-	 * @param	name	the location name
-	 * @param	descr 	the location description
-	 * @param	label	the location label
-	 * @return			true if the operation was successful
-	 */
+	static List<Location> l = Location.generateLocations();
+	
 	public boolean createLocationOnMap(	int uid, 
 										int mid, 
 										String name, 
@@ -50,16 +44,6 @@ public class LocationDAOImpl implements LocationDAO {
 		return false;
 	}
 	
-	/**
-     * Contributes on the feed of a location by a message.
-	 * If the map or the location doesn't exist nothing is added.
-	 *
-	 * @param  		uid		the user identifier 
-	 * @param  		mid		the map identifier 
-	 * @param  		lid		the location identifier 
-	 * @param		message
-	 * @return		true	if the operation was successful
-	 */
 	public boolean contributeOnLocation(int uid,
 										int mid,
 										int lid,
@@ -80,17 +64,6 @@ public class LocationDAOImpl implements LocationDAO {
 		return false;
 	}
 	
-	/**
-     * Edits a location.
-	 *
-	 * @param	uid		the user identifier 
-	 * @param	mid 	the map identifier 
-	 * @param	lid 	the location identifier 
-	 * @param	name 	the location name
-	 * @param	descr	the location description
-	 * @param	label	the location label
-	 * @return			true if the operation was successful
-	 */
 	public boolean editLocation(		int uid,
 										int mid,
 										int lid,
@@ -113,15 +86,6 @@ public class LocationDAOImpl implements LocationDAO {
 		return false;
 	}
 	
-	/**
-     * Deletes a location on a map.
-	 * If the map or the location doesn't exist nothing is deleted.
-	 *
-	 * @param  uid the user identifier 
-	 * @param  mid the map identifier 
-	 * @param  lid the location identifier 
-	 * @return	   true if the operation was successful
-	 */
 	public boolean deleteLocation(		int uid,
 										int mid,
 										int lid) {
@@ -143,17 +107,6 @@ public class LocationDAOImpl implements LocationDAO {
 		return false;
 	}
 	
-
-	/**
-     * Contributes on the feed of a location by a picture.
-	 * If the map or the location doesn't exist nothing is added.
-	 *
-	 * @param  		uid		the user identifier 
-	 * @param  		mid		the map identifier 
-	 * @param  		lid		the location identifier 
-	 * @param		path
-	 * @return		true	if the operation was successful
-	 */
 	public boolean contributeOnLocationImg(int uid,
 										int mid,
 										int lid,
@@ -189,6 +142,5 @@ public class LocationDAOImpl implements LocationDAO {
 			}
 		}
 		return false;
-	}
-	
+	}	
 }

@@ -1,5 +1,7 @@
 package jetty_server.ws;
 
+import java.util.List;
+
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;
 import javax.ws.rs.Consumes;
@@ -16,24 +18,18 @@ import javax.ws.rs.core.Response;
 
 import classes.Map;
 import dao.MapDAO;
-import dao.MapDAOImpl;
-import dao.UserDAO;
 import dao.datanucleus.MapDAOPersistence;
-import dao.datanucleus.UserDAOPersistence;
-
-import java.util.*;
 
 /**
  * MapRessource is the class of the maps resource used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
- * @version %I%, %G%
+ * @version 2.0
  * @since 1.0
  */
 @Path("/")
 public class MapResource {
 	
-	//MapDAO mapDAO = new MapDAOPersistence(JDOHelper.getPersistenceManagerFactory("gl"));
 	PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("gl");
 	MapDAO mapDAO = new MapDAOPersistence(pmf);
 	
@@ -44,14 +40,6 @@ public class MapResource {
 		return mapDAO.getMaps();
 	}
 	
-	@PUT
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/maps/{name}/user/{user-id}")
-	public boolean createMap(@PathParam("user-id") int uid,
-						     @PathParam("name") String name){
-		return mapDAO.createMap(uid, name, false);		
-	}
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/maps/{map-id}")
@@ -59,13 +47,12 @@ public class MapResource {
 			return mapDAO.getMap(mid);
 	}
 	
-	@GET
+	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/map")
-	public Response getSharedMap(@QueryParam("id") int mid,
-					@QueryParam("shared-id") String sharedID,
-					@QueryParam("uid") int uid) {	
-			return mapDAO.getSharedMap(uid, mid, sharedID);
+	@Path("/maps/{name}/user/{user-id}")
+	public boolean createMap(@PathParam("user-id") int uid,
+						     @PathParam("name") String name){
+		return mapDAO.createMap(uid, name, false);		
 	}
 	
 	@POST
@@ -77,6 +64,15 @@ public class MapResource {
 		String name = m.getName();
 		boolean access = m.getAccess();
 		return mapDAO.editMap(uid, mid, name, access);
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/map")
+	public Response getSharedMap(@QueryParam("id") int mid,
+					@QueryParam("shared-id") String sharedID,
+					@QueryParam("uid") int uid) {	
+			return mapDAO.getSharedMap(uid, mid, sharedID);
 	}	
 
 	@DELETE

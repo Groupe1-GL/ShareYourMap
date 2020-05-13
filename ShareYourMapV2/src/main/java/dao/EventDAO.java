@@ -1,22 +1,25 @@
 package dao;
 
-import java.io.InputStream;
 import java.time.LocalDateTime;
 
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-
+/**
+ * EventDAO is the interface of the Data Access Object of events.
+ *
+ * @author Mohamed Ahmed
+ * @version 2.0
+ * @since 1.0
+ */
 public interface EventDAO extends LocationDAO{
 	
 	/**
-     * Creates and adds a location on a map selected by its id.
-	 * If the map or the location doesn't exist nothing is added.
+     * Creates and adds an event on a map selected by its id.
+	 * If the map doesn't exist nothing is added.
 	 *
 	 * @param	uid		the user identifier 
 	 * @param	mid		the map identifier 
-	 * @param	lid		the location identifier
-	 * @param	name	the location name
-	 * @param	descr	the location description
-	 * @param	label	the location label
+	 * @param	name	the event name
+	 * @param	descr	the event description
+	 * @param	label	the event label
 	 * @param	x		the longitude
 	 * @param	y		the latitude
 	 * @param   start	the event start date
@@ -35,13 +38,14 @@ public interface EventDAO extends LocationDAO{
 	
 	/**
      * Edits the selected event.
-	 *
+	 * If the map doesn't exist nothing is edited.
+	 * 
 	 * @param	uid		the user identifier 
 	 * @param	mid		the map identifier 
-	 * @param	lid		the location identifier
-	 * @param	name	the location name
-	 * @param	descr	the location description
-	 * @param	label	the location label
+	 * @param	lid		the event identifier
+	 * @param	name	the event name
+	 * @param	descr	the event description
+	 * @param	label	the event label
 	 * @param   start	the event start date
 	 * @param	end		the event end date
 	 * @return			true if the operation was successful
@@ -53,8 +57,5 @@ public interface EventDAO extends LocationDAO{
 										String descr, 
 										String label,
 										LocalDateTime start,
-										LocalDateTime end);
-	
-	
-	
+										LocalDateTime end);	
 }

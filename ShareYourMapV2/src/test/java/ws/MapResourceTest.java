@@ -3,7 +3,6 @@ package ws;
 import org.junit.Assert;
 import org.junit.Test;
 
-import classes.Map;
 import jetty_server.ws.MapResource;
 
 public class MapResourceTest {

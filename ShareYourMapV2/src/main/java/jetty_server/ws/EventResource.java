@@ -1,38 +1,25 @@
 package jetty_server.ws;
 
-import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
-
 import classes.Event;
-import classes.Location;
 import dao.EventDAO;
-import dao.EventDAOImpl;
 import dao.datanucleus.EventDAOPersistence;
 
 /**
  * EventResource is the class of the events resource used in the ShareYourMap website.
  *
  * @author Mohamed Ahmed
- * @version %I%, %G%
+ * @version 2.0
  * @since 1.0
  */
 @Path("/")

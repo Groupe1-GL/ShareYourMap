@@ -8,10 +8,16 @@ import javax.jdo.Transaction;
 
 import classes.Event;
 import classes.Location;
-import classes.Map;
 import classes.User;
 import dao.EventDAO;
 
+/**
+ * EventDAOPersistence is the implementation of the EventDAO interface with DataNucleus.
+ *
+ * @author Mohamed Ahmed
+ * @version 2.0
+ * @since 1.0
+ */
 public class EventDAOPersistence extends LocationDAOPersistence implements EventDAO{
 
 	public EventDAOPersistence(PersistenceManagerFactory pmf) {
@@ -25,13 +31,16 @@ public class EventDAOPersistence extends LocationDAOPersistence implements Event
 		boolean res = false;
 		try {
 			tx.begin();
+			
 			User u = mapDAO.getUserDAO().getUser(uid);
 			Location ev = new Event(name,u.getName(),x,y,descr,label,start,end);
-			Map m = mapDAO.getMap(mid);
-			if (mapDAO.editMapsLocation(uid,mid,ev)) {
-				pm.makePersistent(ev);
-				res = true;
-			}			
+			if (start.isBefore(end)) {
+				if (mapDAO.editMapsLocation(uid,mid,ev)) {
+					pm.makePersistent(ev);
+					res = true;
+				}			
+			}
+			
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
@@ -63,5 +72,4 @@ public class EventDAOPersistence extends LocationDAOPersistence implements Event
 		}
 		return res;
 	}
-
 }

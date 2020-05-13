@@ -1,6 +1,4 @@
 package jetty_server;
-import javax.jdo.JDOHelper;
-import javax.jdo.PersistenceManagerFactory;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -16,10 +14,13 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
-import dao.datanucleus.MapDAOPersistence;
-import dao.datanucleus.UserDAOPersistence;
-import provider.AuthenticationFilter;
-
+/**
+ * Server class with Jetty.
+ *
+ * @author Mohamed Ahmed
+ * @version 1.0
+ * @since 1.0
+ */
 public class JettyMain {
 
 	public static void main(String[] args) throws Exception {

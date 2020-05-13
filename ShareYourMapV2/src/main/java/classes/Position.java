@@ -3,7 +3,13 @@ package classes;
 import javax.jdo.annotations.PersistenceCapable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
+/**
+ * Position is the class that represents the location positions of the ShareYourMap website.
+ *
+ * @author Mohamed Ahmed
+ * @version 2.0
+ * @since 1.0
+ */
 @PersistenceCapable(detachable="true")
 public class Position {
 	private double x;
@@ -18,12 +24,12 @@ public class Position {
 		return x;
 	}
 
-	public void setX(double x) {
-		this.x = x;
-	}
-
 	public double getY() {
 		return y;
+	}
+
+	public void setX(double x) {
+		this.x = x;
 	}
 
 	public void setY(double y) {

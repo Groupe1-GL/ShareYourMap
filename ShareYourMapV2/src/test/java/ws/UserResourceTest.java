@@ -18,22 +18,22 @@ public class UserResourceTest {
 		
 		
 		//	---------------- Create elements ---------------- //
-		User u1 = new User(0,"user1","psw1");
+		User u1 = new User("user1","psw1");
 		Assert.assertEquals("You've been successfully signed up.&viewmap/viewmap.html?uid=1",ur.createUser(u1));
 		Assert.assertEquals(1, ur.getUsers().size());
 		Assert.assertEquals("user1",ur.getUser(1).getName());
-		User u11 = new User(0,"user1","psw");
+		User u11 = new User("user1","psw");
 		Assert.assertEquals("This username is already used.",ur.createUser(u11));
 		Assert.assertEquals(1, ur.getUsers().size());
 		
-		User u2 = new User(0,"user2","psw2");
+		User u2 = new User("user2","psw2");
 		ur.createUser(u2);
 		ur.createUser(new User("user3","psw3"));
 		Assert.assertEquals(2, ur.getUser(2).getId());
 		
 		
 		//		---------------- Connexion ---------------- //
-		User u4 = new User(0,"user4","psw4");
+		User u4 = new User("user4","psw4");
 		Assert.assertEquals("This user doesn't exist",ur.connectUser(u4));
 		u1.setPassword("psw2");
 		Assert.assertEquals("Username and password do not match",ur.connectUser(u1));

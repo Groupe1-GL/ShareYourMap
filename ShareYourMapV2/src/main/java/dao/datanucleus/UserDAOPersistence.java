@@ -1,25 +1,29 @@
 package dao.datanucleus;
 
-import java.util.ArrayList;
+import classes.Map;
+import dao.UserDAO;
+import classes.User;
 import java.util.List;
-
+import javax.jdo.Query;
+import java.util.ArrayList;
+import javax.jdo.Transaction;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
-import javax.jdo.Transaction;
 
-import classes.Map;
-import classes.User;
-import dao.UserDAO;
-
+/**
+ * UserDAOPersistence is the implementation of the UserDAO interface with DataNucleus.
+ *
+ * @author Mohamed Ahmed
+ * @version 2.0
+ * @since 1.0
+ */
 public class UserDAOPersistence implements UserDAO {
 
 	private PersistenceManagerFactory pmf;
 	
 	public UserDAOPersistence(PersistenceManagerFactory pmf) {
 		this.pmf = pmf;
-	}
-	
+	}	
 	
 	@SuppressWarnings("unchecked")
 	public List<User> getUsers() {
@@ -44,23 +48,17 @@ public class UserDAOPersistence implements UserDAO {
 		return detached;
 	}
 	
-	
 	public User getUser(int uid) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		User detached = null;
 		try {
 			tx.begin();
-			detached = pm.getObjectById(User.class, uid);
-			//List<Map> d2 = detached.getMaps(); useless since the persistence annotation on fetch group
-			pm.setDetachAllOnCommit(true);
-			tx.commit();
 			
-			/*
-			 * ou version sans transaction:
-			 * us = pm.getObjectById(User.class, uid);
-			 * detached = pm.detachCopy(us);
-			 */
+			detached = pm.getObjectById(User.class, uid);
+			pm.setDetachAllOnCommit(true);
+			
+			tx.commit();
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
@@ -71,7 +69,6 @@ public class UserDAOPersistence implements UserDAO {
 		return detached;
 	}
 	
-	//non présent sur les webservices
 	public User getUser(String username) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -96,19 +93,16 @@ public class UserDAOPersistence implements UserDAO {
 			pm.close();
 		}
 		return detached;
-	}
-	
+	}	
 	
 	public String createUser(String name, String password) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		String res = "Transaction method failed.";
-		
+		String res = "Transaction method failed.";		
 		boolean alreadyExist = false;
 		if( name != null && getUser(name) != null) {
 			alreadyExist = true;
-		}
-		
+		}		
 		try {
 			tx.begin();
 			if (alreadyExist){
@@ -123,31 +117,19 @@ public class UserDAOPersistence implements UserDAO {
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
-				pm.close();
-				return res;
 			}
 			pm.close();
 		}
 		return res; 
 	}
-
 	
 	public String editUser(int uid, String password) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		String res = "Transaction method failed.";
-						
+		String res = "Transaction method failed.";						
 		try {
 			tx.begin();
-			/*if (u != null){
-				Query q = pm.newQuery(User.class);
-				q.declareParameters("Integer uid");
-				q.setFilter("uid == id");
-				q.deletePersistentAll(uid);
-				u.setPassword(password);
-				pm.makePersistent(u);
-				res = "Password successfully updated!";	
-			}*/
+			
 			User us = this.getUser(uid);
 			if (us != null) {
 				us.setPassword(password);
@@ -157,11 +139,11 @@ public class UserDAOPersistence implements UserDAO {
 			else {
 				res = "User not found!";		
 			}
+			
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
-				tx.rollback();
-				
+				tx.rollback();				
 			}
 			pm.close();
 		}
@@ -174,6 +156,7 @@ public class UserDAOPersistence implements UserDAO {
 		boolean res = false;
 		try {
 			tx.begin();
+			
 			User u = this.getUser(uid);
 			if(u != null) {
 				Query q = pm.newQuery(User.class);
@@ -182,6 +165,7 @@ public class UserDAOPersistence implements UserDAO {
 				q.deletePersistentAll(uid);
 				res = true;
 			}
+			
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
@@ -196,16 +180,16 @@ public class UserDAOPersistence implements UserDAO {
 	public boolean editUsersMaps(int uid, List<Map> maps) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		boolean res = false;
-		
+		boolean res = false;		
 		try {
 			tx.begin();
-			User u = this.getUser(uid); //detached User
 			
+			User u = this.getUser(uid);			
 			if (u != null && u.setMaps(maps)) {
 					pm.makePersistent(u);
 					res = true;
 			}
+			
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {
@@ -219,15 +203,16 @@ public class UserDAOPersistence implements UserDAO {
 	public boolean editUsersMaps(int uid, Map map) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
-		boolean res = false;
-		
+		boolean res = false;		
 		try {
 			tx.begin();
-			User u = this.getUser(uid); //detached User
+			
+			User u = this.getUser(uid);
 			if (u != null && u.getMaps().add(map)) {
 					pm.makePersistent(u);
 					res = true;
 			}
+			
 			tx.commit();
 		} finally {
 			if (tx.isActive()) {

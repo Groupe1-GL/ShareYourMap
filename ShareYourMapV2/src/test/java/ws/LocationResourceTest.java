@@ -9,7 +9,6 @@ public class LocationResourceTest {
 
 	@Test
 	public void test() {
-		LocationResource lo = new LocationResource();
 		
 		
 	}

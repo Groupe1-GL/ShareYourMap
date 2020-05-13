@@ -2,15 +2,11 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory; 
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import classes.Map;
-import classes.User;
 import dao.datanucleus.UserDAOPersistence;
 
 public class UserDAOPersistenceTest {
@@ -48,7 +44,7 @@ public class UserDAOPersistenceTest {
 		Assert.assertTrue(userDAO.editUsersMaps(1, maps));
 		Assert.assertEquals("map1",userDAO.getUser(1).getMaps().get(0).getName());
 		/* -------------------- Delete elements ------------------------------- */
-		Assert.assertFalse(userDAO.deleteUser(0));
+		Assert.assertFalse(userDAO.deleteUser(10));
 		Assert.assertEquals(3, userDAO.getUsers().size());
 		Assert.assertTrue(userDAO.deleteUser(2));
 		Assert.assertEquals(2, userDAO.getUsers().size());
